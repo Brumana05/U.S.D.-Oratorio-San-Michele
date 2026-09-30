@@ -39,3 +39,8 @@ Quasi sempre le regole di Firestore pubblicate non sono l'ultima versione. In Fi
 
 ## Password degli utenti (v1,11)
 Le password degli utenti creati dalla v1,11 in poi sono salvate in chiaro in Firestore, in una sezione (`credentials`) leggibile **solo dall'Admin**, e l'Admin le vede in Utenti (tasto Mostra). Chi ha accesso al progetto Firebase o all'account Admin può leggerle: usate password diverse da quelle usate altrove. Per gli utenti creati prima la password non è recuperabile: usare **Nuova password**. Ripubblica `firestore.rules` (nuova sezione `credentials`).
+
+## Novità v1,12
+- **Presenze protette:** in Allenamenti i pulsanti Pres./Ass. sono bloccati finché non premi **Modifica presenze**; le modifiche si confermano con **Salva** (o si scartano con **Annulla**).
+- **Più allenamenti insieme (Admin):** si scelgono più giorni sul calendario e più categorie; l'app crea un allenamento per ogni giorno e categoria, saltando quelli già presenti.
+- **Nuovi ruoli:** Presidente, Direttore Generale, Direttore Sportivo, con gli stessi permessi del Direttore (sola visualizzazione di tutte le categorie). **Ripubblica `firestore.rules`** (cambiano le regole sui ruoli).

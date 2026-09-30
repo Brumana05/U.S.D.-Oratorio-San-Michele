@@ -4,7 +4,8 @@ service cloud.firestore {
     function hasProfile(){ return request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid)); }
     function me(){ return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
     function isAdmin(){ return hasProfile() && me().role == 'admin'; }
-    function canSee(t){ return hasProfile() && (me().role == 'admin' || me().role == 'direttore' || me().team == t); }
+    function viewer(){ return me().role in ['direttore','presidente','dirgenerale','dirsportivo']; }
+    function canSee(t){ return hasProfile() && (me().role == 'admin' || viewer() || me().team == t); }
     function setupDone(){ return exists(/databases/$(database)/documents/config/setup); }
 
     match /usernames/{name} {
@@ -45,7 +46,7 @@ service cloud.firestore {
     match /trainings/{id} {
       allow read: if canSee(resource.data.team);
       allow create, delete: if isAdmin();
-      allow update: if isAdmin() || (hasProfile() && me().role != 'direttore' && me().team == resource.data.team
+      allow update: if isAdmin() || (hasProfile() && !viewer() && me().team == resource.data.team
                        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['att']));
     }
   }

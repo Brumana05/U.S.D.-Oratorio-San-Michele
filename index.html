@@ -56,6 +56,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 .dy i{font-style:normal;background:var(--pri);color:#fff;border-radius:99px;font-size:12px;min-width:20px;padding:0 6px;line-height:20px}
 .dy.td{border:2px solid var(--acc)}.dy.sl{background:#dbe7fb;border-color:var(--pri)}
 .tag.t-campionato{background:#dbe7fb}.tag.t-coppa{background:#fbeec7}.tag.t-amichevole{background:#d9f0e2}
+.chk{display:flex;gap:10px;align-items:center;padding:4px 0}.chk input{width:22px;height:22px;min-height:0;flex:none}
+button:disabled{opacity:.5;cursor:not-allowed}.seg button:disabled{opacity:1;cursor:default}
 .mut{color:var(--mut);font-size:14px}.bar{height:8px;border-radius:4px;background:var(--ko);overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--ok)}
 .stat{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;margin-top:6px}.stat b{display:block;font-size:22px}
 .back{margin:4px 0 8px;color:var(--pri)}.err{color:var(--ko);font-weight:600}
@@ -69,7 +71,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <script type="module">
 
 const TEAMS=["Prima Squadra","Juniores","Allievi Under 16","Giovanissimi Under 15","Giovanissimi Under 14","Esordienti Under 13","Esordienti Under 12"];
-const ROLES={admin:"Admin",allenatore:"Allenatore",collaboratore:"Collaboratore Tecnico",dirigente:"Dirigente",direttore:"Direttore"};
+const ROLES={admin:"Admin",allenatore:"Allenatore",collaboratore:"Collaboratore Tecnico",dirigente:"Dirigente",direttore:"Direttore",presidente:"Presidente",dirgenerale:"Direttore Generale",dirsportivo:"Direttore Sportivo"};
 import {firebaseConfig} from "./firebase-config.js";
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
@@ -78,11 +80,12 @@ const cols=["users","players","trainings","matches"],S={users:[],players:[],trai
 const configured=!!(firebaseConfig&&firebaseConfig.apiKey&&!firebaseConfig.apiKey.startsWith("INCOLLA"));
 let app,auth,db,secApp;
 if(configured){app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);secApp=initializeApp(firebaseConfig,"sec")}
-const VER="1,11",club=()=>S.settings.name||"U.S.D. Oratorio San Michele",logo=()=>S.settings.logo||"logo-club.png";
+const VER="1,12",club=()=>S.settings.name||"U.S.D. Oratorio San Michele",logo=()=>S.settings.logo||"logo-club.png";
 let me=null,ready=false,boot=false,uns=[],view="home",team=TEAMS[0],open=null,editP=null,err="",pend=false,setupMode=false,msg="",msgErr=false;
 const $=id=>document.getElementById(id),e=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("it-IT",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):"";
-const isA=()=>me&&me.role==="admin",isD=()=>me&&me.role==="direttore",canAtt=()=>me&&me.role!=="direttore";
+const VIEW=["direttore","presidente","dirgenerale","dirsportivo"];
+const isA=()=>me&&me.role==="admin",isD=()=>me&&VIEW.includes(me.role),canAtt=()=>me&&!VIEW.includes(me.role);
 const em=n=>n+"@oratorio-sanmichele.app",okName=n=>/^[a-z0-9][a-z0-9_-]{2,29}$/.test(n),em2=n=>n+"_"+crypto.randomUUID().replace(/-/g,"").slice(0,8)+"@oratorio-sanmichele.app";
 const fail=x=>{console.error(x);alert("Operazione non riuscita: "+(x.code||x.message))};
 const save=(n,id,o)=>setDoc(doc(db,n,id),o).catch(fail);
@@ -90,7 +93,7 @@ const saveSet=o=>setDoc(doc(db,"config","club"),o).catch(fail);
 const nid=n=>doc(collection(db,n)).id;
 function del(n,id,m){if(confirm(m||"Confermi l'eliminazione?"))deleteDoc(doc(db,n,id)).catch(fail)}
 async function batchSet(items){for(let i=0;i<items.length;i+=400){const b=writeBatch(db);items.slice(i,i+400).forEach(([n,id,o])=>b.set(doc(db,n,id),o));await b.commit()}}
-function go(v){view=v;err="";msg="";open=null;editP=null;render()}
+function go(v){if(edTr&&dirty()&&!confirm("Hai modifiche non salvate: scartarle?"))return;edTr=null;view=v;err="";msg="";open=null;editP=null;render()}
 const pl=()=>S.players.filter(p=>p.team===team).sort((a,b)=>(a.cognome+a.nome).localeCompare(b.cognome+b.nome));
 const tr=()=>S.trainings.filter(t=>t.team===team).sort((a,b)=>b.date.localeCompare(a.date));
 const att=(t,p)=>(t.att||{})[p.id]||"";
@@ -103,10 +106,33 @@ function vLogin(){return`<div class="login"><h2 style="font-size:30px;margin-bot
 function vHome(){const T=(a,b,c)=>`<button class="tile" onclick="${a}"><b>${b}</b><span>${c}</span></button>`;
 return sel()+migCard()+`<div class="tiles">`+(isA()?T("go('an')","Anagrafica","Aggiungi o modifica i giocatori"):"")+T("go('tr')","Allenamenti",(isD()?"Consulta":"Segna")+" presenze e assenze")+T("go('cal')","Calendario","Partite e risultati della stagione")+T("go('st')","Statistiche","Presenze, assenze e percentuali di ogni ragazzo")+(isA()?T("go('us')","Utenti","Crea i profili di accesso")+T("exp()","Backup","Scarica tutti i dati in un file")+T("pick()","Ripristino","Carica un file di backup")+`<input id="imp" type="file" accept=".json,application/json" hidden onchange="imp(this)">`:"")+`</div>`}
 function vTr(){const ps=pl();let h=bk()+sel()+`<h2>Allenamenti</h2>`;
-if(isA())h+=`<div class="card row"><input id="nd" type="date"><button onclick="addT()">Aggiungi allenamento</button></div>`;
+if(isA())h+=tpCard();
 const ts=tr();if(!ts.length)h+=`<p class="mut">Nessun allenamento inserito${isA()?"":". L'Admin può aggiungerli."}</p>`;
-ts.forEach(t=>{const P=ps.filter(p=>att(t,p)==="P").length,o=open===t.id;h+=`<div class="card"><div class="row" style="justify-content:space-between"><button class="g" style="color:var(--ink);flex:1;text-align:left" onclick="tgl('${t.id}')"><b>${fd(t.date)}</b> <span class="mut">· ${P}/${ps.length} presenti</span></button>${isA()?`<button class="d" onclick="del('trainings','${t.id}')">Elimina</button>`:""}</div>`;
-if(o)h+=ps.length?ps.map(p=>`<div class="p">${av(p)}<div class="n">${e(p.cognome)} ${e(p.nome)}</div>${canAtt()?`<div class="seg"><button class="P ${att(t,p)==="P"?"on":""}" onclick="mk('${t.id}','${p.id}','P')">Pres.</button><button class="A ${att(t,p)==="A"?"on":""}" onclick="mk('${t.id}','${p.id}','A')">Ass.</button></div>`:`<span class="tag">${{P:"Presente",A:"Assente"}[att(t,p)]||"—"}</span>`}</div>`).join(""):`<p class="mut">Nessun giocatore in anagrafica.</p>`;h+=`</div>`});return h}
+ts.forEach(t=>{const ed=edTr===t.id,cur=ed?draft:(t.att||{}),P=ps.filter(p=>cur[p.id]==="P").length,o=open===t.id;
+h+=`<div class="card"><div class="row" style="justify-content:space-between"><button class="g" style="color:var(--ink);flex:1;text-align:left" onclick="tgl('${t.id}')"><b>${fd(t.date)}</b> <span class="mut">· ${P}/${ps.length} presenti${ed?" · in modifica":""}</span></button>${isA()?`<button class="d" onclick="del('trainings','${t.id}')">Elimina</button>`:""}</div>`;
+if(o){if(canAtt())h+=ed?`<div class="row" style="margin:8px 0"><button onclick="trSave()">Salva</button><button class="g" style="color:var(--ink)" onclick="trCancel()">Annulla</button></div>`:`<div style="margin:8px 0"><button onclick="trEdit('${t.id}')">Modifica presenze</button></div>`;
+h+=ps.length?ps.map(p=>{const v=cur[p.id]||"";return`<div class="p">${av(p)}<div class="n">${e(p.cognome)} ${e(p.nome)}</div>${canAtt()?`<div class="seg"><button class="P ${v==="P"?"on":""}" ${ed?"":"disabled"} onclick="mk('${t.id}','${p.id}','P')">Pres.</button><button class="A ${v==="A"?"on":""}" ${ed?"":"disabled"} onclick="mk('${t.id}','${p.id}','A')">Ass.</button></div>`:`<span class="tag">${{P:"Presente",A:"Assente"}[v]||"—"}</span>`}</div>`}).join(""):`<p class="mut">Nessun giocatore in anagrafica.</p>`}
+h+=`</div>`});return h}
+let edTr=null,draft={},tSel=[],tCats=[],tpY=new Date().getFullYear(),tpM=new Date().getMonth(),tMsg="",tMsgErr=false;
+function tpCard(){const now=new Date(),td=isoD(now.getFullYear(),now.getMonth(),now.getDate()),cats=tCats.length?tCats:[team],n=tSel.length*cats.length;
+const start=(new Date(tpY,tpM,1).getDay()+6)%7,dim=new Date(tpY,tpM+1,0).getDate();let cells="";for(let i=0;i<start;i++)cells+=`<div></div>`;
+for(let d=1;d<=dim;d++){const k=isoD(tpY,tpM,d),on=tSel.includes(k);cells+=`<button class="dy${k===td?" td":""}${on?" sl":""}" onclick="tpTog('${k}')" aria-pressed="${on}"><span>${d}</span></button>`}
+const title=new Date(tpY,tpM,1).toLocaleDateString("it-IT",{month:"long",year:"numeric"});
+return`<div class="card"><b>Aggiungi allenamenti</b><p class="mut" style="margin:4px 0 8px">Tocca uno o più giorni (anche di mesi diversi), scegli le categorie e premi Aggiungi.</p><div class="row" style="flex-wrap:nowrap;justify-content:space-between;margin-bottom:8px"><button class="g" style="color:var(--pri)" onclick="tpNav(-1)" aria-label="Mese precedente">‹</button><b style="text-transform:capitalize;flex:1;text-align:center;font-size:18px">${title}</b><button class="g" style="color:var(--pri)" onclick="tpNav(1)" aria-label="Mese successivo">›</button></div><div class="cg">${["Lun","Mar","Mer","Gio","Ven","Sab","Dom"].map(x=>`<div class="h">${x}</div>`).join("")}${cells}</div>
+<div class="mut" style="margin:8px 0">Giorni scelti (${tSel.length}): ${tSel.length?tSel.slice().sort().map(k=>fd(k)).join(" · "):"nessuno"}${tSel.length?` <button class="g" style="color:var(--pri);min-height:32px;padding:2px 10px" onclick="tpClear()">Azzera</button>`:""}</div>
+<b>Categorie</b><label class="chk"><input type="checkbox" ${cats.length===TEAMS.length?"checked":""} onchange="tcAll(this.checked)"> Tutte le categorie</label>${TEAMS.map((t,i)=>`<label class="chk"><input type="checkbox" ${cats.includes(t)?"checked":""} onchange="tcTog(${i})"> ${t}</label>`).join("")}
+<div class="${tMsgErr?"err":"mut"}" style="margin-top:6px">${e(tMsg)}</div><button style="margin-top:8px" onclick="addTs()" ${n?"":"disabled"}>${n?`Aggiungi ${n} allenament${n===1?"o":"i"}`:"Aggiungi allenamenti"}</button></div>`}
+const tpNav=d=>{tpM+=d;if(tpM<0){tpM=11;tpY--}if(tpM>11){tpM=0;tpY++}render()},tpTog=k=>{tSel=tSel.includes(k)?tSel.filter(x=>x!==k):[...tSel,k];tMsg="";render()},tpClear=()=>{tSel=[];render()},
+tcTog=i=>{const c=tCats.length?tCats:[team],t=TEAMS[i];tCats=c.includes(t)?c.filter(x=>x!==t):[...c,t];render()},tcAll=on=>{tCats=on?[...TEAMS]:[];render()};
+async function addTs(){const cats=tCats.length?tCats:[team],items=[];let dup=0;
+for(const c of cats)for(const d of tSel){if(S.trainings.some(t=>t.team===c&&t.date===d)){dup++;continue}items.push(["trainings",nid("trainings"),{team:c,date:d,att:{}}])}
+if(!items.length){tMsg="Nessun nuovo allenamento: erano tutti già presenti.";tMsgErr=true;return render()}
+try{await batchSet(items);tMsg=`Aggiunti ${items.length} allenamenti${dup?` (${dup} già presenti, saltati)`:""}.`;tMsgErr=false;tSel=[];render()}catch(x){fail(x)}}
+const dirty=()=>{const t=S.trainings.find(x=>x.id===edTr);return !!t&&JSON.stringify(draft)!==JSON.stringify(t.att||{})};
+function trEdit(id){if(edTr&&edTr!==id&&dirty()&&!confirm("Hai modifiche non salvate: scartarle?"))return;const t=S.trainings.find(x=>x.id===id);edTr=id;draft={...(t.att||{})};render()}
+function trCancel(){edTr=null;render()}
+async function trSave(){const id=edTr;try{await updateDoc(doc(db,"trainings",id),{att:draft});edTr=null;render()}catch(x){fail(x)}}
+function mk(tid,pid,v){if(edTr!==tid)return;if(draft[pid]===v)delete draft[pid];else draft[pid]=v;render()}
 function vSt(){const ts=tr(),T=ts.length;let h=bk()+sel()+`<h2>Statistiche</h2><p class="mut">Allenamenti totali da inizio anno: <b>${T}</b></p>`;
 const ps=pl();if(!ps.length)return h+`<p class="mut">Nessun giocatore in anagrafica.</p>`;
 return h+ps.map(p=>{const P=ts.filter(t=>att(t,p)==="P").length,A=ts.filter(t=>att(t,p)==="A").length,pp=T?Math.round(P/T*100):0,pa=T?Math.round(A/T*100):0;return`<div class="card"><div class="p" style="border:0;padding:0">${av(p)}<div class="n"><b>${e(p.cognome)} ${e(p.nome)}</b></div></div><div class="stat"><div><b>${P}</b><span class="mut">Presenze</span></div><div><b>${A}</b><span class="mut">Assenze</span></div><div><b>${pp}%</b><span class="mut">% pres.</span></div><div><b>${pa}%</b><span class="mut">% ass.</span></div></div><div class="bar"><i style="width:${pp}%"></i></div></div>`}).join("")}
@@ -141,7 +167,7 @@ const tl=p=>{const L=[["Atleta",p.cel],["Mamma",p.celMamma],["Papà",p.celPapa]]
 function vAn(){const ps=pl(),x=editP?S.players.find(p=>p.id===editP)||{}:{};let h=bk()+sel()+`<h2>Anagrafica</h2><div class="card"><b>${editP?"Modifica giocatore":"Nuovo giocatore"}</b><div class="row" style="margin-top:8px"><input id="an1" placeholder="Nome" value="${e(x.nome)}"><input id="an2" placeholder="Cognome" value="${e(x.cognome)}"></div><div class="row" style="margin-top:8px"><label class="mut">Data di nascita<input id="an3" type="date" value="${e(x.dob)}"></label><label class="mut">Foto<input id="an4" type="file" accept="image/*"></label></div><div class="row" style="margin-top:8px"><label class="mut">Ruolo<input id="an5" list="ruoli" placeholder="es. Portiere" value="${e(x.ruolo)}"><datalist id="ruoli"><option>Portiere</option><option>Difensore</option><option>Centrocampista</option><option>Attaccante</option></datalist></label><label class="mut">Cellulare atleta<input id="an6" type="tel" value="${e(x.cel)}"></label></div><div class="row" style="margin-top:8px"><label class="mut">Cellulare mamma<input id="an7" type="tel" value="${e(x.celMamma)}"></label><label class="mut">Cellulare papà<input id="an8" type="tel" value="${e(x.celPapa)}"></label></div><div class="err">${err}</div><div class="row" style="margin-top:8px"><button onclick="savP()">${editP?"Salva modifiche":"Aggiungi giocatore"}</button>${editP?`<button class="g" onclick="edit(null)">Annulla</button>`:""}</div></div>`;
 return h+(ps.length?`<div class="card">`+ps.map(p=>`<div class="p">${av(p)}<div class="n"><b>${e(p.cognome)} ${e(p.nome)}</b><div class="mut">${fd(p.dob)}${p.ruolo?" · "+e(p.ruolo):""}</div>${tl(p)}</div><button onclick="edit('${p.id}')">Modifica</button><button class="d" onclick="del('players','${p.id}')">Elimina</button></div>`).join("")+`</div>`:`<p class="mut">Nessun giocatore in questa categoria.</p>`)}
 function vUs(){return bk()+`<h2>Utenti</h2><div class="card"><b>Nuovo profilo</b><div class="row" style="margin-top:8px"><input id="un" placeholder="Nome utente (lettere e numeri)" autocomplete="off" autocapitalize="none"><input id="up" type="text" placeholder="Password (min. 6 caratteri)" autocomplete="off"></div><div class="row" style="margin-top:8px"><select id="ur" onchange="tg()">${Object.entries(ROLES).filter(r=>r[0]!=="admin").map(r=>`<option value="${r[0]}">${r[1]}</option>`).join("")}</select><select id="ut">${TEAMS.map(t=>`<option>${t}</option>`).join("")}</select></div><div class="err">${err}</div><div style="margin-top:8px"><button onclick="addU()">Crea profilo</button></div></div><div class="card">`+userRows()+`</div>`}
-function tg(){$("ut").style.display=$("ur").value==="direttore"?"none":""}
+function tg(){$("ut").style.display=VIEW.includes($("ur").value)?"none":""}
 
 function vWelcome(){return`<div class="card" style="text-align:center;padding:28px 16px;margin-top:24px"><img src="${logo()}" alt="" style="max-width:220px;max-height:36vh;width:auto;height:auto"><h2 style="font-size:40px;margin:8px 0 4px">Benvenuto</h2><p style="font-size:18px;margin:0"><b>${e(me.name)}</b></p><p class="mut" style="margin:0 0 4px">${ROLES[me.role]}${me.team?" · "+e(me.team):""}</p><p style="font-weight:600;margin:12px 0 16px">${e(club())}</p><button style="min-width:220px;font-size:18px;min-height:52px" onclick="go('home')">Entra</button></div>`}
 function render(){const a=$("app");
@@ -241,7 +267,7 @@ async function addU(){const n=$("un").value.trim().toLowerCase(),p=$("up").value
 if(!okName(n)||p.length<6){err="Nome utente di 3+ caratteri (lettere minuscole, numeri - _) e password di 6+ caratteri.";return render()}
 let st="lettura nome utente";try{if(S.users.some(u=>u.name===n)||(await getDoc(doc(db,"usernames",n))).exists()){err="Nome utente già esistente.";return render()}
 st="creazione account";const email=em2(n),sa=getAuth(secApp),c=await createUserWithEmailAndPassword(sa,email,p);
-st="salvataggio profilo";const b=writeBatch(db);b.set(doc(db,"users",c.user.uid),{name:n,role:r,team:r==="direttore"?"":$("ut").value});b.set(doc(db,"usernames",n),{email,uid:c.user.uid});b.set(doc(db,"credentials",c.user.uid),{name:n,password:p});await b.commit();await signOut(sa)}
+st="salvataggio profilo";const b=writeBatch(db);b.set(doc(db,"users",c.user.uid),{name:n,role:r,team:VIEW.includes(r)?"":$("ut").value});b.set(doc(db,"usernames",n),{email,uid:c.user.uid});b.set(doc(db,"credentials",c.user.uid),{name:n,password:p});await b.commit();await signOut(sa)}
 catch(x){err=x.code==="auth/email-already-in-use"?"Nome utente già esistente (anche se revocato in passato).":x.code==="permission-denied"?"Permesso negato ("+st+"). In Firebase ripubblica le regole di Firestore (file firestore.rules) e controlla di essere entrato con l'Admin.":"Errore ("+st+"): "+(x.code||x.message);console.error(x);render()}}
 function exp(){const d={app:"osm",ver:VER,players:S.players,trainings:S.trainings,matches:S.matches,settings:S.settings,users:S.users.map(u=>({id:u.id,name:u.name,role:u.role,team:u.team}))},a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:"application/json"}));a.download="backup-oratorio-"+new Date().toISOString().slice(0,10)+".json";a.click()}
 function pick(){$("imp").click()}
@@ -253,8 +279,6 @@ async function restore(d){const items=[];for(const n of["players","trainings","m
 await batchSet(items);if(d.settings&&typeof d.settings==="object"&&Object.keys(d.settings).length)await saveSet(d.settings);return items.length}
 async function migra(){if(!confirm("Importare nel database online i dati salvati su questo dispositivo?"))return;try{const n=await restore(localData());localStorage.setItem("osm-migrated","1");alert("Importati "+n+" elementi. Ora crea gli utenti dalla sezione Utenti.");render()}catch(x){fail(x)}}
 const migCard=()=>{const d=isA()&&localData();return d?`<div class="card" style="border-left:6px solid var(--acc)"><b>Dati della versione precedente trovati</b><p class="mut" style="margin:6px 0">Su questo dispositivo ci sono ${d.players.length} giocatori, ${(d.trainings||[]).length} allenamenti e ${(d.matches||[]).length} partite. Importali nel database online.</p><button onclick="migra()">Importa nel database online</button></div>`:""}
-function addT(){const d=$("nd").value;if(!d)return;if(tr().some(t=>t.date===d))return alert("Allenamento già presente in quella data.");const id=nid("trainings");open=id;save("trainings",id,{team,date:d,att:{}})}
-function mk(tid,pid,v){const t=S.trainings.find(t=>t.id===tid),a={...(t.att||{})};if(a[pid]===v)delete a[pid];else a[pid]=v;updateDoc(doc(db,"trainings",tid),{att:a}).catch(fail)}
 function addM(){const d=$("md").value,o=$("mo").value.trim();if(!d||!o)return alert("Inserisci data e avversario.");save("matches",nid("matches"),{team,date:d,ora:$("mt").value,opp:o,home:$("mh").value,tipo:$("mk").value,luogo:$("ml").value.trim(),gf:"",ga:""})}
 function res(id){const m=S.matches.find(m=>m.id===id),v=k=>$(k+id).value,f=v("gf"),a=v("ga"),d=v("dt"),o=v("op").trim();if(!d||!o)return alert("Data e avversario sono obbligatori.");const {id:_,...r}=m;
 save("matches",id,{...r,team:v("cm"),date:d,ora:v("ot"),opp:o,home:v("hm"),tipo:v("tp"),luogo:v("lg").trim(),gf:f===""?"":+f,ga:a===""?"":+a})}
@@ -264,8 +288,8 @@ if(!n||!c)return err="Nome e cognome sono obbligatori.",render();
 const old=editP?S.players.find(p=>p.id===editP):null,photo=f?await rd(f):(old?.photo||"");
 err="";const id=editP||nid("players");editP=null;await save("players",id,{team:old?.team||team,nome:n,cognome:c,dob:d,photo,ruolo:$("an5").value.trim(),cel:$("an6").value.trim(),celMamma:$("an7").value.trim(),celPapa:$("an8").value.trim()})}
 
-const setTeam=v=>{team=v;render()},tgl=id=>{open=open===id?null:id;render()},edit=id=>{editP=id;render();if(id)scrollTo(0,0)},tsetup=()=>{setupMode=!setupMode;err="";render()};
-Object.assign(window,{pwTgl,newPw,calNav,calPick,calFilt,calToday,bdClose,revoca,go,del,login,out,setup,addU,addT,mk,addM,res,savP,tg,setTeam,tgl,edit,tsetup,exp,pick,imp,doUpd,later,savClub,savLogo,rmLogo,impXl,model});
+const setTeam=v=>{team=v;edTr=null;render()},tgl=id=>{if(edTr&&edTr!==id&&dirty()&&!confirm("Hai modifiche non salvate: scartarle?"))return;if(edTr&&edTr!==id)edTr=null;open=open===id?null:id;render()},edit=id=>{editP=id;render();if(id)scrollTo(0,0)},tsetup=()=>{setupMode=!setupMode;err="";render()};
+Object.assign(window,{pwTgl,newPw,calNav,calPick,calFilt,calToday,bdClose,revoca,go,del,login,out,setup,addU,mk,trEdit,trSave,trCancel,tpNav,tpTog,tpClear,tcTog,tcAll,addTs,addM,res,savP,tg,setTeam,tgl,edit,tsetup,exp,pick,imp,doUpd,later,savClub,savLogo,rmLogo,impXl,model});
 document.addEventListener("focusout",()=>{if(pend){pend=false;setTimeout(render,50)}});
 if(configured){onSnapshot(doc(db,"config","club"),s=>{S.settings=s.exists()?s.data():{};paint()},x=>console.error(x));
 onAuthStateChanged(auth,async u=>{if(boot)return;if(!u){stop();me=null;ready=true;render();return}await load(u)})}
