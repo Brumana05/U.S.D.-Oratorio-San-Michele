@@ -1,5 +1,5 @@
 // Incolla qui i dati del tuo progetto Firebase (vedi README, punto 5).
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyDJm8oK_dkB7VRuBfKkEV2aZgYDRknQsAM",
   authDomain: "oratorio-san-michele.firebaseapp.com",
   databaseURL: "https://oratorio-san-michele-default-rtdb.europe-west1.firebasedatabase.app",
