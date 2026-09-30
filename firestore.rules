@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function hasProfile(){ return request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid)); }
+    function me(){ return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function isAdmin(){ return hasProfile() && me().role == 'admin'; }
+    function canSee(t){ return hasProfile() && (me().role == 'admin' || me().role == 'direttore' || me().team == t); }
+    function setupDone(){ return exists(/databases/$(database)/documents/config/setup); }
+
+    match /config/club {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /config/setup {
+      allow read: if false;
+      allow create: if request.auth != null && !setupDone();
+    }
+    match /users/{uid} {
+      allow read: if request.auth != null && (request.auth.uid == uid || isAdmin());
+      allow create: if (request.auth != null && request.auth.uid == uid && request.resource.data.role == 'admin' && !setupDone()) || isAdmin();
+      allow update, delete: if isAdmin();
+    }
+    match /players/{id} {
+      allow read: if canSee(resource.data.team);
+      allow create: if isAdmin();
+      allow update, delete: if isAdmin();
+    }
+    match /matches/{id} {
+      allow read: if canSee(resource.data.team);
+      allow create: if isAdmin();
+      allow update, delete: if isAdmin();
+    }
+    match /trainings/{id} {
+      allow read: if canSee(resource.data.team);
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin() || (hasProfile() && me().role != 'direttore' && me().team == resource.data.team
+                       && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['att']));
+    }
+  }
+}
