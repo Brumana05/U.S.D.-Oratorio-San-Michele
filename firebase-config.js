@@ -1,4 +1,3 @@
-// Incolla qui i dati del tuo progetto Firebase (vedi README, punto 5).
 export const firebaseConfig = {
   apiKey: "AIzaSyDJm8oK_dkB7VRuBfKkEV2aZgYDRknQsAM",
   authDomain: "oratorio-san-michele.firebaseapp.com",

@@ -11,7 +11,7 @@ Se stai usando la v1,04 locale con dati inseriti: aprila, entra come Admin e pre
 2. **Build → Authentication → Inizia → Email/password → Abilita**.
 3. **Build → Firestore Database → Crea database** (modalità produzione, regione `eur3` o `europe-west`).
 4. Scheda **Regole** di Firestore: incolla tutto `firestore.rules` e premi **Pubblica**. Sono le regole a far rispettare i ruoli: un Allenatore non può leggere né modificare altre squadre, il Direttore non può scrivere.
-5. **Impostazioni progetto (ingranaggio) → Le tue app → Web (`</>`)**: registra l'app, copia l'oggetto `firebaseConfig` e incollalo in `firebase-config.js` al posto di `INCOLLA_QUI`.
+5. **Impostazioni progetto (ingranaggio) → Le tue app → Web (`</>`)**: registra l'app, scegli **Config**, copia i valori dell'oggetto `firebaseConfig` e incollali in `firebase-config.js`. La prima riga del file deve restare **`export const firebaseConfig = {`** (con `export`).
 
 ## 2. Pubblica su GitHub Pages
 1. Nel repository carica **tutti** i file di questa cartella, sostituendo quelli vecchi (`version.json` compreso).
@@ -25,8 +25,10 @@ Se stai usando la v1,04 locale con dati inseriti: aprila, entra come Admin e pre
 3. Da **Utenti** ricrea gli altri profili (le password della versione locale non si possono trasferire).
 
 ## Note
-- Nome utente → internamente `nome@oratorio-sanmichele.app` (non è un'email reale), quindi non esiste "password dimenticata": l'Admin revoca l'utente e ne crea uno nuovo con un altro nome.
-- "Revoca" toglie l'accesso ma il nome utente non è riutilizzabile; per cancellarlo del tutto: Firebase → Authentication → Users.
+- Nome utente → internamente un'email fittizia (non reale): non esiste "password dimenticata". L'Admin usa **Revoca** (elimina profilo e nome utente) e ricrea l'utente, anche con lo stesso nome utente.
+- Dopo una revoca resta in Firebase → Authentication → Users una voce orfana (solo email fittizia e password cifrata): non dà accesso a nulla e si può cancellare a mano quando vuoi. L'app non può cancellarla da sola senza i servizi a pagamento di Firebase.
+- **Compleanni (v1,08):** ripubblica le regole (sezione `birthdays`). Quando l'Admin apre l'app, i compleanni si sincronizzano da soli dall'anagrafica (serve la data di nascita). Ogni utente, di qualsiasi squadra, vede il messaggio di auguri il giorno del compleanno.
+- Aggiornando dalla v1,06 ripubblica le **regole** (`firestore.rules`): è stata aggiunta la sezione `usernames`. Gli utenti già esistenti continuano ad accedere normalmente.
 - Backup/Ripristino: il backup contiene giocatori, allenamenti, partite e impostazioni. Il ripristino aggiunge/sovrascrive senza cancellare altro.
 - Le foto sono ridimensionate (200 px) e salvate dentro Firestore: non serve Firebase Storage.
 - I dati richiedono connessione internet.

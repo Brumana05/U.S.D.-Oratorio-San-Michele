@@ -46,6 +46,11 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 .band.l img{max-width:100%;max-height:70vh;object-fit:contain}.band.r img{max-width:160px;height:auto}
 .band span{font:600 13px system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
 .top .logo{display:none}}
+.ov{position:fixed;inset:0;background:#0009;display:grid;place-items:center;padding:16px;z-index:50;overflow:auto}
+.bd{background:#fff;color:var(--ink);border-radius:14px;padding:22px 18px;max-width:420px;width:100%;text-align:center;border-top:6px solid var(--acc);max-height:90vh;overflow:auto}
+.bd h2{font-size:34px;color:var(--pri);margin-bottom:8px}.bp{padding:12px 0;border-top:1px solid var(--line);display:grid;justify-items:center;gap:4px}
+.bp img,.ini{width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid var(--acc)}
+.ini{display:grid;place-items:center;background:var(--line);font:700 40px system-ui,sans-serif;color:var(--pri)}.bp b{font-size:22px}.bp p{margin:4px 0 8px}
 .mut{color:var(--mut);font-size:14px}.bar{height:8px;border-radius:4px;background:var(--ko);overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--ok)}
 .stat{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;margin-top:6px}.stat b{display:block;font-size:22px}
 .back{margin:4px 0 8px;color:var(--pri)}.err{color:var(--ko);font-weight:600}
@@ -64,16 +69,16 @@ import {firebaseConfig} from "./firebase-config.js";
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {getFirestore,collection,doc,setDoc,updateDoc,deleteDoc,getDoc,onSnapshot,query,where,writeBatch} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-const cols=["users","players","trainings","matches"],S={users:[],players:[],trainings:[],matches:[],settings:{}};
+const cols=["users","players","trainings","matches"],S={users:[],players:[],trainings:[],matches:[],settings:{},bday:[],bAll:[]};
 const configured=!!(firebaseConfig&&firebaseConfig.apiKey&&!firebaseConfig.apiKey.startsWith("INCOLLA"));
 let app,auth,db,secApp;
 if(configured){app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);secApp=initializeApp(firebaseConfig,"sec")}
-const VER="1,06",club=()=>S.settings.name||"U.S.D. Oratorio San Michele",logo=()=>S.settings.logo||"logo-club.png";
+const VER="1,08",club=()=>S.settings.name||"U.S.D. Oratorio San Michele",logo=()=>S.settings.logo||"logo-club.png";
 let me=null,ready=false,boot=false,uns=[],view="home",team=TEAMS[0],open=null,editP=null,err="",pend=false,setupMode=false,msg="",msgErr=false;
 const $=id=>document.getElementById(id),e=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("it-IT",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):"";
 const isA=()=>me&&me.role==="admin",isD=()=>me&&me.role==="direttore",canAtt=()=>me&&me.role!=="direttore";
-const em=n=>n+"@oratorio-sanmichele.app",okName=n=>/^[a-z0-9._-]{3,30}$/.test(n);
+const em=n=>n+"@oratorio-sanmichele.app",okName=n=>/^[a-z0-9][a-z0-9_-]{2,29}$/.test(n),em2=n=>n+"_"+crypto.randomUUID().replace(/-/g,"").slice(0,8)+"@oratorio-sanmichele.app";
 const fail=x=>{console.error(x);alert("Operazione non riuscita: "+(x.code||x.message))};
 const save=(n,id,o)=>setDoc(doc(db,n,id),o).catch(fail);
 const saveSet=o=>setDoc(doc(db,"config","club"),o).catch(fail);
@@ -108,7 +113,7 @@ return`<div class="card"><div class="mut">${fd(m.date)}</div><div class="row" st
 const tl=p=>{const L=[["Atleta",p.cel],["Mamma",p.celMamma],["Papà",p.celPapa]].filter(x=>x[1]);return L.length?`<div class="mut">${L.map(x=>`${x[0]}: <a href="tel:${String(x[1]).replace(/[^+\d]/g,"")}">${e(x[1])}</a>`).join(" · ")}</div>`:""};
 function vAn(){const ps=pl(),x=editP?S.players.find(p=>p.id===editP)||{}:{};let h=bk()+sel()+`<h2>Anagrafica</h2><div class="card"><b>${editP?"Modifica giocatore":"Nuovo giocatore"}</b><div class="row" style="margin-top:8px"><input id="an1" placeholder="Nome" value="${e(x.nome)}"><input id="an2" placeholder="Cognome" value="${e(x.cognome)}"></div><div class="row" style="margin-top:8px"><label class="mut">Data di nascita<input id="an3" type="date" value="${e(x.dob)}"></label><label class="mut">Foto<input id="an4" type="file" accept="image/*"></label></div><div class="row" style="margin-top:8px"><label class="mut">Ruolo<input id="an5" list="ruoli" placeholder="es. Portiere" value="${e(x.ruolo)}"><datalist id="ruoli"><option>Portiere</option><option>Difensore</option><option>Centrocampista</option><option>Attaccante</option></datalist></label><label class="mut">Cellulare atleta<input id="an6" type="tel" value="${e(x.cel)}"></label></div><div class="row" style="margin-top:8px"><label class="mut">Cellulare mamma<input id="an7" type="tel" value="${e(x.celMamma)}"></label><label class="mut">Cellulare papà<input id="an8" type="tel" value="${e(x.celPapa)}"></label></div><div class="err">${err}</div><div class="row" style="margin-top:8px"><button onclick="savP()">${editP?"Salva modifiche":"Aggiungi giocatore"}</button>${editP?`<button class="g" onclick="edit(null)">Annulla</button>`:""}</div></div>`;
 return h+(ps.length?`<div class="card">`+ps.map(p=>`<div class="p">${av(p)}<div class="n"><b>${e(p.cognome)} ${e(p.nome)}</b><div class="mut">${fd(p.dob)}${p.ruolo?" · "+e(p.ruolo):""}</div>${tl(p)}</div><button onclick="edit('${p.id}')">Modifica</button><button class="d" onclick="del('players','${p.id}')">Elimina</button></div>`).join("")+`</div>`:`<p class="mut">Nessun giocatore in questa categoria.</p>`)}
-function vUs(){return bk()+`<h2>Utenti</h2><div class="card"><b>Nuovo profilo</b><div class="row" style="margin-top:8px"><input id="un" placeholder="Nome utente (lettere e numeri)" autocomplete="off" autocapitalize="none"><input id="up" type="text" placeholder="Password (min. 6 caratteri)" autocomplete="off"></div><div class="row" style="margin-top:8px"><select id="ur" onchange="tg()">${Object.entries(ROLES).filter(r=>r[0]!=="admin").map(r=>`<option value="${r[0]}">${r[1]}</option>`).join("")}</select><select id="ut">${TEAMS.map(t=>`<option>${t}</option>`).join("")}</select></div><div class="err">${err}</div><div style="margin-top:8px"><button onclick="addU()">Crea profilo</button></div></div><div class="card">`+S.users.sort((a,b)=>a.name.localeCompare(b.name)).map(u=>`<div class="p"><div class="n"><b>${e(u.name)}</b><div class="mut">${ROLES[u.role]}${u.team?" · "+e(u.team):""}</div></div>${u.id!==me.id?`<button class="d" onclick="del('users','${u.id}','Revocare l\\'accesso a questo utente?')">Revoca</button>`:`<span class="tag">Tu</span>`}</div>`).join("")+`</div>`}
+function vUs(){return bk()+`<h2>Utenti</h2><div class="card"><b>Nuovo profilo</b><div class="row" style="margin-top:8px"><input id="un" placeholder="Nome utente (lettere e numeri)" autocomplete="off" autocapitalize="none"><input id="up" type="text" placeholder="Password (min. 6 caratteri)" autocomplete="off"></div><div class="row" style="margin-top:8px"><select id="ur" onchange="tg()">${Object.entries(ROLES).filter(r=>r[0]!=="admin").map(r=>`<option value="${r[0]}">${r[1]}</option>`).join("")}</select><select id="ut">${TEAMS.map(t=>`<option>${t}</option>`).join("")}</select></div><div class="err">${err}</div><div style="margin-top:8px"><button onclick="addU()">Crea profilo</button></div></div><div class="card">`+S.users.sort((a,b)=>a.name.localeCompare(b.name)).map(u=>`<div class="p"><div class="n"><b>${e(u.name)}</b><div class="mut">${ROLES[u.role]}${u.team?" · "+e(u.team):""}</div></div>${u.id!==me.id?`<button class="d" onclick="revoca('${u.id}')">Revoca</button>`:`<span class="tag">Tu</span>`}</div>`).join("")+`</div>`}
 function tg(){$("ut").style.display=$("ur").value==="direttore"?"none":""}
 
 function vWelcome(){return`<div class="card" style="text-align:center;padding:28px 16px;margin-top:24px"><img src="${logo()}" alt="" style="max-width:220px;max-height:36vh;width:auto;height:auto"><h2 style="font-size:40px;margin:8px 0 4px">Benvenuto</h2><p style="font-size:18px;margin:0"><b>${e(me.name)}</b></p><p class="mut" style="margin:0 0 4px">${ROLES[me.role]}${me.team?" · "+e(me.team):""}</p><p style="font-weight:600;margin:12px 0 16px">${e(club())}</p><button style="min-width:220px;font-size:18px;min-height:52px" onclick="go('home')">Entra</button></div>`}
@@ -117,7 +122,7 @@ if(!configured){a.innerHTML=head()+`<main><div class="card"><b>Configurazione ma
 if(!ready){a.innerHTML=head()+`<main><p class="mut">Caricamento…</p></main>`;return}
 if(!me){a.innerHTML=head()+`<main>${vLogin()}</main>`;return}
 if(!isA()&&(view==="an"||view==="us"||view==="set"))view="home";
-a.innerHTML=head()+`<main>${{home:vHome,tr:vTr,st:vSt,cal:vCal,an:vAn,us:vUs,set:vSet,welcome:vWelcome}[view]()}</main>`;if(view==="us")tg()}
+a.innerHTML=head()+`<main>${{home:vHome,tr:vTr,st:vSt,cal:vCal,an:vAn,us:vUs,set:vSet,welcome:vWelcome}[view]()}</main>`+bdayModal();if(view==="us")tg()}
 
 const unesc=s=>String(s).replace(/&#x([0-9a-f]+);/gi,(_,h)=>String.fromCodePoint(parseInt(h,16))).replace(/&#(\d+);/g,(_,d)=>String.fromCodePoint(+d)).replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&amp;/g,"&");
 async function inflate(u8){const ds=new DecompressionStream("deflate-raw"),w=ds.writable.getWriter();w.write(u8);w.close();return new Uint8Array(await new Response(ds.readable).arrayBuffer())}
@@ -160,28 +165,47 @@ async function chk(){try{const r=await fetch("version.json?t="+Date.now(),{cache
 if(v&&num(v)>num(VER)&&v!==newVer){newVer=v;const a=document.activeElement;if(a&&(a.tagName==="INPUT"||a.tagName==="SELECT"))pend=true;else render()}}catch(_){}}
 async function doUpd(){try{const r=await navigator.serviceWorker.getRegistration();await r?.update();for(const k of await caches.keys())await caches.delete(k)}catch(_){}location.reload()}
 function later(){dismissed=newVer;render()}
-function stop(){uns.forEach(u=>u());uns=[]}
+let bdOff=false,syncing=false;const ld={p:0,b:0};
+const pad=n=>String(n).padStart(2,"0");
+function todayKeys(){const d=new Date(),k=[pad(d.getMonth()+1)+"-"+pad(d.getDate())];if(d.getMonth()===1&&d.getDate()===28&&new Date(d.getFullYear(),1,29).getMonth()!==1)k.push("02-29");return k}
+function bSub(){uns.push(onSnapshot(query(collection(db,"birthdays"),where("md","in",todayKeys())),s=>{S.bday=s.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>TEAMS.indexOf(a.team)-TEAMS.indexOf(b.team)||(a.cognome||"").localeCompare(b.cognome||""));paint()},x=>console.error("birthdays",x)));
+if(isA())uns.push(onSnapshot(collection(db,"birthdays"),s=>{S.bAll=s.docs.map(x=>({id:x.id,...x.data()}));ld.b=1;syncB()},x=>console.error(x)))}
+async function syncB(){if(!isA()||syncing||!ld.p||!ld.b)return;const want=new Map();
+for(const p of S.players){const m=/^\d{4}-(\d{2}-\d{2})/.exec(p.dob||"");if(m)want.set(p.id,{team:p.team,nome:p.nome,cognome:p.cognome,photo:p.photo||"",md:m[1]})}
+const have=new Map(S.bAll.map(x=>[x.id,x])),ops=[];
+for(const [id,w] of want){const h=have.get(id);if(!h||h.md!==w.md||h.nome!==w.nome||h.cognome!==w.cognome||h.team!==w.team||(h.photo||"")!==w.photo)ops.push(["set",id,w])}
+for(const id of have.keys())if(!want.has(id))ops.push(["del",id]);
+if(!ops.length)return;syncing=true;
+try{for(let i=0;i<ops.length;i+=400){const b=writeBatch(db);ops.slice(i,i+400).forEach(([t,id,w])=>t==="set"?b.set(doc(db,"birthdays",id),w):b.delete(doc(db,"birthdays",id)));await b.commit()}}catch(x){console.error("sync compleanni",x)}
+syncing=false}
+const bdayModal=()=>!me||bdOff||!S.bday.length?"":`<div class="ov" role="dialog" aria-modal="true" aria-label="Compleanni"><div class="bd"><h2>🎉 Tanti auguri!</h2>${S.bday.map(p=>`<div class="bp">${p.photo?`<img src="${p.photo}" alt="">`:`<div class="ini">${e((p.nome||"?")[0])}${e((p.cognome||"")[0])}</div>`}<b>${e(p.nome)} ${e(p.cognome)}</b><span class="mut">${e(p.team)}</span><p>Oggi compie gli anni: tanti auguri da tutta la società!</p></div>`).join("")}<button onclick="bdClose()">Chiudi</button></div></div>`;
+function bdClose(){bdOff=true;render()}
+function stop(){uns.forEach(u=>u());uns=[];ld.p=0;ld.b=0;S.bday=[];S.bAll=[];bdOff=false}
 function paint(){const a=document.activeElement;if(a&&(a.tagName==="INPUT"||a.tagName==="SELECT"))pend=true;else render()}
 function sub(){const all=isA()||isD(),f=n=>all?collection(db,n):query(collection(db,n),where("team","==",me.team));
-["players","trainings","matches"].forEach(n=>uns.push(onSnapshot(f(n),s=>{S[n]=s.docs.map(x=>({id:x.id,...x.data()}));paint()},x=>console.error(n,x))));
-if(isA())uns.push(onSnapshot(collection(db,"users"),s=>{S.users=s.docs.map(x=>({id:x.id,...x.data()}));paint()},x=>console.error(x)))}
+["players","trainings","matches"].forEach(n=>uns.push(onSnapshot(f(n),s=>{S[n]=s.docs.map(x=>({id:x.id,...x.data()}));if(n==="players"){ld.p=1;syncB()}paint()},x=>console.error(n,x))));
+if(isA())uns.push(onSnapshot(collection(db,"users"),s=>{S.users=s.docs.map(x=>({id:x.id,...x.data()}));paint()},x=>console.error(x)));
+bSub()}
 async function load(u){try{const s=await getDoc(doc(db,"users",u.uid));
 if(!s.exists()){err="Profilo non abilitato. Contatta l'Admin.";await signOut(auth);return}
 me={id:u.uid,...s.data()};team=me.team||TEAMS[0];view="welcome";err="";sub()}catch(x){console.error(x);err="Impossibile leggere il profilo: "+(x.code||x.message)}
 ready=true;render()}
+function revoca(id){const u=S.users.find(x=>x.id===id);if(!u||u.id===me.id)return;if(!confirm("Eliminare l'utente «"+u.name+"» e i suoi dati? Il nome utente potrà essere riutilizzato."))return;
+const b=writeBatch(db);b.delete(doc(db,"users",id));b.delete(doc(db,"usernames",u.name));b.commit().catch(fail)}
 async function login(){const n=$("lu").value.trim().toLowerCase(),p=$("lp").value;err="";
-try{await signInWithEmailAndPassword(auth,em(n),p)}catch(x){err=["auth/invalid-credential","auth/invalid-email","auth/user-not-found","auth/wrong-password"].includes(x.code)?"Nome utente o password non corretti.":"Accesso non riuscito: "+x.code;render()}}
+try{let email=em(n);try{const m=await getDoc(doc(db,"usernames",n));if(m.exists())email=m.data().email}catch(_){}await signInWithEmailAndPassword(auth,email,p)}catch(x){err=["auth/invalid-credential","auth/invalid-email","auth/user-not-found","auth/wrong-password"].includes(x.code)?"Nome utente o password non corretti.":"Accesso non riuscito: "+x.code;render()}}
 async function out(){stop();me=null;S.users=[];S.players=[];S.trainings=[];S.matches=[];await signOut(auth)}
 async function setup(){const n=$("lu").value.trim().toLowerCase(),p=$("lp").value;
-if(!okName(n)||p.length<6){err="Nome utente di 3+ caratteri (lettere, numeri . _ -) e password di 6+ caratteri.";return render()}
-boot=true;let c;try{c=await createUserWithEmailAndPassword(auth,em(n),p);
-const b=writeBatch(db);b.set(doc(db,"users",c.user.uid),{name:n,role:"admin",team:""});b.set(doc(db,"config","setup"),{by:c.user.uid,at:Date.now()});await b.commit();
+if(!okName(n)||p.length<6){err="Nome utente di 3+ caratteri (lettere, numeri - _) e password di 6+ caratteri.";return render()}
+boot=true;let c;const email=em2(n);try{c=await createUserWithEmailAndPassword(auth,email,p);
+const b=writeBatch(db);b.set(doc(db,"users",c.user.uid),{name:n,role:"admin",team:""});b.set(doc(db,"usernames",n),{email,uid:c.user.uid});b.set(doc(db,"config","setup"),{by:c.user.uid,at:Date.now()});await b.commit();
 boot=false;setupMode=false;await load(c.user)}
 catch(x){boot=false;if(c)await c.user.delete().catch(()=>{});await signOut(auth).catch(()=>{});err=x.code==="auth/email-already-in-use"?"Nome utente già usato.":(x.code==="permission-denied"?"Esiste già un Admin: accedi con le sue credenziali.":"Errore: "+(x.code||x.message));render()}}
 async function addU(){const n=$("un").value.trim().toLowerCase(),p=$("up").value,r=$("ur").value;err="";
-if(!okName(n)||p.length<6){err="Nome utente di 3+ caratteri (lettere minuscole, numeri . _ -) e password di 6+ caratteri.";return render()}
-try{const sa=getAuth(secApp),c=await createUserWithEmailAndPassword(sa,em(n),p);
-await setDoc(doc(db,"users",c.user.uid),{name:n,role:r,team:r==="direttore"?"":$("ut").value});await signOut(sa)}
+if(!okName(n)||p.length<6){err="Nome utente di 3+ caratteri (lettere minuscole, numeri - _) e password di 6+ caratteri.";return render()}
+try{if(S.users.some(u=>u.name===n)||(await getDoc(doc(db,"usernames",n))).exists()){err="Nome utente già esistente.";return render()}
+const email=em2(n),sa=getAuth(secApp),c=await createUserWithEmailAndPassword(sa,email,p);
+const b=writeBatch(db);b.set(doc(db,"users",c.user.uid),{name:n,role:r,team:r==="direttore"?"":$("ut").value});b.set(doc(db,"usernames",n),{email,uid:c.user.uid});await b.commit();await signOut(sa)}
 catch(x){err=x.code==="auth/email-already-in-use"?"Nome utente già esistente (anche se revocato in passato).":"Errore: "+(x.code||x.message);render()}}
 function exp(){const d={app:"osm",ver:VER,players:S.players,trainings:S.trainings,matches:S.matches,settings:S.settings,users:S.users.map(u=>({id:u.id,name:u.name,role:u.role,team:u.team}))},a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:"application/json"}));a.download="backup-oratorio-"+new Date().toISOString().slice(0,10)+".json";a.click()}
 function pick(){$("imp").click()}
@@ -204,7 +228,7 @@ const old=editP?S.players.find(p=>p.id===editP):null,photo=f?await rd(f):(old?.p
 err="";const id=editP||nid("players");editP=null;await save("players",id,{team:old?.team||team,nome:n,cognome:c,dob:d,photo,ruolo:$("an5").value.trim(),cel:$("an6").value.trim(),celMamma:$("an7").value.trim(),celPapa:$("an8").value.trim()})}
 
 const setTeam=v=>{team=v;render()},tgl=id=>{open=open===id?null:id;render()},edit=id=>{editP=id;render();if(id)scrollTo(0,0)},tsetup=()=>{setupMode=!setupMode;err="";render()};
-Object.assign(window,{go,del,login,out,setup,addU,addT,mk,addM,res,savP,tg,setTeam,tgl,edit,tsetup,exp,pick,imp,doUpd,later,savClub,savLogo,rmLogo,impXl,model});
+Object.assign(window,{bdClose,revoca,go,del,login,out,setup,addU,addT,mk,addM,res,savP,tg,setTeam,tgl,edit,tsetup,exp,pick,imp,doUpd,later,savClub,savLogo,rmLogo,impXl,model});
 document.addEventListener("focusout",()=>{if(pend){pend=false;setTimeout(render,50)}});
 if(configured){onSnapshot(doc(db,"config","club"),s=>{S.settings=s.exists()?s.data():{};paint()},x=>console.error(x));
 onAuthStateChanged(auth,async u=>{if(boot)return;if(!u){stop();me=null;ready=true;render();return}await load(u)})}

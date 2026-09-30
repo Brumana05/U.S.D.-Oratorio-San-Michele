@@ -7,6 +7,15 @@ service cloud.firestore {
     function canSee(t){ return hasProfile() && (me().role == 'admin' || me().role == 'direttore' || me().team == t); }
     function setupDone(){ return exists(/databases/$(database)/documents/config/setup); }
 
+    match /usernames/{name} {
+      allow read: if true;
+      allow create: if isAdmin() || (request.auth != null && !setupDone());
+      allow update, delete: if isAdmin();
+    }
+    match /birthdays/{id} {
+      allow read: if hasProfile();
+      allow write: if isAdmin();
+    }
     match /config/club {
       allow read: if true;
       allow write: if isAdmin();
