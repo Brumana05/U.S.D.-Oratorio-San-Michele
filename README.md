@@ -36,3 +36,6 @@ Se stai usando la v1,04 locale con dati inseriti: aprila, entra come Admin e pre
 
 ## Se la creazione di un utente dà "permission-denied"
 Quasi sempre le regole di Firestore pubblicate non sono l'ultima versione. In Firebase → Firestore Database → **Regole**: il testo deve contenere le sezioni `match /usernames/{name}` e `match /birthdays/{id}`. Se mancano, cancella tutto, incolla di nuovo `firestore.rules` e premi **Pubblica**. Da v1,09 il messaggio indica anche il passaggio che ha fallito.
+
+## Password degli utenti (v1,11)
+Le password degli utenti creati dalla v1,11 in poi sono salvate in chiaro in Firestore, in una sezione (`credentials`) leggibile **solo dall'Admin**, e l'Admin le vede in Utenti (tasto Mostra). Chi ha accesso al progetto Firebase o all'account Admin può leggerle: usate password diverse da quelle usate altrove. Per gli utenti creati prima la password non è recuperabile: usare **Nuova password**. Ripubblica `firestore.rules` (nuova sezione `credentials`).

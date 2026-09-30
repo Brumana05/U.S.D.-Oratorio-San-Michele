@@ -16,6 +16,9 @@ service cloud.firestore {
       allow read: if hasProfile();
       allow write: if isAdmin();
     }
+    match /credentials/{id} {
+      allow read, write: if isAdmin();
+    }
     match /config/club {
       allow read: if true;
       allow write: if isAdmin();

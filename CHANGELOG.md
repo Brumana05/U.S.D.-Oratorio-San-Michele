@@ -11,3 +11,4 @@
 - **v1,08** – Auguri di compleanno: all'ingresso in app compare foto, nome e cognome degli atleti che compiono gli anni quel giorno, visibile a tutti gli utenti di tutte le squadre. Nuova sezione `birthdays` nelle regole.
 - **v1,09** – Creazione utente: il messaggio di errore indica il passaggio che ha fallito (lettura nome utente / creazione account / salvataggio profilo) e cosa controllare.
 - **v1,10** – Calendario partite: tipo (Campionato, Coppa Brescia, Amichevole), orario e luogo; l'Admin può modificarli dopo l'inserimento. Direttore: calendario mensile stile Google, con filtro categoria; toccando un giorno compaiono tutte le partite di quella data con orari e dettagli.
+- **v1,11** – Admin: modifica delle partite già inserite (data, ora, avversario, casa/trasferta, categoria, tipo, luogo, risultato). Admin: elenco utenti con password visibile (tasto Mostra) e "Nuova password". Nuova sezione `credentials` nelle regole.
