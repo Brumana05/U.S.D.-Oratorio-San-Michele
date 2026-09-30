@@ -73,7 +73,7 @@ const cols=["users","players","trainings","matches"],S={users:[],players:[],trai
 const configured=!!(firebaseConfig&&firebaseConfig.apiKey&&!firebaseConfig.apiKey.startsWith("INCOLLA"));
 let app,auth,db,secApp;
 if(configured){app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);secApp=initializeApp(firebaseConfig,"sec")}
-const VER="1,08",club=()=>S.settings.name||"U.S.D. Oratorio San Michele",logo=()=>S.settings.logo||"logo-club.png";
+const VER="1,09",club=()=>S.settings.name||"U.S.D. Oratorio San Michele",logo=()=>S.settings.logo||"logo-club.png";
 let me=null,ready=false,boot=false,uns=[],view="home",team=TEAMS[0],open=null,editP=null,err="",pend=false,setupMode=false,msg="",msgErr=false;
 const $=id=>document.getElementById(id),e=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("it-IT",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):"";
@@ -203,10 +203,10 @@ boot=false;setupMode=false;await load(c.user)}
 catch(x){boot=false;if(c)await c.user.delete().catch(()=>{});await signOut(auth).catch(()=>{});err=x.code==="auth/email-already-in-use"?"Nome utente già usato.":(x.code==="permission-denied"?"Esiste già un Admin: accedi con le sue credenziali.":"Errore: "+(x.code||x.message));render()}}
 async function addU(){const n=$("un").value.trim().toLowerCase(),p=$("up").value,r=$("ur").value;err="";
 if(!okName(n)||p.length<6){err="Nome utente di 3+ caratteri (lettere minuscole, numeri - _) e password di 6+ caratteri.";return render()}
-try{if(S.users.some(u=>u.name===n)||(await getDoc(doc(db,"usernames",n))).exists()){err="Nome utente già esistente.";return render()}
-const email=em2(n),sa=getAuth(secApp),c=await createUserWithEmailAndPassword(sa,email,p);
-const b=writeBatch(db);b.set(doc(db,"users",c.user.uid),{name:n,role:r,team:r==="direttore"?"":$("ut").value});b.set(doc(db,"usernames",n),{email,uid:c.user.uid});await b.commit();await signOut(sa)}
-catch(x){err=x.code==="auth/email-already-in-use"?"Nome utente già esistente (anche se revocato in passato).":"Errore: "+(x.code||x.message);render()}}
+let st="lettura nome utente";try{if(S.users.some(u=>u.name===n)||(await getDoc(doc(db,"usernames",n))).exists()){err="Nome utente già esistente.";return render()}
+st="creazione account";const email=em2(n),sa=getAuth(secApp),c=await createUserWithEmailAndPassword(sa,email,p);
+st="salvataggio profilo";const b=writeBatch(db);b.set(doc(db,"users",c.user.uid),{name:n,role:r,team:r==="direttore"?"":$("ut").value});b.set(doc(db,"usernames",n),{email,uid:c.user.uid});await b.commit();await signOut(sa)}
+catch(x){err=x.code==="auth/email-already-in-use"?"Nome utente già esistente (anche se revocato in passato).":x.code==="permission-denied"?"Permesso negato ("+st+"). In Firebase ripubblica le regole di Firestore (file firestore.rules) e controlla di essere entrato con l'Admin.":"Errore ("+st+"): "+(x.code||x.message);console.error(x);render()}}
 function exp(){const d={app:"osm",ver:VER,players:S.players,trainings:S.trainings,matches:S.matches,settings:S.settings,users:S.users.map(u=>({id:u.id,name:u.name,role:u.role,team:u.team}))},a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:"application/json"}));a.download="backup-oratorio-"+new Date().toISOString().slice(0,10)+".json";a.click()}
 function pick(){$("imp").click()}
 async function imp(i){const f=i.files[0];i.value="";if(!f)return;let d;try{d=JSON.parse(await f.text());if(!["players","trainings","matches"].every(c=>Array.isArray(d[c])))throw 0}catch(_){return alert("File di backup non valido.")}

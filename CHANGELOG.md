@@ -9,3 +9,4 @@
 - **v1,06** – Sfondo azzurro chiaro con riquadri bianchi; schermata di Benvenuto dopo il login con logo della società; su PC bande laterali (a sinistra logo società, a destra Union Brescia con "Società Affiliata"); icona dell'app = logo su sfondo bianco.
 - **v1,07** – "Revoca" elimina profilo e nome utente: il nome può essere riutilizzato per un altro utente. Nuove regole (sezione `usernames`). Nomi utente: lettere, numeri, - e _.
 - **v1,08** – Auguri di compleanno: all'ingresso in app compare foto, nome e cognome degli atleti che compiono gli anni quel giorno, visibile a tutti gli utenti di tutte le squadre. Nuova sezione `birthdays` nelle regole.
+- **v1,09** – Creazione utente: il messaggio di errore indica il passaggio che ha fallito (lettura nome utente / creazione account / salvataggio profilo) e cosa controllare.

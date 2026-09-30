@@ -33,3 +33,6 @@ Se stai usando la v1,04 locale con dati inseriti: aprila, entra come Admin e pre
 - Le foto sono ridimensionate (200 px) e salvate dentro Firestore: non serve Firebase Storage.
 - I dati richiedono connessione internet.
 - Aggiornamenti: cambia `VER` in `index.html`, `version.json` e il nome della cache in `sw.js`, poi ricarica i file su GitHub. Gli utenti vedranno il banner "Nuova versione disponibile".
+
+## Se la creazione di un utente dà "permission-denied"
+Quasi sempre le regole di Firestore pubblicate non sono l'ultima versione. In Firebase → Firestore Database → **Regole**: il testo deve contenere le sezioni `match /usernames/{name}` e `match /birthdays/{id}`. Se mancano, cancella tutto, incolla di nuovo `firestore.rules` e premi **Pubblica**. Da v1,09 il messaggio indica anche il passaggio che ha fallito.
