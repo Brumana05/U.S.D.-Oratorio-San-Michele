@@ -5,6 +5,8 @@ service cloud.firestore {
     function me(){ return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
     function isAdmin(){ return hasProfile() && me().role == 'admin'; }
     function viewer(){ return me().role in ['direttore','presidente','dirgenerale','dirsportivo']; }
+    function isStaff(){ return hasProfile() && me().role in ['allenatore','collaboratore','dirigente']; }
+    function mgr(){ return hasProfile() && (me().role == 'admin' || viewer()); }
     function canSee(t){ return hasProfile() && (me().role == 'admin' || viewer() || me().team == t); }
     function setupDone(){ return exists(/databases/$(database)/documents/config/setup); }
 
@@ -13,12 +15,13 @@ service cloud.firestore {
       allow create: if isAdmin() || (request.auth != null && !setupDone());
       allow update, delete: if isAdmin();
     }
-    match /birthdays/{id} {
-      allow read: if hasProfile();
-      allow write: if isAdmin();
-    }
     match /credentials/{id} {
       allow read, write: if isAdmin();
+    }
+    match /birthdays/{id} {
+      allow read: if hasProfile();
+      allow create, update: if isAdmin() || (isStaff() && request.resource.data.team == me().team);
+      allow delete: if isAdmin() || (isStaff() && resource.data.team == me().team);
     }
     match /config/club {
       allow read: if true;
@@ -35,19 +38,30 @@ service cloud.firestore {
     }
     match /players/{id} {
       allow read: if canSee(resource.data.team);
-      allow create: if isAdmin();
-      allow update, delete: if isAdmin();
+      allow create: if isAdmin() || (isStaff() && request.resource.data.team == me().team);
+      allow update: if isAdmin() || (isStaff() && resource.data.team == me().team && request.resource.data.team == me().team);
+      allow delete: if isAdmin();
     }
     match /matches/{id} {
       allow read: if canSee(resource.data.team);
-      allow create: if isAdmin();
-      allow update, delete: if isAdmin();
+      allow create, update, delete: if mgr();
     }
     match /trainings/{id} {
       allow read: if canSee(resource.data.team);
       allow create, delete: if isAdmin();
-      allow update: if isAdmin() || (hasProfile() && !viewer() && me().team == resource.data.team
+      allow update: if isAdmin() || (isStaff() && me().team == resource.data.team
                        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['att']));
+    }
+    match /requests/{id} {
+      allow read: if canSee(resource.data.team);
+      allow create: if isStaff() && request.resource.data.team == me().team && request.resource.data.status == 'pending' && request.resource.data.by == request.auth.uid;
+      allow update: if mgr();
+      allow delete: if mgr() || (isStaff() && resource.data.team == me().team && resource.data.status == 'pending');
+    }
+    match /feedback/{id} {
+      allow read: if hasProfile() && (isAdmin() || resource.data.uid == request.auth.uid);
+      allow create: if hasProfile() && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if isAdmin();
     }
   }
 }

@@ -44,3 +44,13 @@ Le password degli utenti creati dalla v1,11 in poi sono salvate in chiaro in Fir
 - **Presenze protette:** in Allenamenti i pulsanti Pres./Ass. sono bloccati finché non premi **Modifica presenze**; le modifiche si confermano con **Salva** (o si scartano con **Annulla**).
 - **Più allenamenti insieme (Admin):** si scelgono più giorni sul calendario e più categorie; l'app crea un allenamento per ogni giorno e categoria, saltando quelli già presenti.
 - **Nuovi ruoli:** Presidente, Direttore Generale, Direttore Sportivo, con gli stessi permessi del Direttore (sola visualizzazione di tutte le categorie). **Ripubblica `firestore.rules`** (cambiano le regole sui ruoli).
+
+## Novità v1,13
+- **Statistiche:** le percentuali usano solo gli allenamenti già svolti (data odierna compresa). Toccando un atleta si apre il suo calendario mensile (settembre–maggio) con presenze (✓ verde), assenze (✗ rosso), non segnato (–) e allenamenti in programma.
+- **Allenamenti:** elenco per mese da settembre a maggio, in ordine cronologico; il selettore dei giorni per l'Admin è limitato alla stagione settembre–maggio.
+- **Anagrafica:** Allenatore, Collaboratore Tecnico e Dirigente possono aggiungere e modificare i giocatori della propria squadra (non eliminarli).
+- **Calendario partite:** Direttore, Presidente, Direttore Generale e Direttore Sportivo hanno il pulsante "Modifica partite": scelgono la categoria e aggiungono/modificano le partite.
+- **Richiesta Amichevoli** (Allenatore, Collaboratore, Dirigente): giorno dal–al e fascia oraria. Direzione e Admin le gestiscono da "Richieste amichevoli": *Conferma e inserisci partita* crea la partita (tipo Amichevole) nel calendario della categoria; *Annulla richiesta* la nega, con motivo facoltativo.
+- **Notifiche:** badge sui pulsanti, finestra "Notifiche" all'ingresso in app e, se attivate dal pulsante in Home, avvisi del browser mentre l'app è aperta o in background. Non sono notifiche "push" ad app chiusa: richiederebbero Cloud Functions (piano Blaze, a pagamento).
+- **Richiesta miglioramenti** (tutti): il testo lo legge solo l'Admin, che vede chi l'ha scritto e risponde; l'utente vede solo le proprie richieste e le risposte.
+- **Regole:** ripubblica `firestore.rules` (nuove sezioni `requests` e `feedback`, permessi su `players`, `matches`, `birthdays`).
