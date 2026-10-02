@@ -4,7 +4,7 @@ service cloud.firestore {
     function hasProfile(){ return request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid)); }
     function me(){ return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
     function isAdmin(){ return hasProfile() && me().role == 'admin'; }
-    function viewer(){ return me().role in ['direttore','presidente','dirgenerale','dirsportivo']; }
+    function viewer(){ return me().role in ['direttore','presidente','dirgenerale','dirsportivo','segreteria']; }
     function isStaff(){ return hasProfile() && me().role in ['allenatore','collaboratore','dirigente']; }
     function mgr(){ return hasProfile() && (me().role == 'admin' || viewer()); }
     function canSee(t){ return hasProfile() && (me().role == 'admin' || viewer() || me().team == t); }
@@ -40,7 +40,7 @@ service cloud.firestore {
       allow read: if canSee(resource.data.team);
       allow create: if isAdmin() || (isStaff() && request.resource.data.team == me().team);
       allow update: if isAdmin() || (isStaff() && resource.data.team == me().team && request.resource.data.team == me().team);
-      allow delete: if isAdmin();
+      allow delete: if isAdmin() || (isStaff() && resource.data.team == me().team);
     }
     match /matches/{id} {
       allow read: if canSee(resource.data.team);
@@ -51,6 +51,12 @@ service cloud.firestore {
       allow create, delete: if isAdmin();
       allow update: if isAdmin() || (isStaff() && me().team == resource.data.team
                        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['att']));
+    }
+    match /convocations/{id} {
+      allow read: if canSee(resource.data.team);
+      allow create: if isAdmin() || (isStaff() && request.resource.data.team == me().team);
+      allow update: if isAdmin() || (isStaff() && resource.data.team == me().team && request.resource.data.team == me().team);
+      allow delete: if isAdmin() || (isStaff() && resource.data.team == me().team);
     }
     match /requests/{id} {
       allow read: if canSee(resource.data.team);

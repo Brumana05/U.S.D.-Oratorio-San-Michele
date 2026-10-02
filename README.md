@@ -54,3 +54,10 @@ Le password degli utenti creati dalla v1,11 in poi sono salvate in chiaro in Fir
 - **Notifiche:** badge sui pulsanti, finestra "Notifiche" all'ingresso in app e, se attivate dal pulsante in Home, avvisi del browser mentre l'app è aperta o in background. Non sono notifiche "push" ad app chiusa: richiederebbero Cloud Functions (piano Blaze, a pagamento).
 - **Richiesta miglioramenti** (tutti): il testo lo legge solo l'Admin, che vede chi l'ha scritto e risponde; l'utente vede solo le proprie richieste e le risposte.
 - **Regole:** ripubblica `firestore.rules` (nuove sezioni `requests` e `feedback`, permessi su `players`, `matches`, `birthdays`).
+
+## Novità v1,14
+- **Eliminare giocatori:** anche Allenatore, Collaboratore Tecnico e Dirigente possono eliminare i giocatori della propria squadra.
+- **Convocazioni:** si sceglie la partita dal calendario della categoria, si preme **Compila**, si imposta per ogni atleta *Convocato* o *Non convocato* (solo per i Non convocati si può aggiungere *Infortunato* o *Prestito*) e si preme **Salva**. La convocazione resta salvata nell'app (si riapre e si modifica dalla stessa partita) e si scarica come immagine **JPG** con lo stesso layout del foglio Excel. Dove è disponibile compare anche **Condividi** (salvataggio su Foto/WhatsApp da telefono).
+- Direttore, Direttore Generale, Direttore Sportivo, Presidente e Segreteria possono solo consultare le convocazioni.
+- **Nuovo ruolo Segreteria:** stessi permessi del Direttore (vede tutte le categorie, modifica il calendario partite, gestisce le richieste di amichevoli).
+- **Regole:** ripubblica `firestore.rules` (nuova sezione `convocations`, eliminazione giocatori per lo staff, ruolo `segreteria`).
