@@ -55,7 +55,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 .dy{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;min-height:54px;padding:6px 2px;background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500}
 .dy i{font-style:normal;background:var(--pri);color:#fff;border-radius:99px;font-size:12px;min-width:20px;padding:0 6px;line-height:20px}
 .dy.td{border:2px solid var(--acc)}.dy.sl{background:#dbe7fb;border-color:var(--pri)}
-.tag.t-campionato{background:#dbe7fb}.tag.t-coppa{background:#fbeec7}.tag.t-amichevole{background:#d9f0e2}
+.tag.t-campionato{background:#dbe7fb}.tag.t-coppa{background:#fbeec7}.tag.t-coppalombardia{background:#fde0cc}.tag.t-amichevole{background:#d9f0e2}
 .chk{display:flex;gap:10px;align-items:center;padding:4px 0}.chk input{width:22px;height:22px;min-height:0;flex:none}
 button:disabled{opacity:.5;cursor:not-allowed}.seg button:disabled{opacity:1;cursor:default}
 textarea{font:inherit;color:inherit;resize:vertical}
@@ -89,7 +89,7 @@ const cols=["users","players","trainings","matches"],S={users:[],players:[],trai
 const configured=!!(firebaseConfig&&firebaseConfig.apiKey&&!firebaseConfig.apiKey.startsWith("INCOLLA"));
 let app,auth,db,secApp;
 if(configured){app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);secApp=initializeApp(firebaseConfig,"sec")}
-const VER="1,15",club=()=>S.settings.name||"U.S.D. Oratorio San Michele",logo=()=>S.settings.logo||"logo-club.png";
+const VER="1,16",club=()=>S.settings.name||"U.S.D. Oratorio San Michele",logo=()=>S.settings.logo||"logo-club.png";
 let me=null,ready=false,boot=false,uns=[],view="home",team=TEAMS[0],open=null,editP=null,err="",pend=false,setupMode=false,msg="",msgErr=false;
 const $=id=>document.getElementById(id),e=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("it-IT",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):"";
@@ -204,7 +204,7 @@ function liveN(n,s){if(!ld[n]){ld[n]=1;return}
 s.docChanges().forEach(c=>{const x={id:c.doc.id,...c.doc.data()};
 if(n==="requests"){if(c.type==="added"&&mgr()&&x.status==="pending")ping("Nuova richiesta amichevole",`${x.team}: dal ${fd(x.from)} al ${fd(x.to)}`);else if(c.type==="modified"&&isS()&&x.status!=="pending")ping(x.status==="confirmed"?"Amichevole confermata":"Amichevole annullata",x.status==="confirmed"?`${fd(x.mDate)} contro ${x.mOpp}`:(x.reason||""))}
 if(n==="feedback"){if(c.type==="added"&&isA()&&x.uid!==me.id)ping("Nuova richiesta di miglioramento",x.name);else if(c.type==="modified"&&!isA()&&x.reply)ping("Risposta alla tua richiesta",String(x.reply).slice(0,80))}})}
-const TIPI={campionato:"Campionato",coppa:"Coppa Brescia",amichevole:"Amichevole"};
+const TIPI={campionato:"Campionato",coppa:"Coppa Brescia",coppalombardia:"Coppa Lombardia",amichevole:"Amichevole"};
 const cmpM=(a,b)=>(a.date+(a.ora||"")).localeCompare(b.date+(b.ora||""));
 let calY=new Date().getFullYear(),calM=new Date().getMonth(),calSel="",calF="";
 const isoD=(y,m,d)=>`${y}-${pad(m+1)}-${pad(d)}`;
