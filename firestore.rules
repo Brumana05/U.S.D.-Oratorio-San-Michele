@@ -58,6 +58,13 @@ service cloud.firestore {
       allow update: if isAdmin() || (isStaff() && resource.data.team == me().team && request.resource.data.team == me().team);
       allow delete: if isAdmin() || (isStaff() && resource.data.team == me().team);
     }
+    function rateOk(){ return request.resource.data.team == 'Giovanissimi Under 14' || (request.resource.data.team == 'Giovanissimi Under 15' && request.resource.data.kind == 'm'); }
+    match /ratings/{id} {
+      allow read: if canSee(resource.data.team);
+      allow create: if rateOk() && (isAdmin() || (isStaff() && request.resource.data.team == me().team));
+      allow update: if rateOk() && (isAdmin() || (isStaff() && resource.data.team == me().team && request.resource.data.team == me().team));
+      allow delete: if isAdmin() || (isStaff() && resource.data.team == me().team);
+    }
     match /requests/{id} {
       allow read: if canSee(resource.data.team);
       allow create: if isStaff() && request.resource.data.team == me().team && request.resource.data.status == 'pending' && request.resource.data.by == request.auth.uid;

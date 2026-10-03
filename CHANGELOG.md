@@ -15,3 +15,4 @@
 - **v1,12** – Allenamenti: presenze bloccate con pulsanti Modifica presenze / Salva / Annulla. Admin: inserimento di più giorni e più categorie in un solo colpo. Nuovi ruoli Presidente, Direttore Generale e Direttore Sportivo (stessi permessi del Direttore).
 - **v1,13** – Statistiche solo su allenamenti svolti + calendario per atleta; elenco allenamenti per mese (set–mag); staff può gestire i propri giocatori; Direzione può inserire/modificare le partite; Richiesta Amichevoli con conferma/annullo e notifiche; Richiesta miglioramenti con risposta dell'Admin.
 - **v1,14** – Convocazioni (come il foglio Excel, con salvataggio nell'app e download JPG); staff può eliminare i propri giocatori; nuovo ruolo Segreteria.
+- **v1,15** – Valutazioni di allenamenti e partite (scala 4-9) per Giovanissimi Under 14 e, solo partite, Under 15; media e voti nelle Statistiche; il Backup include valutazioni e convocazioni.

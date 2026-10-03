@@ -61,3 +61,12 @@ Le password degli utenti creati dalla v1,11 in poi sono salvate in chiaro in Fir
 - Direttore, Direttore Generale, Direttore Sportivo, Presidente e Segreteria possono solo consultare le convocazioni.
 - **Nuovo ruolo Segreteria:** stessi permessi del Direttore (vede tutte le categorie, modifica il calendario partite, gestisce le richieste di amichevoli).
 - **Regole:** ripubblica `firestore.rules` (nuova sezione `convocations`, eliminazione giocatori per lo staff, ruolo `segreteria`).
+
+## Novità v1,15 – Valutazioni
+- Nuova sezione **Valutazioni** (Allenamento / Partita) con la scala: 4 Insufficiente, 5 Mediocre, 6 Sufficiente, 7 Buono, 8 Ottimo, 9 Eccellente.
+- Attiva per ora solo per **Giovanissimi Under 14** (allenamenti e partite) e **Giovanissimi Under 15** (solo partite). Per attivarla su altre categorie bisogna aggiungerle in `RATE` (index.html) e nella funzione `rateOk` di `firestore.rules`.
+- Allenamenti: si valutano solo gli atleti segnati *Presenti* e solo allenamenti già svolti (oggi compreso). Partite: solo dopo l'orario di inizio; se esiste la convocazione si valutano i convocati, altrimenti tutti i giocatori.
+- Modificano: Allenatore, Collaboratore Tecnico, Dirigente (propria squadra) e Admin; gli altri ruoli consultano soltanto.
+- Statistiche: media voto di ogni atleta, voto accanto a ogni allenamento in cui è stato presente, elenco dei voti delle partite.
+- Il Backup ora include anche valutazioni e convocazioni.
+- **Ripubblica `firestore.rules`** (nuova sezione `ratings`).
