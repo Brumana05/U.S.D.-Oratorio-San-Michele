@@ -17,3 +17,5 @@
 - **v1,14** – Convocazioni (come il foglio Excel, con salvataggio nell'app e download JPG); staff può eliminare i propri giocatori; nuovo ruolo Segreteria.
 - **v1,15** – Valutazioni di allenamenti e partite (scala 4-9) per Giovanissimi Under 14 e, solo partite, Under 15; media e voti nelle Statistiche; il Backup include valutazioni e convocazioni.
 - **v1,16** – Nuovo tipo di partita: Coppa Lombardia.
+- **v1,17** – Statistiche: la media voto è divisa in Media allenamenti e Media partite (niente più media unica).
+- **v1,18** – Valutazioni: aggiunta l'opzione SV (Senza voto), esclusa dalle medie.

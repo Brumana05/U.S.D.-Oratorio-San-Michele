@@ -66,7 +66,8 @@ textarea{font:inherit;color:inherit;resize:vertical}
 .tag.st-no{background:#f7d9d6}
 .seg .N.on{background:#5b6b82;color:#fff;border-color:#5b6b82}.seg .x.on{background:var(--acc);color:#1b1500;border-color:var(--acc)}
 .rts{display:flex;gap:6px;width:100%;margin:2px 0 8px}.rts button{flex:1;min-width:0;background:#fff;color:var(--ink);border:1px solid var(--line);padding:8px 0;font-size:18px}
-.rts button.on{background:var(--pri);color:#fff;border-color:var(--pri)}.rts button:disabled{opacity:1;cursor:default}
+.rts button.sv{font-size:15px}.rts button.on{background:var(--pri);color:#fff;border-color:var(--pri)}.rts button:disabled{opacity:1;cursor:default}
+.avgs{display:grid;gap:8px;margin-top:10px}.avg{display:grid;gap:1px;background:#f4f7fc;border:1px solid var(--line);border-radius:8px;padding:6px 10px}.avg b{font:700 26px "Arial Narrow",system-ui,sans-serif;font-stretch:condensed}
 .mut{color:var(--mut);font-size:14px}.bar{height:8px;border-radius:4px;background:var(--ko);overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--ok)}
 .stat{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;margin-top:6px}.stat b{display:block;font-size:22px}
 .back{margin:4px 0 8px;color:var(--pri)}.err{color:var(--ko);font-weight:600}
@@ -89,7 +90,7 @@ const cols=["users","players","trainings","matches"],S={users:[],players:[],trai
 const configured=!!(firebaseConfig&&firebaseConfig.apiKey&&!firebaseConfig.apiKey.startsWith("INCOLLA"));
 let app,auth,db,secApp;
 if(configured){app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);secApp=initializeApp(firebaseConfig,"sec")}
-const VER="1,16",club=()=>S.settings.name||"U.S.D. Oratorio San Michele",logo=()=>S.settings.logo||"logo-club.png";
+const VER="1,18",club=()=>S.settings.name||"U.S.D. Oratorio San Michele",logo=()=>S.settings.logo||"logo-club.png";
 let me=null,ready=false,boot=false,uns=[],view="home",team=TEAMS[0],open=null,editP=null,err="",pend=false,setupMode=false,msg="",msgErr=false;
 const $=id=>document.getElementById(id),e=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("it-IT",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):"";
@@ -159,7 +160,7 @@ function vSt(){const td=todayIso(),all=tr(),ts=all.filter(t=>t.date<=td),T=ts.le
 let h=bk()+sel()+`<h2>Statistiche</h2><p class="mut">Allenamenti svolti da inizio anno: <b>${T}</b>${fut?` · ancora da fare: ${fut}`:""}<br>Le percentuali sono calcolate solo sugli allenamenti già svolti. Tocca un atleta per vedere il suo calendario.</p>`;
 const ps=pl();if(!ps.length)return h+`<p class="mut">Nessun giocatore in anagrafica.</p>`;
 return h+ps.map(p=>{const P=ts.filter(t=>att(t,p)==="P").length,A=ts.filter(t=>att(t,p)==="A").length,pp=T?Math.round(P/T*100):0,pa=T?Math.round(A/T*100):0,op=stOpen===p.id;
-return`<div class="card"><button class="g" style="color:var(--ink);border:0;text-align:left;width:100%;padding:0;min-height:0;display:block" onclick="stTog('${p.id}')" aria-expanded="${op}"><div class="p" style="border:0;padding:0">${av(p)}<div class="n"><b>${e(p.cognome)} ${e(p.nome)}</b></div><span class="mut">${op?"▲":"▼"}</span></div></button><div class="stat"${RATE[team]?' style="grid-template-columns:repeat(5,1fr)"':""}><div><b>${P}</b><span class="mut">Presenze</span></div><div><b>${A}</b><span class="mut">Assenze</span></div><div><b>${pp}%</b><span class="mut">% pres.</span></div><div><b>${pa}%</b><span class="mut">% ass.</span></div>${RATE[team]?`<div><b>${avgTxt(p.id)}</b><span class="mut">Media voto</span></div>`:""}</div><div class="bar"><i style="width:${pp}%"></i></div>${op?stCal(p,all):""}</div>`}).join("")}
+return`<div class="card"><button class="g" style="color:var(--ink);border:0;text-align:left;width:100%;padding:0;min-height:0;display:block" onclick="stTog('${p.id}')" aria-expanded="${op}"><div class="p" style="border:0;padding:0">${av(p)}<div class="n"><b>${e(p.cognome)} ${e(p.nome)}</b></div><span class="mut">${op?"▲":"▼"}</span></div></button><div class="stat"><div><b>${P}</b><span class="mut">Presenze</span></div><div><b>${A}</b><span class="mut">Assenze</span></div><div><b>${pp}%</b><span class="mut">% pres.</span></div><div><b>${pa}%</b><span class="mut">% ass.</span></div></div>${avgRow(p.id)}<div class="bar"><i style="width:${pp}%"></i></div>${op?stCal(p,all):""}</div>`}).join("")}
 function stCal(p,all){const [y,m]=idxYM(stI),start=(new Date(y,m,1).getDay()+6)%7,dim=new Date(y,m+1,0).getDate(),td=todayIso(),by={};all.forEach(t=>by[t.date]=t);let c="";
 for(let i=0;i<start;i++)c+=`<div></div>`;
 for(let d=1;d<=dim;d++){const k=isoD(y,m,d),t=by[k];let cl="dy sm",s="";if(t){const v=att(t,p),rt=rOn("t")?(((S.ratings.find(x=>x.id===rkey("t",t.id))||{}).rates||{})[p.id]||0):0;if(k>td){cl+=" ff";s="•"}else if(v==="P"){cl+=" pp";s="✓"+(rt?" "+rt:"")}else if(v==="A"){cl+=" aa";s="✗"}else{cl+=" nn";s="–"}}c+=`<div class="${cl}"><span>${d}</span>${s?`<small>${s}</small>`:""}</div>`}
@@ -405,17 +406,18 @@ async function cvImg(){const c=cvFind(cvId),cn=document.createElement("canvas");
 async function cvJpg(){const b=await cvImg(),m=S.matches.find(x=>x.id===cvId),nm=("Convocazione_"+(m?m.team+"_"+m.date:"")).replace(/[^A-Za-z0-9_-]+/g,"_")+".jpg",a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=nm;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}
 async function cvShare(){const b=await cvImg();try{await navigator.share({files:[new File([b],"convocazione.jpg",{type:"image/jpeg"})]})}catch(_){}}
 const RATE={"Giovanissimi Under 14":["t","m"],"Giovanissimi Under 15":["m"]};
-const GIUD={4:"Insufficiente",5:"Mediocre",6:"Sufficiente",7:"Buono",8:"Ottimo",9:"Eccellente"};
+const GIUD={4:"Insufficiente",5:"Mediocre",6:"Sufficiente",7:"Buono",8:"Ottimo",9:"Eccellente",SV:"Senza voto"};
 let vlMode=null,vlOpen=null,rtEd=null,rtDraft={};
 const canRate=()=>isA()||isS(),valOk=()=>isA()||isD()||(isS()&&!!RATE[me.team]),rOn=k=>!!RATE[team]&&RATE[team].includes(k);
 const rkey=(k,id)=>k+"_"+id,rdoc=(k,id)=>S.ratings.find(r=>r.id===rkey(k,id));
 const fm=x=>x.toFixed(1).replace(".",","),gl=x=>GIUD[Math.max(4,Math.min(9,Math.round(x)))];
 const mStarted=m=>new Date(m.date+"T"+(m.ora||"00:00")+":00")<=new Date();
-function avgOf(pid){const a={t:[],m:[]};S.ratings.forEach(r=>{const v=r.rates&&r.rates[pid];if(!v||!a[r.kind])return;if(r.kind==="t"){const t=S.trainings.find(x=>x.id===r.refId);if(!t||(t.att||{})[pid]!=="P")return}a[r.kind].push(v)});
-const all=a.t.concat(a.m),av=l=>l.length?l.reduce((x,y)=>x+y,0)/l.length:0;return{all:av(all),t:av(a.t),m:av(a.m),n:all.length,nt:a.t.length,nm:a.m.length}}
-const avgTxt=pid=>{const a=avgOf(pid);return a.n?fm(a.all):"—"};
+function avgOf(pid){const a={t:[],m:[]},sv={t:0,m:0};S.ratings.forEach(r=>{const v=r.rates&&r.rates[pid];if(!v||!a[r.kind])return;if(r.kind==="t"){const t=S.trainings.find(x=>x.id===r.refId);if(!t||(t.att||{})[pid]!=="P")return}if(typeof v!=="number"){sv[r.kind]++;return}a[r.kind].push(v)});
+const all=a.t.concat(a.m),av=l=>l.length?l.reduce((x,y)=>x+y,0)/l.length:0;return{all:av(all),t:av(a.t),m:av(a.m),n:all.length,nt:a.t.length,nm:a.m.length,st:sv.t,sm:sv.m}}
+const avgTile=(l,v,n,c,sv)=>`<div class="avg" style="border-left:5px solid ${c}"><span class="mut">${l}</span><b>${n?fm(v):"—"}</b><span class="mut">${n?gl(v)+" · "+n+(n===1?" voto":" voti")+(sv?" · "+sv+" SV":""):(sv?sv+" SV (senza voto)":"nessun voto")}</span></div>`;
+const avgRow=pid=>{if(!RATE[team])return"";const a=avgOf(pid),t=rOn("t"),m=rOn("m");return`<div class="avgs" style="grid-template-columns:repeat(${(t?1:0)+(m?1:0)},1fr)">${t?avgTile("Media allenamenti",a.t,a.nt,"var(--pri)",a.st):""}${m?avgTile("Media partite",a.m,a.nm,"var(--acc)",a.sm):""}</div>`};
 function ratingBox(p){if(!RATE[team])return"";const a=avgOf(p.id),ml=S.ratings.filter(r=>r.kind==="m"&&r.rates&&r.rates[p.id]).map(r=>({r,m:S.matches.find(x=>x.id===r.refId)})).filter(x=>x.m).sort((x,y)=>x.m.date.localeCompare(y.m.date));
-return`<div style="margin-top:10px;border-top:1px solid var(--line);padding-top:10px"><b>Valutazioni</b><div class="mut" style="margin:4px 0">${a.n?`Media totale <b>${fm(a.all)}</b> (${gl(a.all)}) su ${a.n} valutazioni`:"Nessuna valutazione ancora"}${a.nt?` · Allenamenti <b>${fm(a.t)}</b> (${a.nt})`:""}${a.nm?` · Partite <b>${fm(a.m)}</b> (${a.nm})`:""}</div>${ml.map(x=>`<div class="p"><div class="n">${fd(x.m.date)} · ${e(garaOf(x.m))}</div><span class="tag">${x.r.rates[p.id]} · ${GIUD[x.r.rates[p.id]]}</span></div>`).join("")}</div>`}
+return`<div style="margin-top:10px;border-top:1px solid var(--line);padding-top:10px"><b>Valutazioni</b><div class="mut" style="margin:4px 0">${a.n||a.st||a.sm?"":"Nessuna valutazione ancora"}${a.nt?`Media allenamenti <b>${fm(a.t)}</b> (${gl(a.t)}) su ${a.nt} voti`:""}${a.nt&&a.nm?"<br>":""}${a.nm?`Media partite <b>${fm(a.m)}</b> (${gl(a.m)}) su ${a.nm} voti`:""}</div>${ml.map(x=>`<div class="p"><div class="n">${fd(x.m.date)} · ${e(garaOf(x.m))}</div><span class="tag">${x.r.rates[p.id]} · ${GIUD[x.r.rates[p.id]]}</span></div>`).join("")}</div>`}
 const gLegend=()=>`<div class="card"><b>Scala di giudizio</b><div style="margin-top:6px">${Object.entries(GIUD).map(([n,l])=>`<span class="lg">${n} · ${l}</span>`).join("")}</div></div>`;
 function vVl(){let h=bk()+sel()+`<h2>Valutazioni</h2>`;const md=RATE[team];
 if(!md)return h+`<div class="card"><p style="margin:0">Le valutazioni non sono ancora attive per questa categoria.</p><p class="mut" style="margin:6px 0 0">Per ora sono attive: Giovanissimi Under 14 (allenamenti e partite) e Giovanissimi Under 15 (solo partite).</p></div>`;
@@ -436,7 +438,7 @@ let h=`<div class="card"><button class="g" style="color:var(--ink);width:100%;te
 if(o){if(note)h+=`<p class="mut" style="margin:6px 0">${note}</p>`;
 if(!list.length)h+=`<p class="mut">${k[0]==="t"?"Nessun atleta presente: segna prima le presenze in Allenamenti.":"Nessun giocatore da valutare."}</p>`;
 else{if(canRate())h+=ed?`<div class="row" style="margin:8px 0"><button onclick="rtSave()">Salva</button><button class="g" style="color:var(--ink)" onclick="rtCancel()">Annulla</button></div>`:`<div style="margin:8px 0"><button onclick="rtEdit('${k}')">Modifica valutazioni</button></div>`;
-h+=list.map(p=>{const v=cur[p.id]||0;return`<div class="p" style="flex-wrap:wrap"><div class="n"><b>${e(p.nome)}</b></div>${canRate()?`<span class="mut">${v?GIUD[v]:"Non valutato"}</span><div class="rts">${[4,5,6,7,8,9].map(n=>`<button class="${v===n?"on":""}" ${ed?"":"disabled"} onclick="rtSet('${k}','${p.id}',${n})">${n}</button>`).join("")}</div>`:`<span class="tag">${v?v+" · "+GIUD[v]:"—"}</span>`}</div>`}).join("");
+h+=list.map(p=>{const v=cur[p.id]||0;return`<div class="p" style="flex-wrap:wrap"><div class="n"><b>${e(p.nome)}</b></div>${canRate()?`<span class="mut">${v?GIUD[v]:"Non valutato"}</span><div class="rts">${[4,5,6,7,8,9,"SV"].map(n=>`<button class="${v===n?"on":""}${n==="SV"?" sv":""}" ${ed?"":"disabled"} onclick="rtSet('${k}','${p.id}',${n==="SV"?"'SV'":n})">${n}</button>`).join("")}</div>`:`<span class="tag">${v?v+" · "+GIUD[v]:"—"}</span>`}</div>`}).join("");
 if(absent)h+=`<p class="mut" style="margin-top:6px">Non presenti o non segnati: ${absent} (non valutabili).</p>`}}
 return h+`</div>`}
 const rtDirty=()=>{const r=S.ratings.find(x=>x.id===rtEd);return JSON.stringify(rtDraft)!==JSON.stringify((r&&r.rates)||{})};

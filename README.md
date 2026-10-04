@@ -70,3 +70,6 @@ Le password degli utenti creati dalla v1,11 in poi sono salvate in chiaro in Fir
 - Statistiche: media voto di ogni atleta, voto accanto a ogni allenamento in cui è stato presente, elenco dei voti delle partite.
 - Il Backup ora include anche valutazioni e convocazioni.
 - **Ripubblica `firestore.rules`** (nuova sezione `ratings`).
+
+## Novità v1,18
+- Nelle Valutazioni c'è anche **SV – Senza voto**: l'atleta risulta valutato ma il voto non entra nelle medie (le statistiche indicano quanti SV ci sono).
