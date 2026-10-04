@@ -73,3 +73,7 @@ Le password degli utenti creati dalla v1,11 in poi sono salvate in chiaro in Fir
 
 ## Novità v1,18
 - Nelle Valutazioni c'è anche **SV – Senza voto**: l'atleta risulta valutato ma il voto non entra nelle medie (le statistiche indicano quanti SV ci sono).
+
+## Novità v1,19 – Risultati
+- Nel **Calendario** di Direttore, Presidente, Direttore Generale, Direttore Sportivo e Segreteria c'è la tabella *Vittorie, pareggi e sconfitte* per ogni categoria (con totale e gol fatti-subiti), filtrabile per categoria e per tipo di partita. Le partite del calendario sono colorate: verde vinta, grigio pareggiata, rosso persa. Nella griglia mensile ogni partita è un pallino dello stesso colore (vuoto = da giocare). Un riepilogo della categoria è visibile anche all'Admin nella modifica partite.
+- Contano solo le partite con il risultato inserito.

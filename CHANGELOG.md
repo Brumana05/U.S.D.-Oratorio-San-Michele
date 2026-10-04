@@ -19,3 +19,4 @@
 - **v1,16** – Nuovo tipo di partita: Coppa Lombardia.
 - **v1,17** – Statistiche: la media voto è divisa in Media allenamenti e Media partite (niente più media unica).
 - **v1,18** – Valutazioni: aggiunta l'opzione SV (Senza voto), esclusa dalle medie.
+- **v1,19** – Calendario: tabella vittorie/pareggi/sconfitte per categoria (ruoli di direzione), partite colorate verde/grigio/rosso, filtro per tipo di partita.
