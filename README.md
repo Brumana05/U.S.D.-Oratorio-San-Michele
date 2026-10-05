@@ -77,3 +77,8 @@ Le password degli utenti creati dalla v1,11 in poi sono salvate in chiaro in Fir
 ## Novità v1,19 – Risultati
 - Nel **Calendario** di Direttore, Presidente, Direttore Generale, Direttore Sportivo e Segreteria c'è la tabella *Vittorie, pareggi e sconfitte* per ogni categoria (con totale e gol fatti-subiti), filtrabile per categoria e per tipo di partita. Le partite del calendario sono colorate: verde vinta, grigio pareggiata, rosso persa. Nella griglia mensile ogni partita è un pallino dello stesso colore (vuoto = da giocare). Un riepilogo della categoria è visibile anche all'Admin nella modifica partite.
 - Contano solo le partite con il risultato inserito.
+
+## Novità v1,20 – Distinta Esordienti Under 12
+- Solo per **Esordienti Under 12** la convocazione usa il foglio ufficiale (CONVOCAZIONE UFFICIALE): titolo con anno sportivo, riga *Partita* con le due squadre, *Info Gara* (tipo gara e inizio partita), data, partenza, ritrovo, campo, tabella con tessera e maglia, esiti **Convocato / Non convocato / Rifiuto / Infortunio-Malattia**, piè di pagina. Le altre categorie restano con il foglio precedente.
+- Mister, Mister in seconda e Accompagnatore Dirigente sono fissi come nel foglio e non si modificano.
+- Numero di **tessera** e di **maglia** dei ragazzi si inseriscono in Anagrafica (o con l'import Excel: colonne *N tessera* e *Maglia*) e nella distinta non si toccano. Prima di salvare l'app chiede se si vogliono modificare i numeri di maglia: con *Sì* si cambiano solo per quella distinta (l'Anagrafica resta com'è), con *No* si salva subito.
