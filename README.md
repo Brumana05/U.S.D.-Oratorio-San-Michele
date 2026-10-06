@@ -82,3 +82,7 @@ Le password degli utenti creati dalla v1,11 in poi sono salvate in chiaro in Fir
 - Solo per **Esordienti Under 12** la convocazione usa il foglio ufficiale (CONVOCAZIONE UFFICIALE): titolo con anno sportivo, riga *Partita* con le due squadre, *Info Gara* (tipo gara e inizio partita), data, partenza, ritrovo, campo, tabella con tessera e maglia, esiti **Convocato / Non convocato / Rifiuto / Infortunio-Malattia**, piè di pagina. Le altre categorie restano con il foglio precedente.
 - Mister, Mister in seconda e Accompagnatore Dirigente sono fissi come nel foglio e non si modificano.
 - Numero di **tessera** e di **maglia** dei ragazzi si inseriscono in Anagrafica (o con l'import Excel: colonne *N tessera* e *Maglia*) e nella distinta non si toccano. Prima di salvare l'app chiede se si vogliono modificare i numeri di maglia: con *Sì* si cambiano solo per quella distinta (l'Anagrafica resta com'è), con *No* si salva subito.
+
+## Novità v1,21 – Distinte (Under 15)
+- Nuovo pulsante **Distinte**, visibile solo per la categoria **Giovanissimi Under 15** (agli staff di quella squadra; Admin e Direzione lo vedono scegliendo la categoria). Contiene **Distinte Campionato** (apre la lista di presentazione LND) e **Distinte Coppa Brescia**.
+- I link si cambiano da **Impostazioni → Link Distinte** (solo Admin), senza ricaricare l'app: il link della Coppa Brescia va inserito lì.

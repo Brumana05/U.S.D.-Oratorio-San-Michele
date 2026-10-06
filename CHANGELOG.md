@@ -21,3 +21,4 @@
 - **v1,18** – Valutazioni: aggiunta l'opzione SV (Senza voto), esclusa dalle medie.
 - **v1,19** – Calendario: tabella vittorie/pareggi/sconfitte per categoria (ruoli di direzione), partite colorate verde/grigio/rosso, filtro per tipo di partita.
 - **v1,20** – Distinta ufficiale per gli Esordienti Under 12 (4 esiti, tessera e maglia, staff fisso, domanda sui numeri di maglia prima del salvataggio); in Anagrafica nuovi campi N° tessera e N° maglia (anche nell'import Excel).
+- **v1,21** – Pulsante Distinte (solo Giovanissimi Under 15) con Distinte Campionato (link LND) e Distinte Coppa Brescia; link modificabili da Impostazioni.
