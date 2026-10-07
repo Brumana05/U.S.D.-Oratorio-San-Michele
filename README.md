@@ -86,3 +86,8 @@ Le password degli utenti creati dalla v1,11 in poi sono salvate in chiaro in Fir
 ## Novità v1,21 – Distinte (Under 15)
 - Nuovo pulsante **Distinte**, visibile solo per la categoria **Giovanissimi Under 15** (agli staff di quella squadra; Admin e Direzione lo vedono scegliendo la categoria). Contiene **Distinte Campionato** (apre la lista di presentazione LND) e **Distinte Coppa Brescia**.
 - I link si cambiano da **Impostazioni → Link Distinte** (solo Admin), senza ricaricare l'app: il link della Coppa Brescia va inserito lì.
+
+## Novità v1,22 – Distinte per tutti, richieste amichevoli
+- Il pulsante **Distinte** è visibile a tutti. Contiene **Distinte Campionato** e **Distinte Coppa Brescia**; per **Prima Squadra, Juniores e Giovanissimi Under 14** c'è solo il Campionato.
+- Tutti i link partono **vuoti**. Solo l'Admin li inserisce da **Impostazioni → Link Distinte**, categoria per categoria (✓ = link inserito). Senza link il pulsante avvisa che non è ancora impostato.
+- Il pulsante **Richieste amichevoli** (conferma/annulla) resta solo a Direttore e Admin: Presidente, Direttore Generale, Direttore Sportivo e Segreteria non lo vedono più e non ricevono più le relative notifiche. **Ripubblica `firestore.rules`.**
