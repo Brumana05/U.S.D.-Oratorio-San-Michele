@@ -1,4 +1,7 @@
-export const firebaseConfig = {
+// Sostituisci i valori con quelli del tuo progetto Firebase
+// (Impostazioni progetto -> Le tue app -> App web -> Configurazione SDK -> Config)
+// Tieni SOLO l'oggetto tra graffe. Niente righe "import".
+const firebaseConfig = {
   apiKey: "AIzaSyDrTyNDn1p2-Q6x1gqQzU2Lt2xPQl8xbwg",
   authDomain: "fanta-michele.firebaseapp.com",
   projectId: "fanta-michele",
