@@ -1,9 +1,8 @@
 export const firebaseConfig = {
-  apiKey: "AIzaSyDJm8oK_dkB7VRuBfKkEV2aZgYDRknQsAM",
-  authDomain: "oratorio-san-michele.firebaseapp.com",
-  databaseURL: "https://oratorio-san-michele-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "oratorio-san-michele",
-  storageBucket: "oratorio-san-michele.firebasestorage.app",
-  messagingSenderId: "583442988309",
-  appId: "1:583442988309:web:c2dde50b96ddb33be83d1c"
+  apiKey: "AIzaSyDrTyNDn1p2-Q6x1gqQzU2Lt2xPQl8xbwg",
+  authDomain: "fanta-michele.firebaseapp.com",
+  projectId: "fanta-michele",
+  storageBucket: "fanta-michele.firebasestorage.app",
+  messagingSenderId: "670685849057",
+  appId: "1:670685849057:web:4100f8baf6dfb38dbc5ea0"
 };
