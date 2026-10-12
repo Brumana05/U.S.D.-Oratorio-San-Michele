@@ -1,10 +1,5 @@
-// Service worker v1.11: apre subito la versione salvata e controlla gli aggiornamenti in background.
-// Il banner "Nuova versione" compare confrontando version.json (mai in cache) con la versione in uso.
-const C='osm';
-self.addEventListener('install',e=>{self.skipWaiting()});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>clients.claim()))});
-self.addEventListener('fetch',e=>{const r=e.request,u=new URL(r.url);
-if(r.method!=='GET'||u.origin!==location.origin||u.pathname.endsWith('version.json'))return;
-e.respondWith((async()=>{const c=await caches.open(C),hit=await c.match(r);
-const net=fetch(r,{cache:'no-cache'}).then(x=>{if(x.ok)c.put(r,x.clone());return x}).catch(()=>hit);
-e.waitUntil(net);return hit||net})())});
+const V="osm-v1.22",FILES=["./","index.html","firebase-config.js","manifest.webmanifest","icon-192.png","logo-club.png","logo-union.jpg","icon-512.png"];
+self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
+self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
+self.addEventListener("fetch",e=>{const u=new URL(e.request.url);if(e.request.method!=="GET"||u.origin!==location.origin)return;
+e.respondWith(fetch(e.request).then(r=>{const c=r.clone();caches.open(V).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request).then(r=>r||caches.match("index.html"))))});

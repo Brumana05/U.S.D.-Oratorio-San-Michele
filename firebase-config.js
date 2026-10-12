@@ -1,11 +1,9 @@
-// Sostituisci i valori con quelli del tuo progetto Firebase
-// (Impostazioni progetto -> Le tue app -> App web -> Configurazione SDK -> Config)
-// Tieni SOLO l'oggetto tra graffe. Niente righe "import".
-const firebaseConfig = {
-  apiKey: "AIzaSyDrTyNDn1p2-Q6x1gqQzU2Lt2xPQl8xbwg",
-  authDomain: "fanta-michele.firebaseapp.com",
-  projectId: "fanta-michele",
-  storageBucket: "fanta-michele.firebasestorage.app",
-  messagingSenderId: "670685849057",
-  appId: "1:670685849057:web:4100f8baf6dfb38dbc5ea0"
+export const firebaseConfig = {
+  apiKey: "AIzaSyDJm8oK_dkB7VRuBfKkEV2aZgYDRknQsAM",
+  authDomain: "oratorio-san-michele.firebaseapp.com",
+  databaseURL: "https://oratorio-san-michele-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "oratorio-san-michele",
+  storageBucket: "oratorio-san-michele.firebasestorage.app",
+  messagingSenderId: "583442988309",
+  appId: "1:583442988309:web:c2dde50b96ddb33be83d1c"
 };
