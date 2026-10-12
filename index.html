@@ -28,7 +28,7 @@ main h4{color:#8a6a00;border-bottom:2px solid #c99a1c;padding-bottom:3px}.auth h
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-const V='1.09',K='osm_v1',$=q=>document.querySelector(q),p2=n=>String(n).padStart(2,'0'),uid=()=>Math.random().toString(36).slice(2,9);
+const V='1.10',K='osm_v1',$=q=>document.querySelector(q),p2=n=>String(n).padStart(2,'0'),uid=()=>Math.random().toString(36).slice(2,9);
 const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const def=()=>({team:{name:'Oratorio San Michele',logo:''},players:[],events:[],users:[],votes:{}});
 let S=def();
@@ -51,7 +51,7 @@ const msg=t=>`<div class=msg>${t}</div>`,pl=id=>S.players.find(p=>p.id===id),fmt
 function M(h){const m=$('#m');m.innerHTML='<div>'+h+'</div>';m.classList.add('on')}function X(){$('#m').classList.remove('on');if(pend)R()}
 function go(){R()}
 /* AUTH */
-function vAuth(){return`<div class=auth>${`<img src="${S.team.logo||'icon-192.png'}">`}<h2>${e(S.team.name)}</h2><p>Giovanissimi Under 15</p>
+function vAuth(){return`<div class=auth>${`<img src="${S.team.logo||'logo.png'}">`}<h2>${e(S.team.name)}</h2><p>Giovanissimi Under 15</p>
 <input id=au placeholder="Nome utente" autocapitalize=off><input id=ap type=password placeholder="Password">
 <button class=b style="width:100%" onclick="doAuth()">${authMode==='in'?'Accedi':'Registrati'}</button><p><a href="#" onclick="authMode=authMode==='in'?'reg':'in';R();return false">${authMode==='in'?'Non hai un account? Registrati':'Hai già un account? Accedi'}</a></p>
 <button class="b g" style="width:100%" onclick="setMe('guest')">Continua senza accedere</button><p style="font-size:12px;color:#667">Password: almeno 6 caratteri. Nome utente: lettere, numeri . _ -</p><p id=ae style="color:#c0392b">${FB_ERR}</p></div>`}
@@ -188,7 +188,7 @@ function trAdd(){if(!tr.sel.length)return alert('Seleziona almeno un giorno');co
 function R(){pend=false;if(!me){$('#app').innerHTML=vAuth();return}
 const T=[['cal','📅','Calendario'],['val','⭐',admin()?'Formazione':'Valutazioni'],['fanta','🏆','Fanta Michele'],['stat','📊','Statistiche'],['conv','📋','Convocazioni']];if(admin())T.push(['vot','📝','Valutazioni'],['trn','🏋️','Allenamenti'],['ana','👥','Anagrafe'],['usr','🔑','Utenti']);
 if(tab!=='home'&&!T.some(t=>t[0]===tab))tab='home';const views={cal:vCal,val:vVal,fanta:vFanta,stat:vStat,conv:vConv,vot:vVot,trn:vTrn,ana:vAna,usr:vUsr},c=T.find(t=>t[0]===tab);
-$('#app').innerHTML=`<header><div class=hl>${tab!=='home'?'<button onclick="tab=\'home\';R()">‹ Home</button>':`<img src="${S.team.logo||'icon-192.png'}">`}</div><div class=ht><b>${e(S.team.name)}</b><small>v${V}${c?' · '+c[2]:''}</small></div><div class=hr>${admin()?'<button onclick="vSet()">⚙️</button>':''}${me==='guest'?'<button class=gold onclick="out()">Accedi</button>':`<a class=av onclick="prof()">${avatar(34)}</a>`}</div></header><main>${tab==='home'?`<div class=hm>${T.map(t=>`<button onclick="tab='${t[0]}';R()"><span>${t[1]}</span>${t[2]}</button>`).join('')}</div>`:views[tab]()}</main>`}
+$('#app').innerHTML=`<header><div class=hl>${tab!=='home'?'<button onclick="tab=\'home\';R()">‹ Home</button>':`<img src="${S.team.logo||'logo.png'}">`}</div><div class=ht><b>${e(S.team.name)}</b><small>v${V}${c?' · '+c[2]:''}</small></div><div class=hr>${admin()?'<button onclick="vSet()">⚙️</button>':''}${me==='guest'?'<button class=gold onclick="out()">Accedi</button>':`<a class=av onclick="prof()">${avatar(34)}</a>`}</div></header><main>${tab==='home'?`<div class=hm>${T.map(t=>`<button onclick="tab='${t[0]}';R()"><span>${t[1]}</span>${t[2]}</button>`).join('')}</div>`:views[tab]()}</main>`}
 /* FIREBASE */
 const CFG=typeof FIREBASE_CONFIG!=='undefined'?FIREBASE_CONFIG:typeof firebaseConfig!=='undefined'?firebaseConfig:null;
 const FB_ERR=typeof firebase==='undefined'?'Libreria Firebase non caricata: controlla la connessione internet':!CFG?'File firebase-config.js non trovato o con errori: controlla che sia nella stessa cartella di index.html, che la variabile si chiami FIREBASE_CONFIG e che non ci siano righe import':(!CFG.apiKey||String(CFG.apiKey).startsWith('INCOLLA'))?'firebase-config.js contiene ancora i valori INCOLLA_QUI (oppure la versione caricata su GitHub non è quella modificata)':'',FB_OK=!FB_ERR;
