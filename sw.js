@@ -1,5 +1,10 @@
-const C='osm-v1.10';
-self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['./','index.html','manifest.json','icon-192.png','icon-512.png'])));self.skipWaiting()});
+// Service worker v1.11: apre subito la versione salvata e controlla gli aggiornamenti in background.
+// Il banner "Nuova versione" compare confrontando version.json (mai in cache) con la versione in uso.
+const C='osm';
+self.addEventListener('install',e=>{self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>clients.claim()))});
-self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||!e.request.url.startsWith(self.location.origin))return;
-e.respondWith(fetch(e.request,{cache:'no-cache'}).then(r=>{const c=r.clone();caches.open(C).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request)))});
+self.addEventListener('fetch',e=>{const r=e.request,u=new URL(r.url);
+if(r.method!=='GET'||u.origin!==location.origin||u.pathname.endsWith('version.json'))return;
+e.respondWith((async()=>{const c=await caches.open(C),hit=await c.match(r);
+const net=fetch(r,{cache:'no-cache'}).then(x=>{if(x.ok)c.put(r,x.clone());return x}).catch(()=>hit);
+e.waitUntil(net);return hit||net})())});

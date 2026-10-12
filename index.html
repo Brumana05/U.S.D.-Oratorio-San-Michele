@@ -28,7 +28,7 @@ main h4{color:#8a6a00;border-bottom:2px solid #c99a1c;padding-bottom:3px}.auth h
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-const V='1.10',K='osm_v1',$=q=>document.querySelector(q),p2=n=>String(n).padStart(2,'0'),uid=()=>Math.random().toString(36).slice(2,9);
+const V='1.11',K='osm_v1',$=q=>document.querySelector(q),p2=n=>String(n).padStart(2,'0'),uid=()=>Math.random().toString(36).slice(2,9);
 const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const def=()=>({team:{name:'Oratorio San Michele',logo:''},players:[],events:[],users:[],votes:{}});
 let S=def();
@@ -171,7 +171,7 @@ function swp(a,b){if(!fe)return;const L=cur().lineup;L.slots=Array.from({length:
 if(ak&&bk){const x=+a.k,y=+b.k;[L.slots[x],L.slots[y]]=[L.slots[y],L.slots[x]]}
 else if(ak||bk){const sl=+(ak?a.k:b.k),bn=ak?b.b:a.b,old=L.slots[sl];if(!bn)return;L.slots[sl]=bn;L.bench=L.bench.filter(i=>i!==bn);if(old)L.bench.push(old)}else return;save();R()}
 const avatar=n=>myPh?`<img src="${myPh}" style="width:${n}px;height:${n}px;border-radius:50%;object-fit:cover;border:2px solid #c99a1c;background:#fff">`:`<span style="display:inline-flex;width:${n}px;height:${n}px;border-radius:50%;background:#c99a1c;color:#fff;align-items:center;justify-content:center;font-weight:700;font-size:${n/2}px;border:2px solid #fff">${e((me||'?')[0].toUpperCase())}</span>`;
-function prof(){M(`<h3>Profilo</h3><div style="text-align:center">${avatar(80)}<p><b>${e(me)}</b></p></div><label>Foto profilo</label><input type=file accept="image/*" onchange="setPh(this)"><div class=row>${myPh?'<button class="b g" onclick="rmPh()">Rimuovi foto</button>':''}<button class="b r" onclick="X();out()">Esci</button><button class="b g" onclick="X()">Chiudi</button></div>`)}
+function prof(){M(`<h3>Profilo</h3><div style="text-align:center">${avatar(80)}<p><b>${e(me)}</b></p></div><label>Foto profilo</label><input type=file accept="image/*" onchange="setPh(this)"><div class=row>${myPh?'<button class="b g" onclick="rmPh()">Rimuovi foto</button>':''}<button class="b r" onclick="X();out()">Esci</button><button class="b g" onclick="X()">Chiudi</button></div><br><button class="b g" onclick="chk(true)">🔄 Controlla aggiornamenti (v${V})</button>`)}
 function setPh(inp){img(inp,160,'jpeg',d=>{myPh=d;localStorage.setItem('osm_ph',d);if(auth&&auth.currentUser)db.collection('users').doc(auth.currentUser.uid).set({photo:d},{merge:true}).catch(()=>alert('Foto salvata solo su questo dispositivo: aggiorna le regole Firestore (file firestore.rules)'));R();prof()})}
 function rmPh(){myPh='';localStorage.removeItem('osm_ph');if(auth&&auth.currentUser)db.collection('users').doc(auth.currentUser.uid).set({photo:''},{merge:true}).catch(er);R();prof()}
 let tr={y:new Date().getFullYear(),m:new Date().getMonth(),sel:[],t:'18:00',p:''};
@@ -211,8 +211,8 @@ const t=JSON.stringify(S.team);if(L.team!==t){L.team=t;w('meta','team',JSON.pars
 function mig(){let o;try{o=JSON.parse(localStorage.getItem(K))}catch(x){}if(!o||!((o.players||[]).length||(o.events||[]).length))return alert('Nessun dato locale trovato su questo dispositivo');
 if(!confirm('I dati di questo dispositivo sostituiranno quelli online. Continuare?'))return;S.players=o.players||[];S.events=o.events||[];if(o.team)S.team=o.team;syncA();alert('Dati caricati su Firebase')}
 /* AGGIORNAMENTI */
-async function chk(){try{const j=await(await fetch('version.json?t='+Date.now(),{cache:'no-store'})).json();if(j.version&&j.version!==V){const b=$('#bn');b.style.display='flex';b.innerHTML=`🔔 Nuova versione disponibile<br>Attuale: v${V} → Nuova: v${e(j.version)}<button onclick="upd()">Aggiorna</button>`}}catch(x){}}
+async function chk(m){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const j=await r.json();if(j.version&&j.version!==V){const b=$('#bn');b.style.display='flex';b.innerHTML=`🔔 Nuova versione disponibile<br>Attuale: v${V} → Nuova: v${e(j.version)}<button onclick="upd()">Aggiorna</button>`}else if(m)alert('Hai già l\'ultima versione (v'+V+')')}catch(x){if(m)alert('Impossibile controllare gli aggiornamenti (manca version.json o internet)')}}
 async function upd(){try{(await navigator.serviceWorker.getRegistrations()).forEach(r=>r.unregister());(await caches.keys()).forEach(k=>caches.delete(k))}catch(x){}location.reload()}
-if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js',{updateViaCache:'none'});
 fbInit();R();chk();setInterval(chk,300000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()});
 </script></body></html>
