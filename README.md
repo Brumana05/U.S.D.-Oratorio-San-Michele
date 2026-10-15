@@ -91,3 +91,13 @@ Le password degli utenti creati dalla v1,11 in poi sono salvate in chiaro in Fir
 - Il pulsante **Distinte** è visibile a tutti. Contiene **Distinte Campionato** e **Distinte Coppa Brescia**; per **Prima Squadra, Juniores e Giovanissimi Under 14** c'è solo il Campionato.
 - Tutti i link partono **vuoti**. Solo l'Admin li inserisce da **Impostazioni → Link Distinte**, categoria per categoria (✓ = link inserito). Senza link il pulsante avvisa che non è ancora impostato.
 - Il pulsante **Richieste amichevoli** (conferma/annulla) resta solo a Direttore e Admin: Presidente, Direttore Generale, Direttore Sportivo e Segreteria non lo vedono più e non ricevono più le relative notifiche. **Ripubblica `firestore.rules`.**
+
+## Novità v1,23 – Iscrizione e pulizia utenti
+- **Iscrizione:** dalla schermata di accesso, *Non hai un account? Iscriviti*. Si sceglie **Genitore / Giocatore / Staff**, nome e cognome, nome utente, password e categoria (per lo Staff anche il ruolo richiesto). La richiesta **non dà accesso subito**: l'Admin la vede in *Utenti → Richieste di iscrizione* (con numero rosso e avviso all'ingresso), può cambiare ruolo e categoria e poi **Approva** o **Rifiuta**. Resta quindi solo l'Admin a decidere chi entra e con quale ruolo.
+- **Genitore e Giocatore:** vedono soltanto Calendario, Convocazioni (della propria categoria) e Richiesta miglioramenti. Non vedono Anagrafica, telefoni, statistiche, valutazioni, compleanni né Distinte.
+- **Elimina tutti gli utenti (tranne l'Admin):** pulsante in fondo alla pagina Utenti, con doppia conferma (scrivere ELIMINA). Le voci in Firebase → Authentication non si possono cancellare dall'app: si selezionano e si eliminano a mano, lasciando l'Admin.
+- **Ripubblica `firestore.rules`** (nuova sezione `signups`, nuovi ruoli).
+
+## Novità v1,24 – Ritardo
+- In **Allenamenti** ogni atleta ha tre scelte: **Presente**, **Ritardo**, **Assente**. *Ritardo* = presente ma arrivato in ritardo: conta come presenza (percentuali, valutazioni) e viene contato a parte.
+- **Statistiche:** nuovo riquadro **Ritardi** per ogni atleta; nel calendario dell'atleta i giorni di ritardo sono segnati con **R** (giallo) e il riepilogo del mese mostra presenze, ritardi e assenze. L'elenco degli allenamenti mostra quanti ragazzi sono arrivati in ritardo.

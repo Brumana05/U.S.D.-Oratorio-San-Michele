@@ -5,10 +5,13 @@ service cloud.firestore {
     function me(){ return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
     function isAdmin(){ return hasProfile() && me().role == 'admin'; }
     function viewer(){ return me().role in ['direttore','presidente','dirgenerale','dirsportivo','segreteria']; }
+    function fam(){ return me().role in ['genitore','giocatore']; }
     function isStaff(){ return hasProfile() && me().role in ['allenatore','collaboratore','dirigente']; }
     function mgr(){ return hasProfile() && (me().role == 'admin' || viewer()); }
-    function canSee(t){ return hasProfile() && (me().role == 'admin' || viewer() || me().team == t); }
+    function canSee(t){ return hasProfile() && !fam() && (me().role == 'admin' || viewer() || me().team == t); }
+    function canSeeMC(t){ return hasProfile() && (me().role == 'admin' || viewer() || me().team == t); }
     function setupDone(){ return exists(/databases/$(database)/documents/config/setup); }
+    function rateOk(){ return request.resource.data.team == 'Giovanissimi Under 14' || (request.resource.data.team == 'Giovanissimi Under 15' && request.resource.data.kind == 'm'); }
 
     match /usernames/{name} {
       allow read: if true;
@@ -18,8 +21,13 @@ service cloud.firestore {
     match /credentials/{id} {
       allow read, write: if isAdmin();
     }
+    match /signups/{id} {
+      allow read: if request.auth != null && (request.auth.uid == id || isAdmin());
+      allow create: if request.auth != null && request.auth.uid == id && request.resource.data.status == 'pending' && !hasProfile();
+      allow update, delete: if isAdmin();
+    }
     match /birthdays/{id} {
-      allow read: if hasProfile();
+      allow read: if hasProfile() && !fam();
       allow create, update: if isAdmin() || (isStaff() && request.resource.data.team == me().team);
       allow delete: if isAdmin() || (isStaff() && resource.data.team == me().team);
     }
@@ -43,27 +51,26 @@ service cloud.firestore {
       allow delete: if isAdmin() || (isStaff() && resource.data.team == me().team);
     }
     match /matches/{id} {
-      allow read: if canSee(resource.data.team);
+      allow read: if canSeeMC(resource.data.team);
       allow create, update, delete: if mgr();
+    }
+    match /convocations/{id} {
+      allow read: if canSeeMC(resource.data.team);
+      allow create: if isAdmin() || (isStaff() && request.resource.data.team == me().team);
+      allow update: if isAdmin() || (isStaff() && resource.data.team == me().team && request.resource.data.team == me().team);
+      allow delete: if isAdmin() || (isStaff() && resource.data.team == me().team);
+    }
+    match /ratings/{id} {
+      allow read: if canSee(resource.data.team);
+      allow create: if rateOk() && (isAdmin() || (isStaff() && request.resource.data.team == me().team));
+      allow update: if rateOk() && (isAdmin() || (isStaff() && resource.data.team == me().team && request.resource.data.team == me().team));
+      allow delete: if isAdmin() || (isStaff() && resource.data.team == me().team);
     }
     match /trainings/{id} {
       allow read: if canSee(resource.data.team);
       allow create, delete: if isAdmin();
       allow update: if isAdmin() || (isStaff() && me().team == resource.data.team
                        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['att']));
-    }
-    match /convocations/{id} {
-      allow read: if canSee(resource.data.team);
-      allow create: if isAdmin() || (isStaff() && request.resource.data.team == me().team);
-      allow update: if isAdmin() || (isStaff() && resource.data.team == me().team && request.resource.data.team == me().team);
-      allow delete: if isAdmin() || (isStaff() && resource.data.team == me().team);
-    }
-    function rateOk(){ return request.resource.data.team == 'Giovanissimi Under 14' || (request.resource.data.team == 'Giovanissimi Under 15' && request.resource.data.kind == 'm'); }
-    match /ratings/{id} {
-      allow read: if canSee(resource.data.team);
-      allow create: if rateOk() && (isAdmin() || (isStaff() && request.resource.data.team == me().team));
-      allow update: if rateOk() && (isAdmin() || (isStaff() && resource.data.team == me().team && request.resource.data.team == me().team));
-      allow delete: if isAdmin() || (isStaff() && resource.data.team == me().team);
     }
     match /requests/{id} {
       allow read: if canSee(resource.data.team);

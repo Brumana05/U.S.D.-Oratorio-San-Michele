@@ -23,3 +23,5 @@
 - **v1,20** – Distinta ufficiale per gli Esordienti Under 12 (4 esiti, tessera e maglia, staff fisso, domanda sui numeri di maglia prima del salvataggio); in Anagrafica nuovi campi N° tessera e N° maglia (anche nell'import Excel).
 - **v1,21** – Pulsante Distinte (solo Giovanissimi Under 15) con Distinte Campionato (link LND) e Distinte Coppa Brescia; link modificabili da Impostazioni.
 - **v1,22** – Distinte per tutti (link per categoria, tutti vuoti, solo Admin li imposta; niente Coppa Brescia per Prima Squadra, Juniores, Under 14). Richieste amichevoli solo a Direttore e Admin.
+- **v1,23** – Iscrizione con scelta Genitore/Giocatore/Staff e approvazione dell'Admin; ruoli Genitore e Giocatore in sola consultazione (calendario e convocazioni); pulsante per eliminare tutti gli utenti tranne l'Admin; regole aggiornate.
+- **v1,24** – Allenamenti: nuova scelta Ritardo (presente ma in ritardo), contata a parte nelle Statistiche e segnata sul calendario dell'atleta.
