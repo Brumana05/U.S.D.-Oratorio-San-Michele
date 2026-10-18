@@ -1,345 +1,619 @@
-<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Oratorio San Michele</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#1e3a8a"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oratorio San Michele</title>
+<meta name="theme-color" content="#1b4fa8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Oratorio SM">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:#f1f4f9;color:#1b2333}
-header{position:sticky;top:0;z-index:5;background:#1e3a8a;color:#fff;display:flex;align-items:center;gap:8px;padding:8px 10px;padding-top:calc(8px + env(safe-area-inset-top,0px))}
-header b{flex:1;font-size:15px}header img{width:30px;height:30px;border-radius:50%;object-fit:contain;background:#fff}.ver{font-size:11px;background:#ffffff33;border-radius:8px;padding:2px 6px}
-header button{background:#ffffff22;color:#fff;border:0;border-radius:8px;padding:6px 9px;font-size:13px}
-main{padding:12px;max-width:760px;margin:auto}nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;overflow-x:auto;border-top:1px solid #d6dbe6;padding-bottom:env(safe-area-inset-bottom,0px)}
-nav a{flex:1;min-width:76px;text-align:center;padding:8px 4px;font-size:11px;color:#667}nav a span{display:block;font-size:20px}nav a.on{color:#1e3a8a;font-weight:700}
-.card{background:#fff;border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:0 1px 3px #0001;border-left:6px solid #8a8f98}
-.b{background:#1e3a8a;color:#fff;border:0;border-radius:8px;padding:9px 14px;font-size:14px}.b.g{background:#e3e8f3;color:#1e3a8a}.b.r{background:#c0392b}
-input,select{width:100%;padding:9px;border:1px solid #c8cfdd;border-radius:8px;font-size:15px;margin:3px 0 8px;background:#fff}label{font-size:12px;color:#556}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
-.day{background:#fff;border-radius:8px;min-height:50px;padding:4px 0;font-size:13px}.day.sel{outline:2px solid #1e3a8a}.day.tod{font-weight:800;color:#1e3a8a}.dots{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;margin-top:3px}.dots i{width:8px;height:8px;border-radius:50%}
-.hd{font-size:11px;color:#778;padding:4px 0}#m{position:fixed;inset:0;display:none;background:#0008;z-index:20;align-items:center;justify-content:center;padding:14px}#m.on{display:flex}#m>div{background:#fff;border-radius:14px;padding:16px;width:100%;max-width:440px;max-height:90vh;overflow:auto}
-.pitch{position:relative;aspect-ratio:2/3;border-radius:10px;background:repeating-linear-gradient(#2f8f4c 0 10%,#277f40 10% 20%);border:3px solid #fff;overflow:hidden}.pitch svg{position:absolute;inset:0;width:100%;height:100%}.pf{position:absolute;inset:2% 0;display:flex;flex-direction:column;justify-content:space-around}.pr{display:flex;justify-content:space-around}.pl .c{position:relative}.bd{position:absolute;top:-4px;right:-4px;width:17px;height:17px;border-radius:50%;color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;border:1px solid #fff}.ic{letter-spacing:-3px;font-size:12px}.ng{display:block;font-size:10px;color:#ffe08a;margin-top:2px}.bench{background:linear-gradient(#2f8f4c,#277f40);border:3px solid #fff;border-radius:10px;padding:10px 4px;margin-top:10px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}.hm{display:grid;grid-template-columns:1fr;gap:12px}.hm button{display:flex;align-items:center;gap:16px;text-align:left;background:#fff;border:0;border-left:6px solid #c99a1c;border-radius:16px;padding:16px 18px;font-size:15px;font-weight:700;color:#1e3a8a;box-shadow:0 2px 6px #0002}.hm span{font-size:30px}
-.pl{width:86px;text-align:center;color:#fff;font-size:12px}
-.pl .c{width:58px;height:58px;border-radius:50%;background:#ffffff40 center/cover;margin:auto;display:flex;align-items:center;justify-content:center;font-size:28px;border:2px solid #fff}.pl em{display:block;font-style:normal}.pl .v{background:#fff;color:#1b2333;border-radius:6px;padding:1px 4px;margin-top:2px;display:inline-block;font-weight:700}
-table{border-collapse:collapse;width:100%;font-size:13px;background:#fff}th,td{padding:7px 5px;border-bottom:1px solid #e3e7ef;text-align:center;white-space:nowrap}td:first-child,th:first-child{text-align:left;position:sticky;left:0;background:#fff}
-.sm{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.msg{text-align:center;color:#667;padding:30px 10px}
-#bn{position:fixed;top:0;left:0;right:0;z-index:30;background:#c99a1c;color:#fff;padding:10px;display:flex;gap:8px;align-items:center;font-size:13px;padding-top:calc(10px + env(safe-area-inset-top,0px))}#bn button{margin-left:auto;background:#fff;color:#1b2333;border:0;border-radius:8px;padding:6px 10px}
-.auth{max-width:380px;margin:40px auto;padding:20px;text-align:center}.auth img{width:90px;height:90px;border-radius:50%;object-fit:cover}
-header{display:grid;grid-template-columns:1fr auto 1fr;border-bottom:3px solid #c99a1c}.hl{display:flex;align-items:center;gap:6px}.ht{text-align:center;line-height:1.15}.ht b{display:block;font-size:17px;flex:none}.ht small{font-size:10px;opacity:.85}.hr{display:flex;justify-content:flex-end;align-items:center;gap:8px}header button.gold{background:#c99a1c;font-weight:700}a.av{cursor:pointer;display:inline-flex}
-main h4{color:#8a6a00;border-bottom:2px solid #c99a1c;padding-bottom:3px}.auth h2{color:#1e3a8a;border-bottom:3px solid #c99a1c;display:inline-block;padding-bottom:4px}
-.dg{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}.rb{margin:0 -1px 0 1px;vertical-align:-2px}.gs{position:relative;display:inline-block;padding-top:7px;margin-right:2px}.gs svg{position:absolute;top:-1px;left:50%;transform:translateX(-50%)}
-.hm button.ins{background:#c99a1c;color:#fff;border-left-color:#8a6a00}
-.bdbar{background:linear-gradient(90deg,#c99a1c,#e6b830);color:#1b2333;text-align:center;padding:7px 10px;font-size:13px;font-weight:700}
-.bell{position:relative}.bell b{position:absolute;top:-6px;right:-6px;background:#e53935;color:#fff;border-radius:10px;font-size:10px;padding:1px 5px;flex:none}.nbar{background:#1e3a8a;color:#fff;text-align:center;padding:8px 10px;font-size:13px;cursor:pointer;border-bottom:3px solid #c99a1c}
-#mv{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 35%,#0f3a9e 0,#061a45 55%,#020a22 100%);color:#fff;text-align:center;overflow:hidden}
-#mv .beam{position:absolute;top:-20%;left:50%;width:30vmin;height:140%;background:linear-gradient(rgba(255,255,255,.28),transparent);transform-origin:top center;filter:blur(8px);animation:sw 4s ease-in-out infinite alternate}
-#mv .b2{animation-delay:-2s;background:linear-gradient(rgba(201,154,28,.4),transparent)}
-@keyframes sw{from{transform:translateX(-50%) rotate(-35deg)}to{transform:translateX(-50%) rotate(35deg)}}
-#mv .sc{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:14px}
-#mv .sc.on{display:flex;animation:fi .6s}
-@keyframes fi{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
-#mv .gold{color:#f0c75e;letter-spacing:4px;font-weight:800;text-transform:uppercase}
-#mv .lg{width:min(46vw,200px);animation:pop 1.2s ease-out,glow 2s infinite alternate}
-@keyframes pop{0%{transform:scale(.2) rotate(-90deg);opacity:0}100%{transform:none;opacity:1}}
-@keyframes glow{from{filter:drop-shadow(0 0 8px #c99a1c)}to{filter:drop-shadow(0 0 28px #f0c75e)}}
-#mv .shuf{font-size:clamp(26px,8vw,48px);font-weight:900;min-height:1.3em;text-shadow:0 0 18px #3b82f6}
-#mv .flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none}#mv .flash.on{animation:fl .9s}
-@keyframes fl{0%{opacity:1}100%{opacity:0}}
-#mv .ph{width:min(62vw,280px);aspect-ratio:3/4;border-radius:18px;border:5px solid #c99a1c;background:#12306f center/cover;box-shadow:0 0 40px #c99a1c88;display:flex;align-items:center;justify-content:center;font-size:90px;animation:rv 1s cubic-bezier(.2,1.4,.4,1)}
-@keyframes rv{from{transform:scale(.1) rotate(8deg);opacity:0}to{transform:none;opacity:1}}
-#mv .nm{font-size:clamp(24px,7vw,40px);font-weight:900}
-#mv .cf{position:absolute;top:-20px;width:10px;height:16px;animation:cfall linear forwards}
-@keyframes cfall{to{transform:translateY(115vh) rotate(720deg)}}
-#mv .pl2{display:inline-block;font-size:34vmin;font-weight:900;color:#f0c75e;text-shadow:0 0 40px #c99a1c;animation:pl2 .8s}
-@keyframes pl2{from{transform:scale(2.4);opacity:0}to{transform:scale(1);opacity:1}}
-#mv .skip{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:12px;background:#ffffff2e;color:#fff;border:0;border-radius:20px;padding:7px 14px;font-size:13px;z-index:3}
-</style></head><body><div id="bn" style="display:none"></div><div id="app"></div><div id="m"></div>
-<script src="firebase-config.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script>
-const V='1.21',K='osm_v1',$=q=>document.querySelector(q),p2=n=>String(n).padStart(2,'0'),uid=()=>Math.random().toString(36).slice(2,9);
-const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const def=()=>({team:{name:'Oratorio San Michele',logo:''},players:[],events:[],users:[],votes:{},mvpv:{},notices:[],rd:{},rdAll:{},rdOk:false,claims:{}});
-let S=def();
-const save=()=>{if(admin())syncA()};
-let me=localStorage.getItem('osm_last')||(localStorage.getItem('osm_guest')?'guest':''),tab='home',fe=null,fx=null,authMode='in';
-const admin=()=>me==='Admin',canVote=()=>me&&me!=='guest'&&me!=='Admin';
-const today=()=>{const d=new Date();return`${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`};
-const started=x=>new Date(x.date+'T'+(x.time||'00:00'))<=new Date();
-const TYPES={camp:['Campionato','#1e5bd8'],coppa:['Coppa Brescia','#c99a1c'],amic:['Amichevole','#2e9e4f'],all:['Allenamento','#8a8f98']};
-const MODS=['4-3-1-2','4-4-2','4-3-3','3-5-2','4-5-1','3-4-3','4-2-3-1','3-4-1-2'];let bo=false;
-const ROLES={P:'Portiere',D:'Difensore',C:'Centrocampista',A:'Attaccante'},RP={P:'Portieri',D:'Difensori',C:'Centrocampisti',A:'Attaccanti'};
-function rowsOf(m){if(m==='4-3-1-2')return[['POR'],['Terz. sx','Dif. centr.','Dif. centr.','Terz. dx'],['Mezz. sx','Mediano','Mezz. dx'],['Trequart.'],['Att.','Att.']];
-const n=m.split('-').map(Number);return[['POR'],...n.map((k,i)=>Array(k).fill(i==0?'DIF':i==n.length-1?'ATT':'CEN'))]}
-const MESI=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
-let myPh=localStorage.getItem('osm_ph')||'',myRole='',myPid='',myOk=false;
-const played=(ev,id)=>ev.lineup?.slots.includes(id)||((ev.lineup?.bench||[]).includes(id)&&ev.stats?.[id]?.in);
-const HA=x=>x.ha==='casa'?'🏠 In casa':x.ha==='trasf'?'🚌 In trasferta':'';
-let cal={y:new Date().getFullYear(),m:new Date().getMonth(),d:today()};
-const msg=t=>`<div class=msg>${t}</div>`,pl=id=>S.players.find(p=>p.id===id),fmt=n=>n==null?'–':n.toFixed(1).replace('.',',');
-function M(h){const m=$('#m');m.innerHTML='<div>'+h+'</div>';m.classList.add('on')}function X(){$('#m').classList.remove('on');if(pend)R()}
-function go(){R()}
-/* AUTH */
-function vAuth(){return`<div class=auth>${`<img src="${S.team.logo||'logo.png'}">`}<h2>${e(S.team.name)}</h2><p>Giovanissimi Under 15</p><h3 style="color:#1e3a8a;font-size:22px;margin:14px 0 6px">${authMode==='in'?'Accedi':'Registrati'}</h3>
-<input id=au placeholder="Nome utente" autocapitalize=off><input id=ap type=password placeholder="Password">${authMode==='reg'?`<label style="display:block;text-align:left">Chi sei?</label><select id=ar onchange="$('#asw').style.display=this.value==='giocatore'?'':'none'"><option value=genitore>Genitore</option><option value=giocatore>Giocatore</option><option value=staff>Staff</option></select><div id=asw style="display:none"><p style="font-size:12px;color:#8a6a00;text-align:left">⚠ Scegli con attenzione: una volta scelto il giocatore non potrai più cambiarlo (solo l'admin può modificarlo). Ogni giocatore può avere un solo utente.</p><select id=asn><option value="">— scegli il giocatore —</option>${plOpts()}</select></div>`:''}
-<button class=b style="width:100%" onclick="doAuth()">${authMode==='in'?'Accedi':'Registrati'}</button><p><a href="#" onclick="authMode=authMode==='in'?'reg':'in';R();return false">${authMode==='in'?'Non hai un account? Registrati':'Hai già un account? Accedi'}</a></p>
-<button class="b g" style="width:100%" onclick="setMe('guest')">Continua senza accedere</button><p style="font-size:12px;color:#667">Password: almeno 6 caratteri. Nome utente: lettere, numeri . _ -</p><p id=ae style="color:#c0392b">${FB_ERR}</p></div>`}
-async function doAuth(){const u=$('#au').value.trim(),p=$('#ap').value,E=t=>$('#ae').textContent=t;if(!FB_OK)return E(FB_ERR);if(!u||!p)return E('Inserisci nome utente e password');
-if(!/^[A-Za-z0-9._-]{3,20}$/.test(u))return E('Nome utente: 3-20 caratteri (lettere, numeri . _ -)');
-try{if(authMode==='in'){const key=u.toLowerCase();let em=key==='admin'?'admin@osm.local':key+'@osm.local';if(key!=='admin'){const nd=await db.collection('usernames').doc(key).get();if(nd.exists)em=nd.data().em}await auth.signInWithEmailAndPassword(em,p)}
-else{if(u.toLowerCase()==='admin')return E('Nome utente non disponibile');
-const role=$('#ar').value;let pid='';
-if(role==='giocatore'){pid=$('#asn').value;if(!pid)return E('Scegli il giocatore');if(S.claims[pid])return E('Questo giocatore è già stato scelto da un altro utente');if(!confirm('Confermi di essere '+pl(pid).name+'?\nUna volta scelto non potrai più cambiarlo: solo l\'admin potrà modificarlo.'))return}
-const key=u.toLowerCase();if((await db.collection('usernames').doc(key).get()).exists)return E('Nome utente non disponibile');
-regName=u;regInfo={role,pid};const em='u'+Date.now().toString(36)+Math.random().toString(36).slice(2,8)+'@osm.local';const c=await auth.createUserWithEmailAndPassword(em,p);
-try{await db.collection('usernames').doc(key).set({u,uid:c.user.uid,em})}catch(x2){await c.user.delete();regName='';regInfo=null;return E('Nome utente non disponibile')}
-if(role==='giocatore'){try{await db.collection('claims').doc(pid).set({uid:c.user.uid})}catch(x3){await c.user.delete();regName='';regInfo=null;return E('Questo giocatore è già stato scelto da un altro utente')}}
-await db.collection('users').doc(c.user.uid).set({u,d:today(),role,pid},{merge:true});me=u;myRole=role;myPid=pid;regName='';setTimeout(()=>{regInfo=null},5000)}
-tab='home';R()}catch(x){regName='';regInfo=null;E({'auth/email-already-in-use':'Nome utente non disponibile','auth/weak-password':'La password deve avere almeno 6 caratteri','auth/invalid-credential':'Credenziali errate','auth/user-not-found':'Credenziali errate','auth/wrong-password':'Credenziali errate','auth/network-request-failed':'Nessuna connessione'}[x.code]||x.message)}}
-function setMe(u){me=u;localStorage.setItem('osm_guest','1');tab='home';R()}
-function out(){localStorage.removeItem('osm_guest');localStorage.removeItem('osm_last');me='';tab='home';if(auth&&auth.currentUser)auth.signOut();else R()}
-/* CALENDARIO */
-function vCal(){const f=new Date(cal.y,cal.m,1),off=(f.getDay()+6)%7,dim=new Date(cal.y,cal.m+1,0).getDate();let c='';for(let i=0;i<off;i++)c+='<div></div>';
-for(let d=1;d<=dim;d++){const ds=`${cal.y}-${p2(cal.m+1)}-${p2(d)}`,ev=S.events.filter(x=>x.date===ds);c+=`<div class="day ${ds===cal.d?'sel':''} ${ds===today()?'tod':''}" onclick="cal.d='${ds}';R()">${d}<div class=dots>${ev.slice(0,4).map(x=>`<i style="background:${TYPES[x.type][1]}"></i>`).join('')}</div></div>`}
-const evs=S.events.filter(x=>x.date===cal.d).sort((a,b)=>a.time.localeCompare(b.time));
-return`<div class=row style="justify-content:space-between"><button class="b g" onclick="mv(-1)">‹</button><b>${MESI[cal.m]} ${cal.y}</b><button class="b g" onclick="mv(1)">›</button></div>
-<div class=grid style="margin-top:8px">${['L','M','M','G','V','S','D'].map(x=>`<div class=hd>${x}</div>`).join('')}${c}</div>
-<div class=row style="font-size:11px;margin:8px 0">${Object.values(TYPES).map(t=>`<span><i style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${t[1]}"></i> ${t[0]}</span>`).join('')}</div>
-<h4>${cal.d.split('-').reverse().join('/')}</h4>${evs.map(x=>`<div class=card style="border-color:${TYPES[x.type][1]}"><b style="color:${TYPES[x.type][1]}">${TYPES[x.type][0]}</b> · ${e(x.time)}<br>${x.opp?'vs '+e(x.opp)+(HA(x)?' · '+HA(x):'')+'<br>':''}${e(x.place)}
-${admin()?`<div class=row style="margin-top:6px"><button class="b g" onclick="evF('${x.id}')">Modifica</button><button class="b r" onclick="evD('${x.id}')">Elimina</button></div>`:''}</div>`).join('')||msg('Nessun evento')}
-${admin()?`<button class=b onclick="evF()">+ Aggiungi evento</button>`:''}`}
-function mv(n){cal.m+=n;if(cal.m<0){cal.m=11;cal.y--}if(cal.m>11){cal.m=0;cal.y++}R()}
-function evF(id){const x=S.events.find(y=>y.id===id)||{type:'camp',date:cal.d,time:'15:00',opp:'',place:''};
-M(`<h3>${id?'Modifica':'Nuovo'} evento</h3><label>Tipo</label><select id=f1 onchange="$('#hw').style.display=this.value==='all'?'none':''">${Object.entries(TYPES).map(([k,v])=>`<option value=${k} ${x.type===k?'selected':''}>${v[0]}</option>`).join('')}</select><label>Data</label><input type=date id=f2 value="${x.date}"><label>Orario</label><input type=time id=f3 value="${x.time}"><label>Avversario</label><input id=f4 value="${e(x.opp)}"><label>Luogo</label><input id=f5 value="${e(x.place)}"><div id=hw style="${x.type==='all'?'display:none':''}"><label>Casa / Trasferta</label><select id=f6><option value=casa ${x.ha!=='trasf'?'selected':''}>🏠 In casa</option><option value=trasf ${x.ha==='trasf'?'selected':''}>🚌 In trasferta</option></select></div><div class=row><button class=b onclick="evS('${id||''}')">Salva</button><button class="b g" onclick="X()">Annulla</button></div>`)}
-function evS(id){const o={type:$('#f1').value,date:$('#f2').value,time:$('#f3').value,opp:$('#f4').value,place:$('#f5').value,ha:$('#f1').value==='all'?'':$('#f6').value};if(!o.date)return;
-if(id)Object.assign(S.events.find(y=>y.id===id),o);else S.events.push({id:uid(),...o});cal.d=o.date;save();X();R()}
-function evD(id){if(confirm('Eliminare?')){S.events=S.events.filter(x=>x.id!==id);save();R()}}
-/* VALUTAZIONI / FORMAZIONE */
-const ids=ev=>{const L=ev.lineup;if(!L)return[];const s=L.slots.filter(Boolean);return[...s,...(L.bench||[]).filter(b=>!s.includes(b))]};
-const VOTES=['','SV',...Array.from({length:13},(_,i)=>4+i*.5)];
-const opts=(arr,sel)=>arr.map(v=>`<option value="${v}" ${String(sel??'')===String(v)?'selected':''}>${v===''?'—':v}</option>`).join('');
-function vVal(){if(admin())return vForm();
-if(!canVote())return msg('Per votare i ragazzi devi <a href="#" onclick="out();return false">accedere o registrarti</a>.');
-const evs=S.events.filter(x=>x.type!=='all'&&x.date===today()&&started(x)&&ids(x).length);
-if(!evs.length)return msg('Le valutazioni si aprono all\'inizio della partita e restano aperte fino a fine giornata.');
-return`<p style="font-size:12px;color:#667">I voti sono un parere per aiutare l\'admin: i voti definitivi li assegna solo lui. Vedi solo i tuoi voti.</p>`+evs.map(ev=>`<div class=card style="border-color:${TYPES[ev.type][1]}"><b>${TYPES[ev.type][0]} vs ${e(ev.opp)}</b> ${HA(ev)}${noteG(ev)}${vlist(ev).map(id=>{const p=pl(id);return p?`<div class=row style="margin-top:6px"><span style="flex:1">${p.num?'#'+e(p.num)+' ':''}${e(p.name)}</span><select style="width:90px;margin:0" onchange="setV('${ev.id}','${id}',this.value)">${opts(VOTES,S.votes[ev.id]?.[me]?.[id])}</select></div>`:''}).join('')}${mvpSel(ev)}</div>`).join('')}
-function setV(eid,pid,v){const m=((S.votes[eid]??={})[me]??={});m[pid]=v;if(!auth||!auth.currentUser)return alert('Connessione in corso, riprova tra un attimo');const uid=auth.currentUser.uid;db.collection('votes').doc(eid+'_'+uid).set({eid,uid,user:me,v:m}).catch(x=>alert('Voto non salvato: '+x.message))}
-function vForm(){if(!fe)return`<h4>Seleziona la partita</h4>`+(S.events.filter(x=>x.type!=='all').sort((a,b)=>b.date.localeCompare(a.date)).map(x=>`<div class=card style="border-color:${TYPES[x.type][1]}" onclick="fe='${x.id}';R()"><b>${TYPES[x.type][0]}</b> ${x.date.split('-').reverse().join('/')} vs ${e(x.opp)} ${HA(x)}<br><small>${x.lineup?'Formazione inserita':'Da compilare'}</small></div>`).join('')||msg('Aggiungi prima le partite dal Calendario'));
-const ev=S.events.find(x=>x.id===fe);ev.lineup??={mod:'4-4-2',slots:[],bench:[]};ev.stats??={};const rows=rowsOf(ev.lineup.mod);let i=0;
-const ps=[...S.players].sort((a,b)=>a.name.localeCompare(b.name));
-const sl=rows.map(r=>r.map(lb=>{const k=i++;return`<label>${lb}</label><select onchange="setSlot(${k},this.value)"><option value="">— scegli —</option>${ps.map(p=>`<option value=${p.id} ${ev.lineup.slots[k]===p.id?'selected':''}>${e(p.name)}${p.role?' ('+p.role+')':''}</option>`).join('')}</select>`}).join('')).join('');
-const st=ids(ev).map(id=>{const p=pl(id);if(!p)return'';const s=ev.stats[id]??={},gk=ev.lineup.slots[0]===id,vs=Object.values(S.votes[ev.id]||{}).map(u=>parseFloat(u[id])).filter(n=>!isNaN(n)),avg=vs.length?(vs.reduce((a,b)=>a+b,0)/vs.length).toFixed(2):'–';
-const num=(k,l)=>`<div><label>${l}</label><input type=number min=0 value="${s[k]||0}" onchange="setS('${id}','${k}',+this.value)"></div>`,chk=(k,l)=>`<label><input type=checkbox style="width:auto" ${s[k]?'checked':''} onchange="setS('${id}','${k}',this.checked)"> ${l}</label>`;
-return`<div class=card><b>${e(p.name)}${gk?' 🧤':''}</b> <span style="float:right" id="fv${id}">Fanta: ${fmt(fanta(ev,id))}</span><br><small>Media utenti: ${avg} (${vs.length} voti)</small>
-<div class=sm><div><label>Voto base${s.auto?' (media utenti)':''}</label><select onchange="setS('${id}','vote',this.value)">${opts(vl(s.vote),s.vote)}</select></div>${num('g','Gol')}${num('a','Assist')}${num('og','Autogol')}${num('pm','Rig. sbagliati')}<div><label>Gialli</label><select onchange="setS('${id}','y',+this.value)">${opts([0,1,2],s.y||0)}</select></div>${gk?num('pen','Rigori parati')+num('conc','Gol subiti'):''}</div>
-<div class=row>${chk('r','Rosso')}${chk('out','Sostituito')}${chk('in','Subentrato')}</div></div>`}).join('');
-const bench=ps.filter(p=>!ev.lineup.slots.includes(p.id)).map(p=>`<label style="display:block"><input type=checkbox style="width:auto" ${ev.lineup.bench.includes(p.id)?'checked':''} onchange="setBench('${p.id}',this.checked)"> ${e(p.name)}</label>`).join('');
-return`<button class="b g" onclick="fe=null;R()">‹ Partite</button><h4>${TYPES[ev.type][0]} vs ${e(ev.opp)} ${HA(ev)}</h4><div class=card>${(()=>{const src=S.events.filter(x=>x.id!==ev.id&&x.lineup?.slots.some(Boolean)).sort((a,b)=>b.date.localeCompare(a.date));return src.length?`<label>Copia formazione da una partita precedente</label><select onchange="cpL(this.value)"><option value="">— scegli partita —</option>${src.map(x=>`<option value=${x.id}>${x.date.split('-').reverse().join('/')} · ${TYPES[x.type][0]} vs ${e(x.opp)} (${x.lineup.mod})</option>`).join('')}</select>`:''})()}<label>Modulo</label><select onchange="setMod(this.value)">${MODS.map(m=>`<option ${m===ev.lineup.mod?'selected':''}>${m}</option>`).join('')}</select>${sl}<details ${bo?'open':''} ontoggle="bo=this.open"><summary>Panchina / subentrati (selezione multipla)</summary>${bench||'Nessuno'}</details></div>${ev.lineup.slots.some(Boolean)?'<h4>Anteprima formazione</h4>'+pitchHTML(ev,true):''}${ids(ev).length?'<h4>Voti e statistiche</h4>':''}${st}`}
-const cur=()=>S.events.find(x=>x.id===fe);
-function cpL(id){if(!id)return;const o=S.events.find(x=>x.id===id).lineup,L=cur().lineup;if(L.slots.some(Boolean)&&!confirm('Sostituire la formazione attuale con quella copiata?'))return R();L.mod=o.mod;L.slots=[...o.slots];L.bench=[...(o.bench||[])];save();R()}
-function setMod(m){const L=cur().lineup;L.mod=m;L.slots=L.slots.slice(0,11);save();R()}
-function setSlot(k,v){const L=cur().lineup;L.slots=Array.from({length:11},(_,i)=>L.slots[i]||'');L.slots[k]=v;if(v)L.slots=L.slots.map((x,i)=>i!==k&&x===v?'':x);L.bench=L.bench.filter(b=>b!==v);save();R()}
-function setBench(id,on){const L=cur().lineup;L.bench=L.bench.filter(b=>b!==id);if(on)L.bench.push(id);save();R()}
-function setS(id,k,v){const ev=cur();ev.stats[id][k]=v;if(k==='vote')ev.stats[id].auto=false;save();const el=$('#fv'+id);if(el)el.textContent='Fanta: '+fmt(fanta(ev,id));if(k!=='vote')R()}
-function fanta(ev,id){const s=ev.stats?.[id];if(!s||s.vote===undefined||s.vote===''||s.vote==='SV')return null;let v=parseFloat(s.vote)+3*(s.g||0)+(s.a||0)-.5*(s.y||0)-(s.r?1:0)-2*(s.og||0)-3*(s.pm||0);
-if(ev.lineup.slots[0]===id){v-=(s.conc||0);v+=3*(s.pen||0);if(!s.conc)v+=1}return v}
-/* FANTA */
-const RB='<svg class=rb width=13 height=13 viewBox="0 0 24 24"><circle cx=12 cy=12 r=11 fill="#e53935" stroke="#fff" stroke-width="1.5"/><path d="M12 7l4 3-1.5 5h-5L8 10z" fill="#7f1d1d"/></svg>';
-const GS='<span class=gs>⚽<svg width=8 height=9 viewBox="0 0 8 9"><path d="M3 0h2v5h2.5L4 9 .5 5H3z" fill="#e53935"/></svg></span>';
-const rep=(n,i)=>n>3?i.repeat(3)+'+':i.repeat(n);
-const icons=(s,gk)=>(s.g?rep(s.g,'⚽'):'')+(s.og?rep(s.og,RB):'')+(s.a?rep(s.a,'🦶'):'')+(s.pen?rep(s.pen,'🧤'):'')+(s.pm?rep(s.pm,'🥅❌'):'')+(gk&&s.conc?rep(s.conc,GS):'')+(s.y?'🟨'.repeat(Math.min(s.y,2)):'')+(s.r?'🟥':'');
-function cell(ev,id,lb,bn,dg,k){const p=pl(id),at=dg?(bn?`class="pl dg" data-b="${id||''}"`:`class="pl dg" data-k="${k}"`):'class=pl';
-if(!p)return`<div ${at}><div class=c>👤</div><em>${lb}</em></div>`;const s=ev.stats?.[id]||{},pd=!bn||s.in,gk=ev.lineup.slots[0]===id;
-const bd=s.out?'<b class=bd style="background:#c0392b">▼</b>':s.in?'<b class=bd style="background:#2e9e4f">▲</b>':'';
-return`<div ${at}><div class=c style="${p.photo?`background-image:url(${p.photo})`:''}">${p.photo?'':'👤'}${bd}</div><em>${e(p.last||p.name.split(' ')[0])} <span class=ic>${icons(s,gk)}</span></em>${pd?`<span class=v>${s.vote||'–'}</span> <span class=v style="background:#c99a1c;color:#fff">${fmt(fanta(ev,id))}</span>`:'<small class=ng>Non ha giocato</small>'}</div>`}
-function pitchHTML(ev,dg){const rows=rowsOf(ev.lineup.mod);let o=0;const offs=rows.map(r=>{const q=o;o+=r.length;return q});
-const pitch=rows.map((r,ri)=>ri).reverse().map(ri=>`<div class=pr>${rows[ri].map((lb,j)=>cell(ev,ev.lineup.slots[offs[ri]+j],lb,false,dg,offs[ri]+j)).join('')}</div>`).join('');
-const bn=(ev.lineup.bench||[]).filter(id=>pl(id));
-const svg=`<svg viewBox="0 0 100 150"><g fill=none stroke="#fff" stroke-width=".6" stroke-opacity=".85"><rect x=4 y=4 width=92 height=142 /><line x1=4 y1=75 x2=96 y2=75 /><circle cx=50 cy=75 r=12 /><rect x=26 y=4 width=48 height=22 /><rect x=38 y=4 width=24 height=9 /><rect x=26 y=124 width=48 height=22 /><rect x=38 y=137 width=24 height=9 /><path d="M41 26 A12 12 0 0 0 59 26" /><path d="M41 124 A12 12 0 0 1 59 124" /></g><circle cx=50 cy=75 r=1 fill="#fff"/></svg>`;
-return`${dg?'<p style="font-size:12px;color:#8a6a00">✋ Trascina i giocatori per scambiarli di posto (anche con la panchina). Le icone di gol, voti e sostituzioni restano legate al giocatore.</p>':''}<div class=pitch>${svg}<div class=pf>${pitch}</div></div>${bn.length?`<div class=bench><div style="width:100%;text-align:center;color:#fff;font-weight:700">Panchina</div>${bn.map(id=>cell(ev,id,'',true,dg)).join('')}</div>`:''}<p style="font-size:11px;color:#667">▲ subentrato · ▼ sostituito · ⚽ gol · ${RB} autogol · ${GS} gol subito · 🦶 assist · 🧤 rigore parato · 🥅❌ rigore sbagliato · 🟨 ammonizione · 🟥 espulsione</p>`}
-function vFanta(){const evs=S.events.filter(x=>x.lineup?.slots.some(Boolean)).sort((a,b)=>b.date.localeCompare(a.date));if(!evs.length)return msg('Nessuna formazione ancora pubblicata.');
-const ev=evs.find(x=>x.id===fx)||evs[0];
-return`<select onchange="fx=this.value;R()">${evs.map(x=>`<option value=${x.id} ${x.id===ev.id?'selected':''}>${x.date.split('-').reverse().join('/')} · ${TYPES[x.type][0]} vs ${e(x.opp)}</option>`).join('')}</select><p style="font-size:12px;color:#667">Modulo ${ev.lineup.mod} · Bianco = voto base · Oro = Fantavoto</p>${pitchHTML(ev)}`}
-/* STATISTICHE */
-function vStat(){const A=S.players.map(p=>{const r={p,m:S.events.filter(ev=>{const q=mvpOf(ev);return q&&q.ids.includes(p.id)}).length,app:0,g:0,a:0,y:0,r:0,c:0,vb:[],vf:[]};S.events.forEach(ev=>{if(!played(ev,p.id))return;r.app++;const s=ev.stats?.[p.id]||{};r.g+=s.g||0;r.a+=s.a||0;r.y+=s.y||0;r.r+=s.r?1:0;if(ev.lineup.slots[0]===p.id)r.c+=s.conc||0;const f=fanta(ev,p.id);if(f!=null){r.vf.push(f);r.vb.push(parseFloat(s.vote))}});return r});
-if(!A.length)return msg('Nessun atleta in anagrafe.');const av=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
-return['P','D','C','A',''].map(k=>{const L=A.filter(r=>(r.p.role||'')===k).sort((a,b)=>a.p.name.localeCompare(b.p.name));if(!L.length)return'';const gk=k==='P';
-return`<h4>${RP[k]||'Ruolo non assegnato'}</h4><div style="overflow:auto"><table><tr><th>Atleta</th><th>Pres</th><th>Gol</th><th>Ass</th><th>Amm</th><th>Esp</th>${gk?'<th>Subiti</th>':''}<th>MVP</th><th>M.Voto</th><th>M.Fanta</th></tr>${L.map(r=>`<tr><td>${e(r.p.name)}</td><td>${r.app}</td><td>${r.g}</td><td>${r.a}</td><td>${r.y}</td><td>${r.r}</td>${gk?`<td>${r.c}</td>`:''}<td>${r.m}</td><td>${fmt(av(r.vb))}</td><td>${fmt(av(r.vf))}</td></tr>`).join('')}</table></div>`}).join('')}
-/* ANAGRAFE */
-let tmpPh='';
-function vAna(){return`<button class=b onclick="plF()">+ Nuovo atleta</button><div style="margin-top:10px">${[...S.players].sort((a,b)=>a.name.localeCompare(b.name)).map(p=>`<div class=card class=row style="display:flex;gap:10px;align-items:center">${p.photo?`<img src="${p.photo}" style="width:42px;height:42px;border-radius:50%;object-fit:cover">`:'<span style="font-size:30px">👤</span>'}<div style="flex:1"><b>${p.num?'#'+e(p.num)+' ':''}${e(p.name)}</b><br><small>${ROLES[p.role]||'Ruolo n.d.'} ${p.dob?'· '+p.dob.split('-').reverse().join('/'):e(p.year||'')}</small>${(()=>{const q=S.users.find(u=>u.pid===p.id&&u.role==='giocatore');return q?'<br><small>👤 Utente: <b>'+e(q.u)+'</b></small>':''})()}</div><button class="b g" onclick="plF('${p.id}')">✎</button><button class="b r" onclick="plD('${p.id}')">🗑</button></div>`).join('')||msg('Nessun atleta')}</div>`}
-function plF(id){const p=S.players.find(x=>x.id===id)||{},ln=p.last??(p.name||'').split(' ')[0],fn=p.first??(p.name||'').split(' ').slice(1).join(' ');tmpPh=p.photo||'';
-M(`<h3>${id?'Modifica':'Nuovo'} atleta</h3><label>Cognome</label><input id=p1 value="${e(ln)}"><label>Nome</label><input id=p5 value="${e(fn)}"><label>Numero</label><input id=p2 value="${e(p.num||'')}"><label>Ruolo</label><select id=p3><option value="">— scegli —</option>${Object.entries(ROLES).map(([k,v])=>`<option value=${k} ${p.role===k?'selected':''}>${v}</option>`).join('')}</select><label>Data di nascita</label><input type=date id=p4 value="${e(p.dob||'')}"><label>Foto (meglio se grande: serve per la gigantografia MVP)</label><input type=file accept="image/*" onchange="img(this,600,'jpeg',d=>tmpPh=d)"><div class=row><button class=b onclick="plS('${id||''}')">Salva</button><button class="b g" onclick="X()">Annulla</button></div>`)}
-function plS(id){const l=$('#p1').value.trim(),f=$('#p5').value.trim(),o={last:l,first:f,name:(l+' '+f).trim(),num:$('#p2').value,role:$('#p3').value,dob:$('#p4').value,year:$('#p4').value.slice(0,4),photo:tmpPh};if(!l)return;if(id)Object.assign(S.players.find(x=>x.id===id),o);else S.players.push({id:uid(),...o});save();X();R()}
-function plD(id){if(confirm('Eliminare atleta?')){S.players=S.players.filter(x=>x.id!==id);save();R()}}
-function img(inp,sz,t,cb){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,sz/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*k;c.height=i.height*k;c.getContext('2d').drawImage(i,0,0,c.width,c.height);cb(c.toDataURL('image/'+t,.8))};i.src=r.result};r.readAsDataURL(f)}
-/* UTENTI */
-function vUsr(){return`<p><b>${S.users.length}</b> utenti registrati</p><p style="font-size:12px;color:#667">Le password sono protette da Firebase e non sono visibili. Per reimpostarle o eliminare un account usa Firebase Console → Authentication.</p>`+(S.users.sort((a,b)=>a.u.localeCompare(b.u)).map(u=>`<div class=card><b>${e(u.u)}</b> <button class="b r" style="float:right;padding:4px 8px" onclick="uD('${u.id}')">🗑</button><br><small>Iscritto il ${e(u.d||'')} · ${{genitore:'Genitore',giocatore:'Giocatore',staff:'Staff'}[u.role]||'ruolo non scelto'}${u.pid&&pl(u.pid)?' ⚽ <b>'+e(pl(u.pid).name)+'</b>'+(pl(u.pid).num?' #'+e(pl(u.pid).num):''):''}</small><br><button class="b g" style="padding:4px 8px;margin-top:6px" onclick="uRole('${u.id}')">✎ Cambia ruolo</button></div>`).join('')||msg('Nessun utente registrato'))}
-async function uD(id){if(!confirm('Eliminare questo utente? Il suo nome utente tornerà disponibile e i suoi voti verranno cancellati.'))return;const x=S.users.find(y=>y.id===id);
-try{const b=db.batch();b.delete(db.collection('users').doc(id));if(x)b.delete(db.collection('usernames').doc(x.u.toLowerCase()));for(const c of ['votes','mvp','claims'])(await db.collection(c).where('uid','==',id).get()).docs.forEach(d=>b.delete(d.ref));await b.commit()}catch(er){alert('Errore: '+er.message)}}
-/* IMPOSTAZIONI */
-let tmpLogo=null;
-function vSet(){tmpLogo=null;M(`<h3>Impostazioni</h3><label>Nome società</label><input id=s1 value="${e(S.team.name)}"><label>Logo</label><input type=file accept="image/*" onchange="img(this,160,'png',d=>tmpLogo=d)"><button class=b onclick="S.team.name=$('#s1').value||S.team.name;if(tmpLogo)S.team.logo=tmpLogo;save();X();R()">Salva</button><hr>
-<label>Importa anagrafe da Excel (colonne: Nome, Cognome, Numero, Ruolo, Data di nascita)</label><input type=file accept=".xlsx,.xls,.csv" onchange="xl(this)"><hr>
-<button class="b g" onclick="mig()">☁️ Carica su Firebase i dati di questo dispositivo</button><br><br><button class="b r" onclick="purge()">🗑 Elimina tutti gli utenti (tranne Admin)</button><br><br><div class=row><button class="b g" onclick="bk()">⬇ Backup dati</button><label class="b g" style="margin:0">⬆ Ripristina<input type=file hidden accept=".json" onchange="rs(this)"></label></div><br><button class="b g" onclick="X()">Chiudi</button>`)}
-const parseDob=v=>{if(v==null||v==='')return'';if(typeof v==='number')return new Date(Math.round((v-25569)*864e5)).toISOString().slice(0,10);const t=String(v).trim();let m=t.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);if(m)return`${m[3]}-${p2(m[2])}-${p2(m[1])}`;m=t.match(/^\d{4}-\d{2}-\d{2}/);return m?m[0]:''};
-const dobO=r=>{const d=parseDob(r['data di nascita']??r['data nascita']??r.nascita??r.dob);return d?{dob:d,year:d.slice(0,4)}:{}};
-function xl(inp){const f=inp.files[0];if(!f)return;const run=()=>{const r=new FileReader();r.onload=ev=>{const wb=XLSX.read(ev.target.result,{type:'array'}),rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);let n=0;
-rows.forEach(r0=>{const r={};for(const k in r0)r[k.toLowerCase().trim()]=r0[k];const l=String(r.cognome??'').trim(),f=String(r.nome??'').trim(),name=(l+' '+f).trim()||String(r.atleta??r.giocatore??'').trim();if(!name)return;const rl=String(r.ruolo??'').trim().toUpperCase()[0]||'';const o={last:l||name.split(' ')[0],first:f,name,num:String(r.numero??r.n??''),role:'PDCA'.includes(rl)&&rl?rl:'',year:String(r.anno??r['anno di nascita']??''),...dobO(r)},x=S.players.find(p=>p.name.toLowerCase()===o.name.toLowerCase());x?Object.assign(x,o):S.players.push({id:uid(),...o});n++});save();X();R();alert('Importati '+n+' atleti')};r.readAsArrayBuffer(f)};
-if(window.XLSX)run();else{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=run;s.onerror=()=>alert('Impossibile caricare la libreria Excel (serve internet)');document.head.appendChild(s)}}
-function bk(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='v'+V.replace('.',',')+'_backup.json';a.click()}
-function rs(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{S=Object.assign(def(),JSON.parse(r.result));save();X();R()}catch(x){alert('File non valido')}};r.readAsText(f)}
-/* RENDER */
-function vConv(){const L=S.events.filter(x=>x.type!=='all').sort((a,b)=>b.date.localeCompare(a.date));if(!L.length)return msg('Nessuna partita in calendario.');
-return L.map(x=>`<div class=card style="border-color:${TYPES[x.type][1]}"><b>${TYPES[x.type][0]}</b> ${x.date.split('-').reverse().join('/')} ${e(x.time)} vs ${e(x.opp)} ${HA(x)}<div class=row style="margin-top:6px">${x.conv?`<button class=b onclick="cv('${x.id}')">Vedi convocazioni</button>`:'<small>Convocazioni non ancora pubblicate</small>'}${admin()?`<label class="b g" style="margin:0">${x.conv?'Sostituisci JPG':'Carica JPG'}<input type=file hidden accept="image/jpeg,image/png" onchange="cUp('${x.id}',this)"></label>${x.conv?`<button class="b r" onclick="cDel('${x.id}')">Elimina</button>`:''}`:''}</div></div>`).join('')}
-function cv(id){M(`<img src="${S.events.find(x=>x.id===id).conv}" style="width:100%"><br><button class="b g" onclick="X()">Chiudi</button>`)}
-function cUp(id,inp){img(inp,1100,'jpeg',d=>{const x=S.events.find(y=>y.id===id);x.conv=d;try{save();R()}catch(er){delete x.conv;alert('Memoria piena: immagine troppo grande')}})}
-function cDel(id){if(confirm('Eliminare le convocazioni?')){delete S.events.find(x=>x.id===id).conv;save();R()}}
-let vx='';
-function vVot(){const evs=S.events.filter(x=>x.type!=='all'&&S.votes[x.id]).sort((a,b)=>b.date.localeCompare(a.date));if(!evs.length)return msg('Nessun voto ricevuto dagli utenti.');
-const one=evs.find(x=>x.id===vx),sel=one?[one]:evs;
-const rows=S.players.map(p=>{const vs=[],det=[];sel.forEach(ev=>{const U=S.votes[ev.id]||{};for(const u in U){const v=U[u][p.id];if(v===undefined||v==='')continue;det.push(`${e(u)}: <b>${e(v)}</b>`+(one?'':` <small>(${ev.date.split('-').reverse().slice(0,2).join('/')} vs ${e(ev.opp)})</small>`));const n=parseFloat(v);if(!isNaN(n))vs.push(n)}});return{p,vs,det}}).filter(r=>r.det.length).sort((a,b)=>a.p.name.localeCompare(b.p.name));
-return`<select onchange="vx=this.value;R()"><option value="">Tutte le partite (media generale)</option>${evs.map(x=>`<option value=${x.id} ${x.id===vx?'selected':''}>${x.date.split('-').reverse().join('/')} · ${TYPES[x.type][0]} vs ${e(x.opp)}</option>`).join('')}</select>
-<p style="font-size:12px;color:#667">Pareri degli utenti: il voto definitivo lo assegni tu dalla sezione Formazione.</p>${one?mvpBox(one):''}`+(rows.map(r=>{const a=r.vs.length?r.vs.reduce((x,y)=>x+y,0)/r.vs.length:null,bv=one?one.stats?.[r.p.id]?.vote:'';return`<div class=card style="border-color:#1e3a8a"><div class=row><b style="flex:1">${e(r.p.name)}</b><span style="font-size:22px;font-weight:800;color:#1e3a8a">${a==null?'SV':a.toFixed(2).replace('.',',')}</span></div><small>${r.det.length} ${r.det.length===1?'voto':'voti'}${bv?' · tuo voto base: <b>'+e(bv)+'</b>':''}</small><details><summary style="font-size:13px">Chi ha votato</summary>${r.det.join('<br>')}</details></div>`}).join('')||msg('Nessun voto per questa partita.'))}
-function mvpOf(ev){if(ev.mvpAdmin?.length){const k=ev.mvpAdmin.filter(p=>pl(p));if(k.length)return{ids:k,n:Object.values(S.mvpv?.[ev.id]||{}).filter(p=>p===k[0]).length,man:true}}const Vt=S.mvpv?.[ev.id];if(!Vt||!(ev.date<today()))return null;const c={};Object.values(Vt).forEach(p=>{if(pl(p))c[p]=(c[p]||0)+1});const k=Object.keys(c);if(!k.length)return null;const m=Math.max(...Object.values(c));return{ids:k.filter(x=>c[x]===m),n:m}}
-function mvpSel(ev){const uid=auth?.currentUser?.uid,cu=S.mvpv?.[ev.id]?.[uid]||'';return`<div style="margin-top:12px;border-top:2px solid #c99a1c;padding-top:8px"><b>🏆 Man of the Match</b><br><small>Un solo voto, modificabile fino a fine giornata. Il vincitore viene proclamato a fine giornata.</small><select onchange="setMv('${ev.id}',this.value)"><option value="">— scegli il giocatore —</option>${ids(ev).map(id=>pl(id)).filter(Boolean).sort((a,b)=>a.name.localeCompare(b.name)).map(p=>`<option value=${p.id} ${p.id===cu?'selected':''}>${e(p.name)}</option>`).join('')}</select></div>`}
-function setMv(eid,pid){if(!pid)return;if(!auth||!auth.currentUser)return alert('Connessione in corso, riprova tra un attimo');const uid=auth.currentUser.uid;((S.mvpv??={})[eid]??={})[uid]=pid;db.collection('mvp').doc(eid+'_'+uid).set({eid,uid,pid}).catch(x=>alert('Voto non salvato: '+x.message))}
-function mvpBox(ev){const c={};Object.values(S.mvpv?.[ev.id]||{}).forEach(p=>c[p]=(c[p]||0)+1);const L=Object.entries(c).sort((a,b)=>b[1]-a[1]);return L.length?`<div class=card style="border-color:#c99a1c"><b>🏆 Voti Man of the Match</b>${L.map(([id,n])=>`<div>${e(pl(id)?.name||'?')} — <b>${n}</b></div>`).join('')}</div>`:''}
-function vMvp(){const evs=S.events.filter(x=>x.type!=='all').sort((a,b)=>b.date.localeCompare(a.date)),done=evs.map(ev=>({ev,m:mvpOf(ev)})).filter(r=>r.m),tot={};
-done.forEach(r=>r.m.ids.forEach(id=>tot[id]=(tot[id]||0)+1));const lead=Object.entries(tot).sort((a,b)=>b[1]-a[1]),live=evs.filter(x=>x.date===today()&&S.mvpv?.[x.id]&&!x.mvpAdmin?.length),L=admin()?evs.filter(x=>x.date<=today()).map(ev=>({ev,m:mvpOf(ev)})):done;
-return(lead.length?`<h4>Classifica MVP</h4><div class=card style="border-color:#c99a1c">${lead.map(([id,n],i)=>`<div class=row><span style="width:22px">${i+1}.</span><span style="flex:1">${e(pl(id).name)}</span><b>🏆 ${n}</b></div>`).join('')}</div>`:'')
-+(live.length?`<h4>Votazione in corso</h4>`+live.map(ev=>`<div class=card><b>${TYPES[ev.type][0]} vs ${e(ev.opp)}</b><br><small>Il Man of the Match verrà proclamato a fine giornata.</small></div>${admin()?mvpBox(ev):''}`).join(''):'')
-+`<h4>Man of the Match per partita</h4>`+(L.map(({ev,m})=>`<div class=card style="border-color:${TYPES[ev.type][1]}"><b>${TYPES[ev.type][0]}</b> ${ev.date.split('-').reverse().join('/')} vs ${e(ev.opp)} ${HA(ev)}${m?m.ids.map(id=>{const p=pl(id);return`<div class=row style="margin-top:8px;cursor:pointer" onclick="gig('${ev.id}','${id}')"><span style="width:52px;height:52px;border-radius:50%;background:#e3e8f3 center/cover;display:inline-flex;align-items:center;justify-content:center;font-size:26px;border:2px solid #c99a1c;${p.photo?`background-image:url(${p.photo})`:''}">${p.photo?'':'👤'}</span><div style="flex:1"><b>${e(p.name)}</b><br><small>🏆 ${m.man?"✔ Scelto dall'admin":m.n+' '+(m.n===1?'voto':'voti')+(m.ids.length>1?' · ex aequo':'')}</small></div><span style="color:#8a6a00;font-size:12px">🔍 Gigantografia</span></div>`}).join(''):'<div style="margin-top:6px;color:#667">Nessun MVP proclamato</div>'}${m?`<button class="b g" style="margin-top:8px" onclick="mvpFilm('${ev.id}')">▶ Rivedi il video</button>`:''}${admin()?`<div class=row style="margin-top:10px"><button class="b g" onclick="mvpE('${ev.id}')">✎ Modifica MVP</button>${m&&!ev.mvpAdmin?.length?`<button class=b onclick="mvpC('${ev.id}')">✔ Conferma</button>`:''}${ev.mvpAdmin?.length?`<button class="b g" onclick="mvpR('${ev.id}')">↺ Ripristina dai voti</button>`:''}</div>${mvpBox(ev)}`:''}</div>`).join('')||msg('Nessun Man of the Match ancora proclamato.'))}
-function mvpE(eid){const ev=S.events.find(x=>x.id===eid),inM=new Set(ids(ev)),cu=ev.mvpAdmin?.length?ev.mvpAdmin:(mvpOf(ev)?.ids||[]),ps=[...S.players].sort((a,b)=>a.name.localeCompare(b.name));
-const mk=c=>{const o=p=>`<option value=${p.id} ${p.id===c?'selected':''}>${e(p.name)}</option>`;return'<option value="">— nessuno —</option>'+(inM.size?`<optgroup label="Giocatori della partita">${ps.filter(p=>inM.has(p.id)).map(o).join('')}</optgroup><optgroup label="Altri">${ps.filter(p=>!inM.has(p.id)).map(o).join('')}</optgroup>`:ps.map(o).join(''))};
-M(`<h3>🏆 Modifica Man of the Match</h3><p style="font-size:13px">${TYPES[ev.type][0]} ${ev.date.split('-').reverse().join('/')} vs ${e(ev.opp)}</p><label>Man of the Match</label><select id=mv1>${mk(cu[0]||'')}</select><label>Secondo MVP a pari merito (facoltativo)</label><select id=mv2>${mk(cu[1]||'')}</select><p style="font-size:12px;color:#667">Scegliendo "nessuno" nel primo campo si torna al risultato dei voti degli utenti.</p><div class=row><button class=b onclick="mvpS('${eid}')">Salva</button><button class="b g" onclick="X()">Annulla</button></div>`)}
-function mvpS(eid){const ev=S.events.find(x=>x.id===eid),a=[...new Set([$('#mv1').value,$('#mv2').value].filter(Boolean))];if(a.length)ev.mvpAdmin=a;else delete ev.mvpAdmin;save();X();R()}
-function mvpC(eid){const ev=S.events.find(x=>x.id===eid),m=mvpOf(ev);if(m){ev.mvpAdmin=[...m.ids];save();R()}}
-function mvpR(eid){delete S.events.find(x=>x.id===eid).mvpAdmin;save();R()}
-function gig(eid,id){const ev=S.events.find(x=>x.id===eid),p=pl(id),m=mvpOf(ev);if(!p||!m)return;
-M(`<div style="text-align:center;background:linear-gradient(#0a1f4d,#1e3a8a);border:4px solid #c99a1c;border-radius:14px;padding:14px;color:#fff"><div style="font-size:13px;letter-spacing:4px;color:#f0c75e;font-weight:700">MAN OF THE MATCH</div>${p.photo?`<img src="${p.photo}" style="width:100%;max-height:62vh;object-fit:cover;border-radius:10px;margin:10px 0;border:3px solid #fff">`:'<div style="font-size:130px;margin:10px 0">👤</div>'}<div style="font-size:26px;font-weight:800">${p.num?'#'+e(p.num)+' ':''}${e(p.name)}</div><div style="margin-top:4px">🏆 ${m.man?"Scelto dall'admin":m.n+' '+(m.n===1?'voto':'voti')}</div><div style="font-size:12px;opacity:.85">${TYPES[ev.type][0]} · ${ev.date.split('-').reverse().join('/')} vs ${e(ev.opp)}</div></div><br><button class="b g" onclick="X()">Chiudi</button>`);$('#m>div').style.maxWidth='560px'}
-const vl=v=>{const n=[...VOTES];if(v!==undefined&&v!==''&&!n.map(String).includes(String(v)))n.splice(2,0,v);return n};
-const vlist=ev=>myRole==='giocatore'?ids(ev).filter(i=>i===myPid):ids(ev);
-const noteG=ev=>myRole==='giocatore'?(ids(ev).includes(myPid)?'<br><small>Come giocatore puoi votare solo la tua prestazione (e il Man of the Match).</small>':'<br><small>Non risulti nella formazione di questa partita: puoi votare solo il Man of the Match.</small>'):'';
-function autoAvg(){if(me!=='Admin')return;let ch=false;S.events.forEach(ev=>{if(ev.type==='all'||!(ev.date<today())||!ev.lineup)return;const U=S.votes[ev.id];if(!U)return;
-ids(ev).forEach(id=>{const vs=Object.values(U).map(u=>parseFloat(u[id])).filter(n=>!isNaN(n));if(!vs.length)return;const st=((ev.stats??={})[id]??={});if(st.vote!==undefined&&st.vote!==''&&!st.auto)return;const a=Math.round(vs.reduce((x,y)=>x+y,0)/vs.length*10)/10;if(st.vote!==a||!st.auto){st.vote=a;st.auto=true;ch=true}})});if(ch)save()}
-function askRole(){M(`<h3>Benvenuto! Chi sei?</h3><p style="font-size:13px;color:#667">Scegli come usi l'app.</p><div class=hm><button onclick="setRole('genitore')"><span>👨‍👩‍👦</span>Genitore</button><button onclick="roleP()"><span>⚽</span>Giocatore</button><button onclick="setRole('staff')"><span>📋</span>Staff</button></div>`)}
-const plOpts=()=>[...S.players].sort((a,b)=>a.name.localeCompare(b.name)).map(p=>{const t=S.claims&&S.claims[p.id];return`<option value=${p.id} ${t?'disabled':''}>${e(p.name)}${p.num?' · #'+e(p.num):''}${t?' (già scelto)':''}</option>`}).join('');
-function roleP(msg=''){M(`<h3>Sei un giocatore</h3><p style="font-size:13px;color:#8a6a00">⚠ Scegli con attenzione: una volta scelto il giocatore non potrai più cambiarlo. Solo l'admin potrà modificarlo. Ogni giocatore può avere un solo utente.</p><select id=rsel><option value="">— scegli il giocatore —</option>${plOpts()}</select><p style="color:#c0392b;font-size:13px">${msg}</p><div class=row><button class=b onclick="roleF()">Conferma</button><button class="b g" onclick="askRole()">Indietro</button></div>`)}
-function roleF(){const pid=$('#rsel').value;if(!pid)return roleP('Scegli il giocatore');if(S.claims[pid])return roleP('Questo giocatore è già stato scelto da un altro utente');if(!confirm('Confermi di essere '+pl(pid).name+'?\nNon potrai più cambiarlo.'))return;setRole('giocatore',pid)}
-async function setRole(r,pid){if(!auth||!auth.currentUser)return;const u0=auth.currentUser.uid;try{if(r==='giocatore')await db.collection('claims').doc(pid).set({uid:u0});await db.collection('users').doc(u0).set({role:r,pid:pid||''},{merge:true});myRole=r;myPid=pid||'';X();R()}catch(x){if(r==='giocatore')roleP('Questo giocatore risulta già scelto da un altro utente.');else alert('Errore: '+x.message+' (aggiorna le regole Firestore)')}}
-const isBd=p=>{if(!p.dob)return false;const t=today().slice(5),b=p.dob.slice(5);if(b===t)return true;const y=+today().slice(0,4);return b==='02-29'&&t==='02-28'&&!((y%4==0&&y%100!=0)||y%400==0)};
-const bdList=()=>S.players.filter(isBd),nm=p=>((p.first||'')+' '+(p.last||'')).trim()||p.name,age=p=>+today().slice(0,4)-+p.dob.slice(0,4);
-function bdBar(){const L=bdList();return L.length?`<div class=bdbar>🎂 Oggi è il compleanno di ${L.map(p=>e(nm(p))+' ('+age(p)+' anni)').join(' e ')}! Tanti auguri! 🎉</div>`:''}
-function bdCheck(){if(!me||$('#mv')||$('#m').classList.contains('on'))return;const L=bdList();if(!L.length||localStorage.getItem('osm_bd')===today())return;localStorage.setItem('osm_bd',today());
-M(`<div style="text-align:center"><div style="font-size:60px">🎂🎉</div><h3 style="color:#8a6a00">Tanti auguri!</h3>${L.map(p=>`${p.photo?`<img src="${p.photo}" style="width:110px;height:110px;border-radius:50%;object-fit:cover;border:4px solid #c99a1c">`:''}<p style="font-size:18px"><b>${e(nm(p))}</b><br>oggi compie ${age(p)} anni!</p>`).join('')}<p>Tutta la squadra Oratorio San Michele ${L.length>1?'vi fa':'ti fa'} i migliori auguri! 🥳⚽</p><button class=b onclick="X()">Grazie! 🎈</button></div>`)}
-const isMgr=()=>me==='Admin'||myRole==='staff';
-const fdt=d=>new Date(d).toLocaleString('it-IT',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-const lseen=()=>{try{return JSON.parse(localStorage.getItem('osm_seen')||'[]')}catch(x){return[]}};
-const seen=id=>(me==='guest'||!auth||!auth.currentUser)?lseen().includes(id):!!S.rd[id];
-const unread=()=>(!me||(me!=='guest'&&!S.rdOk))?[]:(S.notices||[]).filter(n=>!seen(n.id));
-function rdWrite(L){if(!L.length)return;if(me==='guest'||!auth||!auth.currentUser){localStorage.setItem('osm_seen',JSON.stringify([...new Set([...lseen(),...L])]));return}
-const u=auth.currentUser.uid,b=db.batch();L.forEach(id=>{S.rd[id]=true;b.set(db.collection('reads').doc(id+'_'+u),{nid:id,uid:u,user:me,t:Date.now()})});b.commit().catch(er)}
-function markAll(){const L=unread();if(L.length){rdWrite(L.map(n=>n.id));R()}}
-function nBar(){const L=unread();if(!L.length||tab==='avv')return'';return`<div class=nbar onclick="tab='avv';R()">🔔 ${L.length===1?'<b>Nuovo avviso:</b> '+e(L[0].title):'<b>'+L.length+' nuovi avvisi</b> da leggere'} — tocca per aprire</div>`}
-function vAvv(){const L=S.notices||[];
-return(isMgr()?'<button class=b onclick="nF()">+ Nuovo avviso</button>':(myRole==='staff'?'<p style="font-size:12px;color:#8a6a00">Sei Staff: per scrivere avvisi serve l\'abilitazione dell\'admin.</p>':''))+(S.nErr?'<p style="color:#c0392b;font-size:13px">⚠ Impossibile leggere gli avvisi: '+e(S.nErr)+'. Controlla di aver pubblicato le regole Firestore aggiornate.</p>':'')+(setTimeout(markAll,600),'')
-+(L.map(n=>`<div class=card style="border-color:#c99a1c;margin-top:10px"><b style="font-size:16px">${e(n.title)}</b><br><small style="color:#667">${fdt(n.date)} · ${e(n.by||'')}</small><div style="white-space:pre-wrap;margin-top:6px">${e(n.text)}</div>${isMgr()?`<div class=row style="margin-top:8px"><button class="b g" onclick="nRd('${n.id}')">👁 Letto da ${Object.keys(S.rdAll[n.id]||{}).length}</button><button class="b g" onclick="nF('${n.id}')">✎</button><button class="b r" onclick="nD('${n.id}')">🗑</button></div>`:''}</div>`).join('')||msg('Nessun avviso al momento.'))}
-function nF(id){const n=(S.notices||[]).find(x=>x.id===id)||{title:'',text:''};M(`<h3>${id?'Modifica':'Nuovo'} avviso</h3><label>Titolo</label><input id=n1 value="${e(n.title)}"><label>Testo</label><textarea id=n2 rows=6 style="width:100%;padding:9px;border:1px solid #c8cfdd;border-radius:8px;font-size:15px;font-family:inherit">${e(n.text)}</textarea><div class=row><button class=b onclick="nS('${id||''}')">${id?'Salva':'Pubblica'}</button><button class="b g" onclick="X()">Annulla</button></div>`)}
-function nS(id){const t=$('#n1').value.trim(),x=$('#n2').value.trim();if(!t||!x)return alert('Inserisci titolo e testo');if(!auth||!auth.currentUser)return alert('Connessione in corso, riprova tra un attimo');const c=db.collection('notices'),f=y=>alert('Errore: '+y.message+' (controlla le regole Firestore e l\'abilitazione Staff)');
-if(id)c.doc(id).set({title:t,text:x},{merge:true}).catch(f);else{const nid=uid();c.doc(nid).set({id:nid,title:t,text:x,date:new Date().toISOString(),by:me,uid:auth.currentUser.uid}).then(()=>rdWrite([nid])).catch(f)}X()}
-function nD(id){if(confirm('Eliminare questo avviso?'))db.collection('notices').doc(id).delete().catch(x=>alert('Errore: '+x.message))}
-function nRd(id){const n=S.notices.find(x=>x.id===id),rr=S.rdAll[id]||{},L=Object.entries(rr).sort((a,b)=>b[1].t-a[1].t),pend=admin()?S.users.filter(u=>!rr[u.id]):[];
-M(`<h3>👁 Chi ha letto</h3><p><b>${e(n.title)}</b></p><p>Letto da <b>${L.length}</b></p>${L.map(([u,r])=>`<div>✅ ${e(r.user)} <small style="color:#667">${fdt(r.t)}</small></div>`).join('')||'<small>Nessuno ancora</small>'}${pend.length?`<p style="margin-top:12px"><b>Non hanno ancora letto (${pend.length})</b></p>${pend.map(u=>`<div>⬜ ${e(u.u)}</div>`).join('')}`:''}<br><button class="b g" onclick="X()">Chiudi</button>`)}
-function uRole(id){const u=S.users.find(x=>x.id===id);if(!u)return;const ps=[...S.players].sort((a,b)=>a.name.localeCompare(b.name));
-M(`<h3>Ruolo di ${e(u.u)}</h3><label>Ruolo</label><select id=ur onchange="$('#urp').style.display=this.value==='giocatore'?'':'none'">${['genitore','giocatore','staff'].map(r=>`<option value=${r} ${u.role===r?'selected':''}>${{genitore:'Genitore',giocatore:'Giocatore',staff:'Staff'}[r]}</option>`).join('')}</select><div id=urp style="${u.role==='giocatore'?'':'display:none'}"><label>Giocatore in Anagrafe</label><select id=urq><option value="">— scegli —</option>${ps.map(p=>`<option value=${p.id} ${p.id===u.pid?'selected':''} ${S.claims[p.id]&&S.claims[p.id]!==id?'disabled':''}>${e(p.name)}${S.claims[p.id]&&S.claims[p.id]!==id?' (già associato)':''}</option>`).join('')}</select></div><div class=row><button class=b onclick="uRoleS('${id}')">Salva</button><button class="b g" onclick="X()">Annulla</button></div>`)}
-async function uRoleS(id){const r=$('#ur').value,pid=r==='giocatore'?$('#urq').value:'',u=S.users.find(x=>x.id===id);if(r==='giocatore'&&!pid)return alert('Scegli il giocatore');
-if(r==='giocatore'&&S.claims[pid]&&S.claims[pid]!==id)return alert('Questo giocatore è già associato a un altro utente');
-try{const b=db.batch();if(u&&u.pid&&u.pid!==pid&&S.claims[u.pid]===id)b.delete(db.collection('claims').doc(u.pid));if(r==='giocatore')b.set(db.collection('claims').doc(pid),{uid:id});b.set(db.collection('users').doc(id),{role:r,pid},{merge:true});await b.commit();X()}catch(x){alert('Errore: '+x.message)}}
-function stf(id,v){db.collection('users').doc(id).set({staffOk:v},{merge:true}).catch(x=>alert('Errore: '+x.message))}
-function mvpAuto(){if(!me||$('#mv')||$('#m').classList.contains('on'))return;let sn=[];try{sn=JSON.parse(localStorage.getItem('osm_mvpseen')||'[]')}catch(x){}
-const lim=new Date(Date.now()-14*864e5).toISOString().slice(0,10),L=S.events.filter(x=>x.type!=='all'&&x.date<today()&&x.date>=lim&&mvpOf(x)&&!sn.includes(x.id)).sort((a,b)=>b.date.localeCompare(a.date));if(!L.length)return;
-localStorage.setItem('osm_mvpseen',JSON.stringify([...new Set([...sn,...L.map(x=>x.id)])]));mvpFilm(L[0].id)}
-function mvpFilm(eid){const ev=S.events.find(x=>x.id===eid),m=ev&&mvpOf(ev);if(!m)return;const W=m.ids.map(pl).filter(Boolean);if(!W.length)return;if($('#mv'))$('#mv').remove();
-const cnt=id=>S.events.filter(x=>{const q=mvpOf(x);return q&&q.ids.includes(id)}).length;
-let pool=ids(ev).map(pl).filter(Boolean).map(p=>p.last||p.name.split(' ')[0]);if(pool.length<4)pool=S.players.map(p=>p.last||p.name.split(' ')[0]);if(!pool.length)pool=['?'];pool=pool.sort(()=>Math.random()-.5);
-const o=document.createElement('div');o.id='mv';
-o.innerHTML=`<div class=beam></div><div class="beam b2"></div><button class=skip>Salta ⏭</button>
-<div class=sc id=s1><img class=lg src="${S.team.logo||'logo.png'}"><div class=gold style="font-size:14px">San Michele Travagliato</div><div style="font-size:clamp(28px,9vw,50px);font-weight:900;line-height:1.1">MAN OF<br>THE MATCH</div><div style="opacity:.85">${TYPES[ev.type][0]} · ${ev.date.split('-').reverse().join('/')} vs ${e(ev.opp)}</div></div>
-<div class=sc id=s2><div style="font-size:60px">🏁</div><div class=nm>La giornata è finita</div><div style="opacity:.85;font-size:17px">Le votazioni sono chiuse.<br>Il pubblico ha scelto...</div></div>
-<div class=sc id=s3><div class=gold>E il Man of the Match è...</div><div class=shuf id=sh>?</div></div>
-<div class=sc id=s4><div class=gold>Tra pochissimo...</div><div id=cd></div></div>
-<div class=sc id=s5><div class=flash></div><div class=gold style="font-size:15px">🏆 Man of the Match 🏆</div><div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">${W.map(p=>`<div><div class=ph style="${p.photo?`background-image:url(${p.photo})`:''}${W.length>1?';width:min(40vw,190px)':''}">${p.photo?'':'👤'}</div><div class=nm style="margin-top:8px">${p.num?'#'+e(p.num)+' ':''}${e(nm(p))}</div><div style="color:#f0c75e;font-weight:800;font-size:17px">🏆 ${cnt(p.id)} ${cnt(p.id)===1?'volta':'volte'} Man of the Match</div></div>`).join('')}</div>
-<div style="opacity:.9">${m.man?"Scelto dall'admin":'⭐ '+m.n+' '+(m.n===1?'voto':'voti')+' dal pubblico'}</div><button class=b id=cl style="background:#c99a1c;color:#fff">Continua</button></div>`;
-document.body.appendChild(o);
-const T=[],at=(ms,f)=>T.push(setTimeout(f,ms)),sc=n=>{o.querySelectorAll('.sc').forEach(x=>x.classList.remove('on'));o.querySelector('#s'+n).classList.add('on')};let done=false;
-const end=()=>{T.forEach(clearTimeout);o.remove();R()};
-const confetti=()=>{const c=['#c99a1c','#f0c75e','#1e5bd8','#fff'];for(let i=0;i<80;i++){const d=document.createElement('i');d.className='cf';d.style.cssText=`left:${Math.random()*100}%;background:${c[i%4]};animation-duration:${2.5+Math.random()*3}s;animation-delay:${Math.random()*.8}s`;o.appendChild(d)}};
-const sk=o.querySelector('.skip'),reveal=()=>{if(done)return;done=true;T.forEach(clearTimeout);sc(5);o.querySelector('.flash').classList.add('on');confetti();sk.textContent='Chiudi ✕'};
-sk.onclick=()=>done?end():reveal();o.querySelector('#cl').onclick=end;
-sc(1);at(2800,()=>sc(2));
-at(5200,()=>{if(done)return;sc(3);let d=70,i=0;const sh=o.querySelector('#sh'),st=()=>{if(!o.isConnected||done)return;if(d>420){sh.textContent='???';return}sh.textContent=pool[i++%pool.length].toUpperCase();d*=1.13;T.push(setTimeout(st,d))};st()});
-at(8700,()=>{if(done)return;sc(4);const cd=o.querySelector('#cd'),n=k=>cd.innerHTML='<span class=pl2>'+k+'</span>';n(3);at(900,()=>n(2));at(1800,()=>n(1));at(2700,reveal)})}
-let dip=null;
-window.addEventListener('beforeinstallprompt',ev=>{ev.preventDefault();dip=ev});
-window.addEventListener('appinstalled',()=>{dip=null;R()});
-const isApp=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
-async function inst(){if(dip){dip.prompt();try{await dip.userChoice}catch(x){}dip=null;R();return}
-const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-M(`<h3>📲 Aggiungi alla schermata Home</h3>`+(ios?`<ol><li>Apri questa pagina con <b>Safari</b></li><li>Tocca il tasto <b>Condividi</b> (il quadrato con la freccia verso l'alto)</li><li>Scorri e scegli <b>Aggiungi alla schermata Home</b></li><li>Conferma con <b>Aggiungi</b></li></ol>`:`<ol><li>Apri il menu del browser (⋮ in alto a destra)</li><li>Scegli <b>Installa app</b> oppure <b>Aggiungi a schermata Home</b></li><li>Conferma</li></ol>`)+`<button class="b g" onclick="X()">Chiudi</button>`)}
-let dgs=null;
-document.addEventListener('pointerdown',ev=>{const t=ev.target.closest&&ev.target.closest('.dg');if(t)dgs={t,x:ev.clientX,y:ev.clientY,g:null}});
-document.addEventListener('pointermove',ev=>{if(!dgs)return;if(!dgs.g){if(Math.hypot(ev.clientX-dgs.x,ev.clientY-dgs.y)<8)return;const g=dgs.t.cloneNode(true);g.removeAttribute('data-k');g.removeAttribute('data-b');g.className='pl';g.style.cssText='position:fixed;z-index:50;pointer-events:none;opacity:.92;transform:scale(1.15);text-shadow:0 1px 2px #000';document.body.appendChild(g);dgs.g=g;dgs.t.style.opacity='.35'}dgs.g.style.left=ev.clientX-43+'px';dgs.g.style.top=ev.clientY-35+'px'});
-const dEnd=ev=>{if(!dgs)return;const d=dgs;dgs=null;if(!d.g)return;d.g.remove();d.t.style.opacity='';if(ev.type==='pointercancel')return;const to=document.elementFromPoint(ev.clientX,ev.clientY)?.closest('.dg');if(to&&to!==d.t)swp({...d.t.dataset},{...to.dataset})};
-document.addEventListener('pointerup',dEnd);document.addEventListener('pointercancel',dEnd);
-function swp(a,b){if(!fe)return;const L=cur().lineup;L.slots=Array.from({length:11},(_,i)=>L.slots[i]||'');const ak=a.k!==undefined,bk=b.k!==undefined;
-if(ak&&bk){const x=+a.k,y=+b.k;[L.slots[x],L.slots[y]]=[L.slots[y],L.slots[x]]}
-else if(ak||bk){const sl=+(ak?a.k:b.k),bn=ak?b.b:a.b,old=L.slots[sl];if(!bn)return;L.slots[sl]=bn;L.bench=L.bench.filter(i=>i!==bn);if(old)L.bench.push(old)}else return;save();R()}
-const avatar=n=>myPh?`<img src="${myPh}" style="width:${n}px;height:${n}px;border-radius:50%;object-fit:cover;border:2px solid #c99a1c;background:#fff">`:`<span style="display:inline-flex;width:${n}px;height:${n}px;border-radius:50%;background:#c99a1c;color:#fff;align-items:center;justify-content:center;font-weight:700;font-size:${n/2}px;border:2px solid #fff">${e((me||'?')[0].toUpperCase())}</span>`;
-function prof(){M(`<h3>Profilo</h3><div style="text-align:center">${avatar(80)}<p><b>${e(me)}</b></p>${me!=='Admin'?`<p><small>${{genitore:'Genitore',giocatore:'Giocatore',staff:'Staff'}[myRole]||''}${myRole==='giocatore'&&pl(myPid)?' · '+e(pl(myPid).name):''}</small> <br><small style="color:#667">Il ruolo può essere cambiato solo dall'admin</small></p>`:''}</div><label>Foto profilo</label><input type=file accept="image/*" onchange="setPh(this)"><div class=row>${myPh?'<button class="b g" onclick="rmPh()">Rimuovi foto</button>':''}<button class="b r" onclick="X();out()">Esci</button><button class="b g" onclick="X()">Chiudi</button></div><br><button class="b g" onclick="chk(true)">🔄 Controlla aggiornamenti (v${V})</button>`)}
-function setPh(inp){img(inp,160,'jpeg',d=>{myPh=d;localStorage.setItem('osm_ph',d);if(auth&&auth.currentUser)db.collection('users').doc(auth.currentUser.uid).set({photo:d},{merge:true}).catch(()=>alert('Foto salvata solo su questo dispositivo: aggiorna le regole Firestore (file firestore.rules)'));R();prof()})}
-function rmPh(){myPh='';localStorage.removeItem('osm_ph');if(auth&&auth.currentUser)db.collection('users').doc(auth.currentUser.uid).set({photo:''},{merge:true}).catch(er);R();prof()}
-let tr={y:new Date().getFullYear(),m:new Date().getMonth(),sel:[],t:'18:00',p:''};
-function vTrn(){const f=new Date(tr.y,tr.m,1),off=(f.getDay()+6)%7,dim=new Date(tr.y,tr.m+1,0).getDate();let c='';for(let i=0;i<off;i++)c+='<div></div>';
-for(let d=1;d<=dim;d++){const ds=`${tr.y}-${p2(tr.m+1)}-${p2(d)}`,on=tr.sel.includes(ds),has=S.events.some(x=>x.type==='all'&&x.date===ds);c+=`<div class=day style="${on?'background:#1e3a8a;color:#fff':''}" onclick="trT('${ds}')">${d}<div class=dots>${has?'<i style="background:#8a8f98"></i>':''}</div></div>`}
-const up=S.events.filter(x=>x.type==='all'&&x.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
-return`<p style="font-size:12px;color:#667">Tocca tutti i giorni di allenamento (anche più mesi). Il puntino grigio indica un allenamento già inserito.</p><div class=row style="justify-content:space-between"><button class="b g" onclick="trM(-1)">‹</button><b>${MESI[tr.m]} ${tr.y}</b><button class="b g" onclick="trM(1)">›</button></div>
-<div class=grid style="margin:8px 0">${['L','M','M','G','V','S','D'].map(x=>`<div class=hd>${x}</div>`).join('')}${c}</div>
-<label>Orario</label><input type=time value="${tr.t}" onchange="tr.t=this.value"><label>Luogo</label><input value="${e(tr.p)}" onchange="tr.p=this.value"><div class=row><button class=b onclick="trAdd()">Aggiungi ${tr.sel.length} allenamenti al calendario</button>${tr.sel.length?'<button class="b g" onclick="tr.sel=[];R()">Deseleziona</button>':''}</div>
-<h4>Prossimi allenamenti</h4>${up.map(x=>`<div class=card><b>${x.date.split('-').reverse().join('/')}</b> ${e(x.time)} ${e(x.place)} <button class="b r" style="float:right;padding:4px 8px" onclick="evD('${x.id}')">🗑</button></div>`).join('')||msg('Nessun allenamento in programma')}`}
-function trT(d){const i=tr.sel.indexOf(d);i<0?tr.sel.push(d):tr.sel.splice(i,1);R()}
-function trM(n){tr.m+=n;if(tr.m<0){tr.m=11;tr.y--}if(tr.m>11){tr.m=0;tr.y++}R()}
-function trAdd(){if(!tr.sel.length)return alert('Seleziona almeno un giorno');const t=tr.t||'18:00';let n=0;tr.sel.forEach(d=>{if(!S.events.some(x=>x.type==='all'&&x.date===d&&x.time===t)){S.events.push({id:uid(),type:'all',date:d,time:t,opp:'',place:tr.p});n++}});tr.sel=[];save();R();alert(n+' allenamenti aggiunti al calendario')}
-function R(){pend=false;if(!me){$('#app').innerHTML=vAuth();return}
-const T=[['cal','📅','Calendario'],['avv','🔔','Avvisi / Comunicazioni'],['val','⭐',admin()?'Formazione':'Valutazioni'],['fanta','🏆','Fanta Michele'],['stat','📊','Statistiche'],['mvp','🥇','MVP'],['conv','📋','Convocazioni']];if(admin())T.push(['vot','📝','Valutazioni'],['trn','🏋️','Allenamenti'],['ana','👥','Anagrafe'],['usr','🔑','Utenti']);
-if(tab!=='home'&&!T.some(t=>t[0]===tab))tab='home';const views={cal:vCal,avv:vAvv,val:vVal,fanta:vFanta,stat:vStat,mvp:vMvp,conv:vConv,vot:vVot,trn:vTrn,ana:vAna,usr:vUsr},c=T.find(t=>t[0]===tab);
-$('#app').innerHTML=`<header><div class=hl>${tab!=='home'?'<button onclick="tab=\'home\';R()">‹ Home</button>':`<img src="${S.team.logo||'logo.png'}">`}</div><div class=ht><b>${e(S.team.name)}</b><small>v${V}${c?' · '+c[2]:''}</small></div><div class=hr><button class=bell onclick="tab='avv';R()">🔔${unread().length?`<b>${unread().length}</b>`:''}</button>${admin()?'<button onclick="vSet()">⚙️</button>':''}${me==='guest'?'<button class=gold onclick="out()">Accedi</button>':`<a class=av onclick="prof()">${avatar(34)}</a>`}</div></header>${nBar()}${bdBar()}${(setTimeout(bdCheck,300),'')}${(setTimeout(mvpAuto,500),'')}<main>${tab==='home'?`<div class=hm>${T.map(t=>`<button onclick="tab='${t[0]}';R()"><span>${t[1]}</span>${t[2]}</button>`).join('')}${isApp()?'':`<button class=ins onclick="inst()"><span>📲</span>Aggiungi alla schermata Home</button>`}</div>`:views[tab]()}</main>`}
-/* FIREBASE */
-const CFG=typeof FIREBASE_CONFIG!=='undefined'?FIREBASE_CONFIG:typeof firebaseConfig!=='undefined'?firebaseConfig:null;
-const FB_ERR=typeof firebase==='undefined'?'Libreria Firebase non caricata: controlla la connessione internet':!CFG?'File firebase-config.js non trovato o con errori: controlla che sia nella stessa cartella di index.html, che la variabile si chiami FIREBASE_CONFIG e che non ci siano righe import':(!CFG.apiKey||String(CFG.apiKey).startsWith('INCOLLA'))?'firebase-config.js contiene ancora i valori INCOLLA_QUI (oppure la versione caricata su GitHub non è quella modificata)':'',FB_OK=!FB_ERR;
-let db,auth,L={players:{},events:{},team:''},un=[],pend=false,regName='',regInfo=null;
-const mail=u=>u.toLowerCase()+'@osm.local',busy=()=>$('#m').classList.contains('on')||/INPUT|SELECT|TEXTAREA/.test(document.activeElement?.tagName||''),dirty=()=>{busy()?pend=true:R()},er=x=>console.error(x);
-document.addEventListener('focusout',()=>setTimeout(()=>{if(pend&&!busy())R()},300));
-function vt(sn){S.votes={};sn.docs.forEach(d=>{const o=d.data();(S.votes[o.eid]??={})[o.user]=o.v});autoAvg();dirty()}
-function fbInit(){if(!FB_OK)return;firebase.initializeApp(CFG);db=firebase.firestore();auth=firebase.auth();auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(er);
-db.collection('meta').doc('team').onSnapshot(d=>{if(d.exists){S.team=d.data();L.team=JSON.stringify(S.team)}dirty()},er);
-for(const c of ['players','events'])db.collection(c).onSnapshot(sn=>{S[c]=sn.docs.map(d=>d.data());L[c]={};S[c].forEach(x=>L[c][x.id]=JSON.stringify(x));if(c==='events')autoAvg();dirty()},er);
-db.collection('mvp').onSnapshot(sn=>{S.mvpv={};sn.docs.forEach(d=>{const o=d.data();(S.mvpv[o.eid]??={})[o.uid]=o.pid});dirty()},er);
-db.collection('claims').onSnapshot(sn=>{S.claims={};sn.docs.forEach(d=>S.claims[d.id]=d.data().uid);dirty()},er);
-db.collection('notices').onSnapshot(sn=>{S.nErr='';S.notices=sn.docs.map(d=>d.data()).sort((a,b)=>b.date.localeCompare(a.date));dirty()},x=>{S.nErr=x.message;dirty()});
-auth.onAuthStateChanged(async u=>{un.forEach(f=>f());un=[];if(!u){me=localStorage.getItem('osm_guest')?'guest':'';localStorage.removeItem('osm_last');myPh='';myRole='';myPid='';myOk=false;S.rd={};S.rdAll={};S.rdOk=false;localStorage.removeItem('osm_ph');S.votes={};S.users=[];return R()}
-const A=u.email==='admin@osm.local';let d=null;try{d=await db.collection('users').doc(u.uid).get()}catch(x){}if(!A&&!regInfo&&!regName&&d&&!d.exists){auth.signOut();alert('Questo account è stato eliminato. Registrati di nuovo per usare l\'app.');return}
-me=A?'Admin':regName||(d&&d.exists&&d.data().u)||u.email.split('@')[0];myPh=(d&&d.exists&&d.data().photo)||'';myPh?localStorage.setItem('osm_ph',myPh):localStorage.removeItem('osm_ph');const dd=d&&d.exists?d.data():{};if(regInfo){myRole=regInfo.role;myPid=regInfo.pid}else{myRole=dd.role||'';myPid=dd.pid||''}if(!A&&!myRole)setTimeout(()=>{if(!myRole)askRole()},400);if(myRole==='giocatore'&&myPid&&!regInfo)db.collection('claims').doc(myPid).set({uid:u.uid}).catch(()=>{});
-localStorage.setItem('osm_last',me);if(A)un.push(db.collection('votes').onSnapshot(vt,er),db.collection('users').onSnapshot(sn=>{S.users=sn.docs.map(d=>({id:d.id,...d.data()})).filter(x=>x.u);dirty()},er));
-else un.push(db.collection('votes').where('uid','==',u.uid).onSnapshot(vt,er));S.rd={};S.rdAll={};S.rdOk=false;const mg=A||myRole==='staff';un.push((mg?db.collection('reads'):db.collection('reads').where('uid','==',u.uid)).onSnapshot(sn=>{S.rd={};S.rdAll={};sn.docs.forEach(d=>{const o=d.data();(S.rdAll[o.nid]??={})[o.uid]={user:o.user,t:o.t};if(o.uid===u.uid)S.rd[o.nid]=true});S.rdOk=true;dirty()},er));R()})}
-function syncA(){if(!db)return;const w=(c,id,o)=>db.collection(c).doc(id).set(o).catch(x=>alert('Errore salvataggio: '+x.message));
-for(const c of ['players','events']){for(const x of S[c]){const j=JSON.stringify(x);if(L[c][x.id]!==j){L[c][x.id]=j;w(c,x.id,JSON.parse(j))}}
-for(const id in L[c])if(!S[c].some(x=>x.id===id)){delete L[c][id];db.collection(c).doc(id).delete()}}
-const t=JSON.stringify(S.team);if(L.team!==t){L.team=t;w('meta','team',JSON.parse(t))}}
-async function purge(){if(me!=='Admin'||!auth.currentUser)return;if(!confirm('Eliminare TUTTI gli utenti registrati (tranne Admin) insieme ai loro voti e ai voti Man of the Match? Operazione irreversibile.'))return;if(!confirm('Ultima conferma: procedo con l\'eliminazione?'))return;
-try{const my=auth.currentUser.uid;let n=0;for(const c of ['users','usernames','claims','votes','mvp']){const sn=await db.collection(c).get(),docs=sn.docs.filter(d=>!(c==='users'&&d.id===my));for(let i=0;i<docs.length;i+=400){const b=db.batch();docs.slice(i,i+400).forEach(d=>b.delete(d.ref));await b.commit()}if(c==='users')n=docs.length}
-X();alert('Eliminati '+n+' profili utente con i relativi voti.\n\nPer eliminare anche gli account di accesso: Firebase Console → Authentication → Utenti → seleziona tutti tranne admin@osm.local → Elimina account.')}catch(x){alert('Errore: '+x.message)}}
-function mig(){let o;try{o=JSON.parse(localStorage.getItem(K))}catch(x){}if(!o||!((o.players||[]).length||(o.events||[]).length))return alert('Nessun dato locale trovato su questo dispositivo');
-if(!confirm('I dati di questo dispositivo sostituiranno quelli online. Continuare?'))return;S.players=o.players||[];S.events=o.events||[];if(o.team)S.team=o.team;syncA();alert('Dati caricati su Firebase')}
-/* AGGIORNAMENTI */
-async function chk(m){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const j=await r.json();if(j.version&&j.version!==V){const b=$('#bn');b.style.display='flex';b.innerHTML=`🔔 Nuova versione disponibile<br>Attuale: v${V} → Nuova: v${e(j.version)}<button onclick="upd()">Aggiorna</button>`}else if(m)alert('Hai già l\'ultima versione (v'+V+')')}catch(x){if(m)alert('Impossibile controllare gli aggiornamenti (manca version.json o internet)')}}
-async function upd(){try{(await navigator.serviceWorker.getRegistrations()).forEach(r=>r.unregister());(await caches.keys()).forEach(k=>caches.delete(k))}catch(x){}location.reload()}
-if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js',{updateViaCache:'none'});
-fbInit();R();chk();setInterval(chk,300000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()});
-</script></body></html>
+:root{--bg:#eef3fb;--card:#ffffff;--ink:#14213d;--mut:#5b6b82;--pri:#1b4fa8;--onpri:#fff;--acc:#e0a526;--line:#d5deeb;--ok:#1e7a46;--ko:#b3372f;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100%}
+h1,h2{font-family:"Arial Narrow","Roboto Condensed",system-ui,sans-serif;font-stretch:condensed;margin:0}
+main{max-width:760px;margin:0 auto;padding:16px}
+.top{background:var(--pri);color:var(--onpri);border-bottom:4px solid var(--acc)}
+.top>div{max-width:760px;margin:0 auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.top h1{font-size:22px;line-height:1.1}.top small{opacity:.85;display:block;font-size:13px}
+button,select,input{font:inherit;color:inherit}
+input,select,textarea{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;width:100%;min-height:44px}
+button{cursor:pointer;border:0;border-radius:8px;padding:10px 14px;min-height:44px;background:var(--pri);color:var(--onpri);font-weight:600}
+button.g{background:transparent;color:inherit;border:1px solid currentColor}
+button.d{background:var(--ko);color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.tiles{display:grid;gap:12px;margin-top:16px}
+.tile{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1px solid var(--line);border-left:8px solid var(--acc);border-radius:10px;padding:20px 18px}
+.tile b{font:700 30px "Arial Narrow",system-ui,sans-serif;font-stretch:condensed;display:block}.tile span{color:var(--mut);font-weight:400}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:12px 0}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1 1 140px}.row>button{flex:0 0 auto}
+.p{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.p:first-child{border-top:0}.p .n{flex:1;min-width:0}
+.seg{display:flex;gap:6px}.seg button{background:transparent;color:var(--ink);border:1px solid var(--line);min-width:48px}
+.seg .P.on{background:var(--ok);color:#fff;border-color:var(--ok)}.seg .A.on{background:var(--ko);color:#fff;border-color:var(--ko)}
+.av{width:44px;height:44px;border-radius:50%;background:var(--line);object-fit:cover;flex:none;display:grid;place-items:center;font-weight:700}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}.logo{width:40px;height:40px;object-fit:contain;border-radius:8px;background:#fff;padding:2px;flex:none}.hb{display:flex;gap:8px}
+.upd{background:var(--acc);color:#1b1500;padding:10px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;font-weight:600}.upd button{min-height:36px;padding:6px 12px}.upd .g{color:#1b1500}
+.shell{min-height:100vh}#app{min-width:0}.band{display:none}
+@media (min-width:1000px){.shell{display:grid;grid-template-columns:220px minmax(0,1fr) 220px}
+.band{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:sticky;top:0;align-self:start;height:100vh;background:#fff;padding:20px;text-align:center}
+.band.l{border-right:1px solid var(--line)}.band.r{border-left:1px solid var(--line)}
+.band.l img{max-width:100%;max-height:70vh;object-fit:contain}.band.r img{max-width:160px;height:auto}
+.band span{font:600 13px system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+.top .logo{display:none}}
+.ov{position:fixed;inset:0;background:#0009;display:grid;place-items:center;padding:16px;z-index:50;overflow:auto}
+.bd{background:#fff;color:var(--ink);border-radius:14px;padding:22px 18px;max-width:420px;width:100%;text-align:center;border-top:6px solid var(--acc);max-height:90vh;overflow:auto}
+.bd h2{font-size:34px;color:var(--pri);margin-bottom:8px}.bp{padding:12px 0;border-top:1px solid var(--line);display:grid;justify-items:center;gap:4px}
+.bp img,.ini{width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid var(--acc)}
+.ini{display:grid;place-items:center;background:var(--line);font:700 40px system-ui,sans-serif;color:var(--pri)}.bp b{font-size:22px}.bp p{margin:4px 0 8px}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.cg .h{text-align:center;font-size:12px;color:var(--mut);padding:2px 0}
+.dy{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;min-height:54px;padding:6px 2px;background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500}
+.dy i{font-style:normal;background:var(--pri);color:#fff;border-radius:99px;font-size:12px;min-width:20px;padding:0 6px;line-height:20px}
+.dy.td{border:2px solid var(--acc)}.dy.sl{background:#dbe7fb;border-color:var(--pri)}
+.tag.t-campionato{background:#dbe7fb}.tag.t-coppa{background:#fbeec7}.tag.t-coppalombardia{background:#fde0cc}.tag.t-amichevole{background:#d9f0e2}
+.chk{display:flex;gap:10px;align-items:center;padding:4px 0}.chk input{width:22px;height:22px;min-height:0;flex:none}
+button:disabled{opacity:.5;cursor:not-allowed}.seg button:disabled{opacity:1;cursor:default}
+textarea{font:inherit;color:inherit;resize:vertical}
+.bdg{font-style:normal;background:var(--ko);color:#fff;border-radius:99px;font-size:14px;padding:0 9px;margin-left:6px;vertical-align:middle;font-family:system-ui,sans-serif}
+.dy.sm{min-height:42px;cursor:default;padding:4px 2px}.dy small{font-weight:700;font-size:12px}
+.dy.pp,.lg.pp{background:#d7f0df;border-color:var(--ok)}.dy.aa,.lg.aa{background:#f7d9d6;border-color:var(--ko)}.dy.nn,.lg.nn{background:#e9edf3}.dy.ff,.lg.ff{border:2px dashed var(--pri);background:#fff}
+.lg{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line);margin:2px}
+.tag.st-no{background:#f7d9d6}
+.seg .N.on{background:#5b6b82;color:#fff;border-color:#5b6b82}.seg .x.on{background:var(--acc);color:#1b1500;border-color:var(--acc)}
+.rts{display:flex;gap:6px;width:100%;margin:2px 0 8px}.rts button{flex:1;min-width:0;background:#fff;color:var(--ink);border:1px solid var(--line);padding:8px 0;font-size:18px}
+.rts button.sv{font-size:15px}.rts button.on{background:var(--pri);color:#fff;border-color:var(--pri)}.rts button:disabled{opacity:1;cursor:default}
+.avgs{display:grid;gap:8px;margin-top:10px}.avg{display:grid;gap:1px;background:#f4f7fc;border:1px solid var(--line);border-radius:8px;padding:6px 10px}.avg b{font:700 26px "Arial Narrow",system-ui,sans-serif;font-stretch:condensed}
+.card.res-w{border-left:6px solid var(--ok);background:#eef8f1}.card.res-d{border-left:6px solid #8a96a8;background:#f1f3f6}.card.res-l{border-left:6px solid var(--ko);background:#fcefed}
+.tag.rt-w{background:#d7f0df}.tag.rt-d{background:#e1e5ec}.tag.rt-l{background:#f7d9d6}
+.rec{width:100%;border-collapse:collapse;font-size:15px;margin-top:8px}.rec th{font-size:13px;color:var(--mut);text-align:center;padding:4px}.rec th:first-child,.rec td:first-child{text-align:left}
+.rec td{padding:6px 4px;text-align:center;border-top:1px solid var(--line)}.rec td.rw{background:#d7f0df;font-weight:700}.rec td.rd{background:#e9edf3;font-weight:700}.rec td.rl{background:#f7d9d6;font-weight:700}.rec tr.tt td{font-weight:700;border-top:2px solid var(--pri)}
+.dots{display:flex;gap:3px;flex-wrap:wrap;justify-content:center}.dots u{width:10px;height:10px;border-radius:50%;display:block;border:2px solid transparent}
+.dots u.rw{background:var(--ok)}.dots u.rd{background:#8a96a8}.dots u.rl{background:var(--ko)}.dots u.rp{background:#fff;border-color:var(--pri)}
+.seg4{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;margin:2px 0 6px}.seg4 button{background:#fff;color:var(--ink);border:1px solid var(--line);padding:8px 4px}
+.seg4 .C.on{background:var(--ok);color:#fff;border-color:var(--ok)}.seg4 .N.on{background:#5b6b82;color:#fff;border-color:#5b6b82}.seg4 .R.on{background:var(--acc);color:#1b1500;border-color:var(--acc)}.seg4 .I.on{background:var(--ko);color:#fff;border-color:var(--ko)}
+a.tile{text-decoration:none;color:var(--ink)}
+.seg .R.on{background:var(--acc);color:#1b1500;border-color:var(--acc)}.dy.rr,.lg.rr{background:#fdf0c8;border-color:var(--acc)}
+.mut{color:var(--mut);font-size:14px}.bar{height:8px;border-radius:4px;background:var(--ko);overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--ok)}
+.stat{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;margin-top:6px}.stat b{display:block;font-size:22px}
+.back{margin:4px 0 8px;color:var(--pri)}.err{color:var(--ko);font-weight:600}
+.login{max-width:380px;margin:10vh auto 0}.login .card{display:grid;gap:10px}
+.tag{font-size:12px;padding:2px 8px;border-radius:99px;background:var(--line)}
+.sc{width:64px!important;flex:0 0 64px!important;text-align:center}
+</style>
+</head>
+<body>
+<div class="shell"><aside class="band l"><img id="bl" src="logo-club.png" alt="U.S.D. Oratorio San Michele"></aside><div id="app"></div><aside class="band r"><span>Società Affiliata</span><img src="logo-union.jpg" alt="Union Brescia"></aside></div>
+<script type="module">
+
+const TEAMS=["Prima Squadra","Juniores","Allievi Under 16","Giovanissimi Under 15","Giovanissimi Under 14","Esordienti Under 13","Esordienti Under 12"];
+const ROLES={admin:"Admin",allenatore:"Allenatore",collaboratore:"Collaboratore Tecnico",dirigente:"Dirigente",direttore:"Direttore",presidente:"Presidente",dirgenerale:"Direttore Generale",dirsportivo:"Direttore Sportivo",segreteria:"Segreteria",genitore:"Genitore",giocatore:"Giocatore"};
+import {firebaseConfig} from "./firebase-config.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {getFirestore,collection,doc,setDoc,updateDoc,deleteDoc,getDoc,onSnapshot,query,where,writeBatch} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+const cols=["users","players","trainings","matches"],S={users:[],players:[],trainings:[],matches:[],settings:{},bday:[],bAll:[],cred:[],requests:[],feedback:[],convocations:[],ratings:[],signups:[]};
+const configured=!!(firebaseConfig&&firebaseConfig.apiKey&&!firebaseConfig.apiKey.startsWith("INCOLLA"));
+let app,auth,db,secApp;
+if(configured){app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app);secApp=initializeApp(firebaseConfig,"sec")}
+const VER="1,24",club=()=>S.settings.name||"U.S.D. Oratorio San Michele",logo=()=>S.settings.logo||"logo-club.png";
+let me=null,ready=false,boot=false,uns=[],view="home",team=TEAMS[0],open=null,editP=null,err="",pend=false,setupMode=false,msg="",msgErr=false;
+const $=id=>document.getElementById(id),e=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("it-IT",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):"";
+const VIEW=["direttore","presidente","dirgenerale","dirsportivo","segreteria"];
+const isA=()=>me&&me.role==="admin",isD=()=>me&&VIEW.includes(me.role),canAtt=()=>me&&!VIEW.includes(me.role);
+const em=n=>n+"@oratorio-sanmichele.app",okName=n=>/^[a-z0-9][a-z0-9_-]{2,29}$/.test(n),em2=n=>n+"_"+crypto.randomUUID().replace(/-/g,"").slice(0,8)+"@oratorio-sanmichele.app";
+const fail=x=>{console.error(x);alert("Operazione non riuscita: "+(x.code||x.message))};
+const save=(n,id,o)=>setDoc(doc(db,n,id),o).catch(fail);
+const saveSet=o=>setDoc(doc(db,"config","club"),o).catch(fail);
+const nid=n=>doc(collection(db,n)).id;
+function del(n,id,m){if(confirm(m||"Confermi l'eliminazione?"))deleteDoc(doc(db,n,id)).catch(fail)}
+async function batchSet(items){for(let i=0;i<items.length;i+=400){const b=writeBatch(db);items.slice(i,i+400).forEach(([n,id,o])=>b.set(doc(db,n,id),o));await b.commit()}}
+function go(v){if(edTr&&dirty()&&!confirm("Hai modifiche non salvate: scartarle?"))return;if((cvEdit||(rtEd&&rtDirty()))&&!confirm("Hai modifiche non salvate: scartarle?"))return;rtEd=null;vlMode=null;vlOpen=null;cvId=null;cvEdit=false;cvMsg="";edTr=null;calEdit=false;rgOpen=null;view=v;err="";msg="";open=null;editP=null;render()}
+const pl=()=>S.players.filter(p=>p.team===team).sort((a,b)=>(a.cognome+a.nome).localeCompare(b.cognome+b.nome));
+const tr=()=>S.trainings.filter(t=>t.team===team).sort((a,b)=>b.date.localeCompare(a.date));
+const att=(t,p)=>(t.att||{})[p.id]||"";
+const head=()=>{document.title=club();const bl=$("bl");if(bl&&bl.getAttribute("src")!==logo())bl.src=logo();return`${banner()}<div class="top"><div><div class="brand"><img class="logo" alt="" src="${logo()}"><div><h1>${e(club())}</h1><small>Versione ${VER}${me?" · "+e(me.name)+" · "+ROLES[me.role]+(me.team?" · "+e(me.team):""):""}</small></div></div>${me?`<div class="hb">${isA()?`<button class="g" aria-label="Impostazioni" title="Impostazioni" onclick="go('set')">⚙</button>`:""}<button class="g" onclick="out()">Esci</button></div>`:""}</div></div>`};
+const sel=()=>(isA()||isD())?`<div class="card"><label class="mut" for="tm">Categoria</label><select id="tm" onchange="setTeam(this.value)">${TEAMS.map(t=>`<option ${t===team?"selected":""}>${t}</option>`).join("")}</select></div>`:`<h2 style="margin:8px 0">${e(team)}</h2>`;
+const bk=()=>`<button class="g back" onclick="go('home')">← Indietro</button>`;
+const av=p=>p.photo?`<img class="av" alt="" src="${p.photo}">`:`<div class="av">${e((p.nome||"?")[0])}${e((p.cognome||"")[0])}</div>`;
+
+function vLogin(){return`<div class="login"><h2 style="font-size:30px;margin-bottom:8px">${setupMode?"Primo avvio: crea l'Admin":"Accedi"}</h2><div class="card">${setupMode?`<p class="mut" style="margin:0">Funziona una sola volta, quando non esiste ancora nessun Admin. Password di almeno 6 caratteri.</p>`:""}<input id="lu" placeholder="Nome utente" autocomplete="username" autocapitalize="none"><input id="lp" type="password" placeholder="Password" autocomplete="${setupMode?"new-password":"current-password"}"><div class="err">${err}</div><button onclick="${setupMode?"setup()":"login()"}">${setupMode?"Crea Admin":"Entra"}</button><button class="g" style="color:var(--mut);font-size:14px" onclick="tsetup()">${setupMode?"Torna all'accesso":"Primo avvio dell'app?"}</button>${setupMode?"":`<button class="g" style="color:var(--pri)" onclick="sgGo(true)">Non hai un account? Iscriviti</button><p class="mut" style="margin:0;font-size:13px">Se ti sei appena iscritto, attendi l'approvazione dell'Admin prima di entrare.</p>`}${sgDone?`<div class="card" style="border-left:6px solid var(--ok)">Richiesta inviata. L'Admin la controllerà: potrai entrare con nome utente e password appena sarà approvata.</div>`:""}</div></div>`}
+function vHome(){const T=(a,b,c,n)=>`<button class="tile" onclick="${a}"><b>${b}${n?` <em class="bdg">${n}</em>`:""}</b><span>${c}</span></button>`,al=alerts(),nR=canReq()?S.requests.filter(r=>r.status==="pending").length:al.filter(x=>x.k[0]==="r").length,nF=al.filter(x=>x.k[0]==="f").length;
+if(isF())return sel()+`<div class="tiles">`+T("go('cal')","Calendario","Partite e risultati della stagione")+T("go('cv')","Convocazioni","Consulta le convocazioni delle partite")+T("go('fb')","Richiesta miglioramenti","Suggerisci un miglioramento dell'app",nF)+`</div>`;
+return sel()+migCard()+notifCard()+`<div class="tiles">`+(canEditP()?T("go('an')","Anagrafica","Aggiungi o modifica i giocatori"):"")+T("go('tr')","Allenamenti",(isD()?"Consulta":"Segna")+" presenze e assenze")+T("go('cal')","Calendario","Partite e risultati della stagione")+T("go('cv')","Convocazioni",canEditC()?"Compila le convocazioni delle partite":"Consulta le convocazioni delle partite")+T("go('ds')","Distinte","Distinte Campionato e Coppa Brescia")+(valOk()?T("go('vl')","Valutazioni","Dai un voto agli atleti: allenamenti e partite"):"")+T("go('st')","Statistiche","Presenze, assenze e percentuali di ogni ragazzo")
++(isS()?T("go('rq')","Richiesta Amichevoli","Chiedi un'amichevole: giorni e fascia oraria",nR):"")+(canReq()?T("go('rg')","Richieste amichevoli","Conferma o annulla le richieste degli allenatori",nR):"")
++(isA()?T("go('us')","Utenti","Profili di accesso e richieste di iscrizione",S.signups.length):"")+T("go('fb')","Richiesta miglioramenti",isA()?"Leggi e rispondi alle richieste degli utenti":"Suggerisci un miglioramento dell'app",nF)
++(isA()?T("exp()","Backup","Scarica tutti i dati in un file")+T("pick()","Ripristino","Carica un file di backup")+`<input id="imp" type="file" accept=".json,application/json" hidden onchange="imp(this)">`:"")+`</div>`}
+const STAFF=["allenatore","collaboratore","dirigente"];
+const isS=()=>!!me&&STAFF.includes(me.role),canEditP=()=>isA()||isS(),canEditM=()=>isA()||isD(),mgr=()=>isA()||isD();
+const MESI=["Settembre","Ottobre","Novembre","Dicembre","Gennaio","Febbraio","Marzo","Aprile","Maggio"];
+const seasonY=()=>{const n=new Date();return n.getMonth()>=5?n.getFullYear():n.getFullYear()-1};
+const curIdx=()=>{const m=new Date().getMonth();return m>=8?m-8:(m<=4?m+4:0)};
+const idxYM=i=>{const y=seasonY();return i<4?[y,8+i]:[y+1,i-4]};
+const todayIso=()=>{const n=new Date();return isoD(n.getFullYear(),n.getMonth(),n.getDate())};
+let trI=curIdx(),tpI=curIdx(),calEdit=false,stOpen=null,stI=curIdx(),rgOpen=null,nOff=false;
+const trMonthBar=()=>`<div class="card row" style="flex-wrap:nowrap"><button class="g" style="color:var(--pri)" ${trI===0?"disabled":""} onclick="trNav(-1)" aria-label="Mese precedente">‹</button><select id="tmo" style="flex:1" onchange="trSet(+this.value)">${MESI.map((n,i)=>`<option value="${i}" ${i===trI?"selected":""}>${n} ${idxYM(i)[0]}</option>`).join("")}</select><button class="g" style="color:var(--pri)" ${trI===8?"disabled":""} onclick="trNav(1)" aria-label="Mese successivo">›</button></div>`;
+const trNav=d=>{trI=Math.max(0,Math.min(8,trI+d));render()},trSet=i=>{trI=i;render()},calEd=v=>{calEdit=v;render()},stNav=d=>{stI=Math.max(0,Math.min(8,stI+d));render()},stTog=id=>{stOpen=stOpen===id?null:id;stI=curIdx();render()},rgSet=id=>{rgOpen=id;render()};
+function vTr(){const ps=pl();let h=bk()+sel()+`<h2>Allenamenti</h2>`;
+if(isA())h+=tpCard();
+h+=trMonthBar();const [my,mm]=idxYM(trI),pre=isoD(my,mm,1).slice(0,7),ts=tr().filter(t=>t.date.slice(0,7)===pre).sort((a,b)=>a.date.localeCompare(b.date));if(!ts.length)h+=`<p class="mut">Nessun allenamento in questo mese${isA()?"":". L'Admin può aggiungerli."}</p>`;
+ts.forEach(t=>{const ed=edTr===t.id,cur=ed?draft:(t.att||{}),P=ps.filter(p=>cur[p.id]==="P"||cur[p.id]==="R").length,L=ps.filter(p=>cur[p.id]==="R").length,o=open===t.id;
+h+=`<div class="card"><div class="row" style="justify-content:space-between"><button class="g" style="color:var(--ink);flex:1;text-align:left" onclick="tgl('${t.id}')"><b>${fd(t.date)}</b> <span class="mut">· ${P}/${ps.length} presenti${L?` · ${L} in ritardo`:""}${ed?" · in modifica":""}</span></button>${isA()?`<button class="d" onclick="del('trainings','${t.id}')">Elimina</button>`:""}</div>`;
+if(o){if(canAtt())h+=ed?`<div class="row" style="margin:8px 0"><button onclick="trSave()">Salva</button><button class="g" style="color:var(--ink)" onclick="trCancel()">Annulla</button></div>`:`<div style="margin:8px 0"><button onclick="trEdit('${t.id}')">Modifica presenze</button></div>`;
+h+=ps.length?ps.map(p=>{const v=cur[p.id]||"";return`<div class="p" style="flex-wrap:wrap">${av(p)}<div class="n">${e(p.cognome)} ${e(p.nome)}</div>${canAtt()?`<div class="seg" style="width:100%"><button style="flex:1" class="P ${v==="P"?"on":""}" ${ed?"":"disabled"} onclick="mk('${t.id}','${p.id}','P')">Presente</button><button style="flex:1" class="R ${v==="R"?"on":""}" ${ed?"":"disabled"} onclick="mk('${t.id}','${p.id}','R')">Ritardo</button><button style="flex:1" class="A ${v==="A"?"on":""}" ${ed?"":"disabled"} onclick="mk('${t.id}','${p.id}','A')">Assente</button></div>`:`<span class="tag">${{P:"Presente",R:"Presente (ritardo)",A:"Assente"}[v]||"—"}</span>`}</div>`}).join(""):`<p class="mut">Nessun giocatore in anagrafica.</p>`}
+h+=`</div>`});return h}
+let edTr=null,draft={},tSel=[],tCats=[],tpY=new Date().getFullYear(),tpM=new Date().getMonth(),tMsg="",tMsgErr=false;
+function tpCard(){const [tpY,tpM]=idxYM(tpI),now=new Date(),td=isoD(now.getFullYear(),now.getMonth(),now.getDate()),cats=tCats.length?tCats:[team],n=tSel.length*cats.length;
+const start=(new Date(tpY,tpM,1).getDay()+6)%7,dim=new Date(tpY,tpM+1,0).getDate();let cells="";for(let i=0;i<start;i++)cells+=`<div></div>`;
+for(let d=1;d<=dim;d++){const k=isoD(tpY,tpM,d),on=tSel.includes(k);cells+=`<button class="dy${k===td?" td":""}${on?" sl":""}" onclick="tpTog('${k}')" aria-pressed="${on}"><span>${d}</span></button>`}
+const title=new Date(tpY,tpM,1).toLocaleDateString("it-IT",{month:"long",year:"numeric"});
+return`<div class="card"><b>Aggiungi allenamenti</b><p class="mut" style="margin:4px 0 8px">Stagione ${seasonY()}/${String(seasonY()+1).slice(2)}, da settembre a maggio. Tocca uno o più giorni (anche di mesi diversi), scegli le categorie e premi Aggiungi.</p><div class="row" style="flex-wrap:nowrap;justify-content:space-between;margin-bottom:8px"><button class="g" style="color:var(--pri)" ${tpI===0?"disabled":""} onclick="tpNav(-1)" aria-label="Mese precedente">‹</button><b style="text-transform:capitalize;flex:1;text-align:center;font-size:18px">${title}</b><button class="g" style="color:var(--pri)" ${tpI===8?"disabled":""} onclick="tpNav(1)" aria-label="Mese successivo">›</button></div><div class="cg">${["Lun","Mar","Mer","Gio","Ven","Sab","Dom"].map(x=>`<div class="h">${x}</div>`).join("")}${cells}</div>
+<div class="mut" style="margin:8px 0">Giorni scelti (${tSel.length}): ${tSel.length?tSel.slice().sort().map(k=>fd(k)).join(" · "):"nessuno"}${tSel.length?` <button class="g" style="color:var(--pri);min-height:32px;padding:2px 10px" onclick="tpClear()">Azzera</button>`:""}</div>
+<b>Categorie</b><label class="chk"><input type="checkbox" ${cats.length===TEAMS.length?"checked":""} onchange="tcAll(this.checked)"> Tutte le categorie</label>${TEAMS.map((t,i)=>`<label class="chk"><input type="checkbox" ${cats.includes(t)?"checked":""} onchange="tcTog(${i})"> ${t}</label>`).join("")}
+<div class="${tMsgErr?"err":"mut"}" style="margin-top:6px">${e(tMsg)}</div><button style="margin-top:8px" onclick="addTs()" ${n?"":"disabled"}>${n?`Aggiungi ${n} allenament${n===1?"o":"i"}`:"Aggiungi allenamenti"}</button></div>`}
+const tpNav=d=>{tpI=Math.max(0,Math.min(8,tpI+d));render()},tpTog=k=>{tSel=tSel.includes(k)?tSel.filter(x=>x!==k):[...tSel,k];tMsg="";render()},tpClear=()=>{tSel=[];render()},
+tcTog=i=>{const c=tCats.length?tCats:[team],t=TEAMS[i];tCats=c.includes(t)?c.filter(x=>x!==t):[...c,t];render()},tcAll=on=>{tCats=on?[...TEAMS]:[];render()};
+async function addTs(){const cats=tCats.length?tCats:[team],items=[];let dup=0;
+for(const c of cats)for(const d of tSel){if(S.trainings.some(t=>t.team===c&&t.date===d)){dup++;continue}items.push(["trainings",nid("trainings"),{team:c,date:d,att:{}}])}
+if(!items.length){tMsg="Nessun nuovo allenamento: erano tutti già presenti.";tMsgErr=true;return render()}
+try{await batchSet(items);tMsg=`Aggiunti ${items.length} allenamenti${dup?` (${dup} già presenti, saltati)`:""}.`;tMsgErr=false;tSel=[];render()}catch(x){fail(x)}}
+const dirty=()=>{const t=S.trainings.find(x=>x.id===edTr);return !!t&&JSON.stringify(draft)!==JSON.stringify(t.att||{})};
+function trEdit(id){if(edTr&&edTr!==id&&dirty()&&!confirm("Hai modifiche non salvate: scartarle?"))return;const t=S.trainings.find(x=>x.id===id);edTr=id;draft={...(t.att||{})};render()}
+function trCancel(){edTr=null;render()}
+async function trSave(){const id=edTr;try{await updateDoc(doc(db,"trainings",id),{att:draft});edTr=null;render()}catch(x){fail(x)}}
+function mk(tid,pid,v){if(edTr!==tid)return;if(draft[pid]===v)delete draft[pid];else draft[pid]=v;render()}
+function vSt(){const td=todayIso(),all=tr(),ts=all.filter(t=>t.date<=td),T=ts.length,fut=all.length-T;
+let h=bk()+sel()+`<h2>Statistiche</h2><p class="mut">Allenamenti svolti da inizio anno: <b>${T}</b>${fut?` · ancora da fare: ${fut}`:""}<br>Le percentuali sono calcolate solo sugli allenamenti già svolti. Tocca un atleta per vedere il suo calendario.</p>`;
+const ps=pl();if(!ps.length)return h+`<p class="mut">Nessun giocatore in anagrafica.</p>`;
+return h+ps.map(p=>{const P=ts.filter(t=>att(t,p)==="P"||att(t,p)==="R").length,L=ts.filter(t=>att(t,p)==="R").length,A=ts.filter(t=>att(t,p)==="A").length,pp=T?Math.round(P/T*100):0,pa=T?Math.round(A/T*100):0,op=stOpen===p.id;
+return`<div class="card"><button class="g" style="color:var(--ink);border:0;text-align:left;width:100%;padding:0;min-height:0;display:block" onclick="stTog('${p.id}')" aria-expanded="${op}"><div class="p" style="border:0;padding:0">${av(p)}<div class="n"><b>${e(p.cognome)} ${e(p.nome)}</b></div><span class="mut">${op?"▲":"▼"}</span></div></button><div class="stat" style="grid-template-columns:repeat(5,1fr)"><div><b>${P}</b><span class="mut">Presenze</span></div><div><b>${A}</b><span class="mut">Assenze</span></div><div><b>${pp}%</b><span class="mut">% pres.</span></div><div><b>${pa}%</b><span class="mut">% ass.</span></div><div><b>${L}</b><span class="mut">Ritardi</span></div></div>${avgRow(p.id)}<div class="bar"><i style="width:${pp}%"></i></div>${op?stCal(p,all):""}</div>`}).join("")}
+function stCal(p,all){const [y,m]=idxYM(stI),start=(new Date(y,m,1).getDay()+6)%7,dim=new Date(y,m+1,0).getDate(),td=todayIso(),by={};all.forEach(t=>by[t.date]=t);let c="";
+for(let i=0;i<start;i++)c+=`<div></div>`;
+for(let d=1;d<=dim;d++){const k=isoD(y,m,d),t=by[k];let cl="dy sm",s="";if(t){const v=att(t,p),rt=rOn("t")?(((S.ratings.find(x=>x.id===rkey("t",t.id))||{}).rates||{})[p.id]||0):0;if(k>td){cl+=" ff";s="•"}else if(v==="P"){cl+=" pp";s="✓"+(rt?" "+rt:"")}else if(v==="R"){cl+=" rr";s="R"+(rt?" "+rt:"")}else if(v==="A"){cl+=" aa";s="✗"}else{cl+=" nn";s="–"}}c+=`<div class="${cl}"><span>${d}</span>${s?`<small>${s}</small>`:""}</div>`}
+const pre=isoD(y,m,1).slice(0,7),pm=all.filter(t=>t.date.slice(0,7)===pre&&t.date<=td),P=pm.filter(t=>att(t,p)==="P"||att(t,p)==="R").length,L=pm.filter(t=>att(t,p)==="R").length,A=pm.filter(t=>att(t,p)==="A").length;
+return`<div style="margin-top:10px;border-top:1px solid var(--line);padding-top:10px"><div class="row" style="flex-wrap:nowrap;justify-content:space-between;margin-bottom:8px"><button class="g" style="color:var(--pri)" ${stI===0?"disabled":""} onclick="stNav(-1)" aria-label="Mese precedente">‹</button><b style="flex:1;text-align:center;font-size:18px">${MESI[stI]} ${y}</b><button class="g" style="color:var(--pri)" ${stI===8?"disabled":""} onclick="stNav(1)" aria-label="Mese successivo">›</button></div><div class="cg">${["Lun","Mar","Mer","Gio","Ven","Sab","Dom"].map(x=>`<div class="h">${x}</div>`).join("")}${c}</div><div class="mut" style="margin-top:8px">Nel mese: <b>${P}</b> presenze · <b>${L}</b> ${L===1?"ritardo":"ritardi"} · <b>${A}</b> assenze</div><div style="margin-top:6px"><span class="lg pp">✓ Presente</span><span class="lg rr">R Presente in ritardo</span><span class="lg aa">✗ Assente</span><span class="lg nn">– Non segnato</span><span class="lg ff">• In programma</span></div>${ratingBox(p)}</div>`}
+
+const stTag=r=>r.status==="confirmed"?`<span class="tag t-amichevole">Confermata</span>`:r.status==="denied"?`<span class="tag st-no">Annullata</span>`:`<span class="tag t-coppa">In attesa</span>`;
+const rForm=r=>`<div class="card" style="background:#f4f7fc;margin:8px 0 0"><b>Dati della partita</b><p class="mut" style="margin:4px 0 8px">Disponibilità: dal ${fd(r.from)} al ${fd(r.to)}, ${e(r.t1)}–${e(r.t2)}. Sarà inserita nel calendario di ${e(r.team)} come Amichevole.</p><div class="row"><input id="cd${r.id}" type="date" min="${r.from}" max="${r.to}" value="${r.from}"><input id="ct${r.id}" type="time" value="${e(r.t1)}"></div><div class="row" style="margin-top:8px"><input id="co${r.id}" placeholder="Avversario"><select id="ch${r.id}"><option value="C">In casa</option><option value="T">Trasferta</option></select></div><div class="row" style="margin-top:8px"><input id="cl${r.id}" placeholder="Luogo (facoltativo)"></div><div class="row" style="margin-top:8px"><button onclick="rqConf('${r.id}')">Salva nel calendario</button><button class="g" style="color:var(--ink)" onclick="rgSet(null)">Chiudi</button></div></div>`;
+function rcard(r,m){const o=rgOpen===r.id;
+return`<div class="card"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><b style="flex:1">${m?e(r.team):"Amichevole"}</b>${stTag(r)}</div><div>Dal <b>${fd(r.from)}</b> al <b>${fd(r.to)}</b></div><div>Fascia oraria: <b>${e(r.t1)} – ${e(r.t2)}</b></div>${r.note?`<div class="mut">Note: ${e(r.note)}</div>`:""}<div class="mut">Richiesta di ${e(r.byName)}${r.at?" · "+new Date(r.at).toLocaleDateString("it-IT"):""}</div>${r.status==="confirmed"?`<div style="margin-top:6px">Partita inserita: <b>${fd(r.mDate)}${r.mOra?" ore "+e(r.mOra):""}</b>, ${r.mHome==="C"?"in casa":"in trasferta"} contro <b>${e(r.mOpp)}</b></div>`:""}${r.status==="denied"&&r.reason?`<div class="mut">Motivo: ${e(r.reason)}</div>`:""}${m&&r.status==="pending"?(o?rForm(r):`<div class="row" style="margin-top:8px"><button onclick="rgSet('${r.id}')">Conferma e inserisci partita</button><button class="d" onclick="rqDeny('${r.id}')">Annulla richiesta</button></div>`):""}${!m&&r.status==="pending"?`<div style="margin-top:8px"><button class="d" onclick="del('requests','${r.id}','Ritirare questa richiesta?')">Ritira richiesta</button></div>`:""}</div>`}
+function vRq(){const rs=S.requests.filter(r=>r.team===me.team).sort((a,b)=>(b.at||0)-(a.at||0));
+return bk()+`<h2>Richiesta Amichevoli</h2><div class="card"><b>Nuova richiesta</b><p class="mut" style="margin:4px 0 8px">Indica da quale a quale giorno puoi giocare e la fascia oraria. Il Direttore confermerà o annullerà la richiesta.</p><div class="row"><label class="mut">Dal giorno<input id="rf" type="date"></label><label class="mut">Al giorno<input id="rt" type="date"></label></div><div class="row" style="margin-top:8px"><label class="mut">Dalle ore<input id="r1" type="time"></label><label class="mut">Alle ore<input id="r2" type="time"></label></div><input id="rn" placeholder="Note (facoltativo)" style="margin-top:8px"><div style="margin-top:8px"><button onclick="addRq()">Invia richiesta</button></div></div>`+(rs.length?rs.map(r=>rcard(r,false)).join(""):`<p class="mut">Nessuna richiesta inviata.</p>`)}
+function vRg(){const rs=S.requests.slice().sort((a,b)=>(a.status==="pending"?0:1)-(b.status==="pending"?0:1)||(b.at||0)-(a.at||0));
+return bk()+`<h2>Richieste amichevoli</h2>`+(rs.length?rs.map(r=>rcard(r,true)).join(""):`<p class="mut">Nessuna richiesta.</p>`)}
+function addRq(){const f=$("rf").value,t=$("rt").value,a=$("r1").value,b=$("r2").value;
+if(!f||!t||!a||!b)return alert("Compila i giorni e la fascia oraria.");if(t<f)return alert("Il giorno finale è prima del giorno iniziale.");if(b<=a)return alert("L'orario finale deve essere dopo quello iniziale.");
+save("requests",nid("requests"),{team:me.team,from:f,to:t,t1:a,t2:b,note:$("rn").value.trim(),status:"pending",by:me.id,byName:me.name,at:Date.now()})}
+async function rqDeny(id){const reason=prompt("Motivo dell'annullamento (facoltativo):");if(reason===null)return;try{await updateDoc(doc(db,"requests",id),{status:"denied",reason:reason.trim(),decidedBy:me.name,decidedAt:Date.now()})}catch(x){fail(x)}}
+async function rqConf(id){const r=S.requests.find(x=>x.id===id),v=k=>$(k+id).value,d=v("cd"),o=v("co").trim();if(!d||!o)return alert("Inserisci data e avversario.");
+const mid=nid("matches"),m={team:r.team,date:d,ora:v("ct"),opp:o,home:v("ch"),tipo:"amichevole",luogo:v("cl").trim(),gf:"",ga:"",fromReq:id};
+try{const b=writeBatch(db);b.set(doc(db,"matches",mid),m);b.update(doc(db,"requests",id),{status:"confirmed",matchId:mid,mDate:d,mOra:m.ora,mOpp:o,mHome:m.home,decidedBy:me.name,decidedAt:Date.now()});await b.commit();rgOpen=null;render()}catch(x){fail(x)}}
+
+function vFb(){const fs=S.feedback.slice().sort((a,b)=>(b.at||0)-(a.at||0));let h=bk()+`<h2>Richiesta miglioramenti</h2>`;
+if(!isA())h+=`<div class="card"><b>Nuova richiesta</b><p class="mut" style="margin:4px 0 8px">Scrivi cosa vorresti migliorare o aggiungere nell'app. La leggerà solo l'Admin, che potrà risponderti.</p><textarea id="ft" rows="4" placeholder="Scrivi qui…"></textarea><div style="margin-top:8px"><button onclick="addFb()">Invia</button></div></div>`;
+return h+(fs.length?fs.map(f=>`<div class="card"><div class="mut">${isA()?`<b>${e(f.name)}</b> · ${ROLES[f.role]||""}${f.team?" · "+e(f.team):""} · `:""}${new Date(f.at||0).toLocaleString("it-IT")}</div><p style="margin:6px 0;white-space:pre-wrap">${e(f.text)}</p>${f.reply?`<div style="border-left:4px solid var(--acc);padding-left:10px"><b>Risposta dell'Admin</b><p style="margin:4px 0;white-space:pre-wrap">${e(f.reply)}</p></div>`:(isA()?"":`<span class="tag">In attesa di risposta</span>`)}${isA()?`<textarea id="fr${f.id}" rows="2" placeholder="Rispondi…" style="margin-top:8px">${e(f.reply||"")}</textarea><div class="row" style="margin-top:8px"><button onclick="repFb('${f.id}')">${f.reply?"Aggiorna risposta":"Rispondi"}</button><button class="d" onclick="del('feedback','${f.id}')">Elimina</button></div>`:""}</div>`).join(""):`<p class="mut">${isA()?"Nessuna richiesta ricevuta.":"Non hai ancora inviato richieste."}</p>`)}
+function addFb(){const t=$("ft").value.trim();if(!t)return alert("Scrivi la richiesta.");save("feedback",nid("feedback"),{uid:me.id,name:me.name,role:me.role,team:me.team||"",text:t,at:Date.now(),reply:"",replyAt:0})}
+async function repFb(id){const t=$("fr"+id).value.trim();if(!t)return alert("Scrivi la risposta.");try{await updateDoc(doc(db,"feedback",id),{reply:t,replyAt:Date.now(),replyBy:me.name})}catch(x){fail(x)}}
+
+const ackKey=()=>"osm-ack-"+me.id,ackGet=()=>{try{return JSON.parse(localStorage.getItem(ackKey())||"{}")}catch(_){return{}}};
+function alerts(){if(!me)return[];const a=ackGet(),L=[];
+for(const r of S.requests){if(canReq()){if(r.status==="pending"&&a["r"+r.id]!=="pending")L.push({k:"r"+r.id,m:"pending",t:"Nuova richiesta amichevole",d:`${r.team}: dal ${fd(r.from)} al ${fd(r.to)}, ${r.t1}–${r.t2}`})}
+else if(isS()&&r.status!=="pending"&&a["r"+r.id]!==r.status)L.push({k:"r"+r.id,m:r.status,t:r.status==="confirmed"?"Amichevole confermata":"Amichevole annullata",d:r.status==="confirmed"?`${fd(r.mDate)}${r.mOra?" ore "+r.mOra:""} contro ${r.mOpp}`:`Dal ${fd(r.from)} al ${fd(r.to)}${r.reason?" — "+r.reason:""}`})}
+for(const f of S.feedback){if(isA()){if(!f.reply&&a["f"+f.id]!=="n")L.push({k:"f"+f.id,m:"n",t:"Nuova richiesta di miglioramento",d:`${f.name}: ${String(f.text).slice(0,80)}`})}
+else if(f.reply&&a["f"+f.id]!==String(f.replyAt))L.push({k:"f"+f.id,m:String(f.replyAt),t:"Risposta alla tua richiesta di miglioramento",d:String(f.reply).slice(0,100)})}
+if(isA())for(const r of S.signups){if(a["s"+r.id]!=="n")L.push({k:"s"+r.id,m:"n",t:"Nuova richiesta di iscrizione",d:`${r.name} (${SG_KIND[r.kind]||""})`})}
+return L}
+function notifAck(){const a=ackGet();alerts().forEach(x=>a[x.k]=x.m);try{localStorage.setItem(ackKey(),JSON.stringify(a))}catch(_){}nOff=true;render()}
+const notifModal=()=>{if(!me||nOff||(S.bday.length&&!bdOff))return"";const L=alerts();return L.length?`<div class="ov" role="dialog" aria-modal="true" aria-label="Notifiche"><div class="bd"><h2 style="font-size:30px">Notifiche</h2>${L.map(x=>`<div class="bp"><b>${e(x.t)}</b><p>${e(x.d)}</p></div>`).join("")}<button onclick="notifAck()">Ok</button></div></div>`:""};
+const notifCard=()=>("Notification" in window&&Notification.permission==="default")?`<div class="card"><b>Notifiche</b><p class="mut" style="margin:4px 0 8px">Attiva gli avvisi del browser per sapere quando arriva o cambia una richiesta (funzionano con l'app aperta o in background).</p><button onclick="notifAsk()">Attiva notifiche</button></div>`:"";
+const notifAsk=()=>{try{Notification.requestPermission().then(()=>render())}catch(_){}};
+function ping(t,b){nOff=false;try{if("Notification" in window&&Notification.permission==="granted"){if(navigator.serviceWorker&&navigator.serviceWorker.ready)navigator.serviceWorker.ready.then(r=>r.showNotification(t,{body:b,icon:"icon-192.png",badge:"icon-192.png"}));else new Notification(t,{body:b,icon:"icon-192.png"})}}catch(_){}}
+function liveN(n,s){if(!ld[n]){ld[n]=1;return}
+s.docChanges().forEach(c=>{const x={id:c.doc.id,...c.doc.data()};
+if(n==="requests"){if(c.type==="added"&&canReq()&&x.status==="pending")ping("Nuova richiesta amichevole",`${x.team}: dal ${fd(x.from)} al ${fd(x.to)}`);else if(c.type==="modified"&&isS()&&x.status!=="pending")ping(x.status==="confirmed"?"Amichevole confermata":"Amichevole annullata",x.status==="confirmed"?`${fd(x.mDate)} contro ${x.mOpp}`:(x.reason||""))}
+if(n==="feedback"){if(c.type==="added"&&isA()&&x.uid!==me.id)ping("Nuova richiesta di miglioramento",x.name);else if(c.type==="modified"&&!isA()&&x.reply)ping("Risposta alla tua richiesta",String(x.reply).slice(0,80))}})}
+const TIPI={campionato:"Campionato",coppa:"Coppa Brescia",coppalombardia:"Coppa Lombardia",amichevole:"Amichevole"};
+const cmpM=(a,b)=>(a.date+(a.ora||"")).localeCompare(b.date+(b.ora||""));
+let calY=new Date().getFullYear(),calM=new Date().getMonth(),calSel="",calF="",calT="";
+const isoD=(y,m,d)=>`${y}-${pad(m+1)}-${pad(d)}`;
+const admRow=m=>`<div class="row" style="margin-top:8px"><span class="mut" style="flex:0 0 auto">Gol nostri</span><input class="sc" type="number" min="0" id="gf${m.id}" value="${m.gf??""}"><span class="mut" style="flex:0 0 auto">Gol avversari</span><input class="sc" type="number" min="0" id="ga${m.id}" value="${m.ga??""}"><button onclick="res('${m.id}')">Salva risultato</button></div>
+<details style="margin-top:8px"><summary style="cursor:pointer;font-weight:600;color:var(--pri);min-height:32px">Modifica partita</summary>
+<div class="row" style="margin-top:8px"><input id="dt${m.id}" type="date" value="${e(m.date)}"><input id="ot${m.id}" type="time" value="${e(m.ora)}"></div>
+<div class="row" style="margin-top:8px"><input id="op${m.id}" placeholder="Avversario" value="${e(m.opp)}"><select id="hm${m.id}"><option value="C" ${m.home==="C"?"selected":""}>In casa</option><option value="T" ${m.home!=="C"?"selected":""}>Trasferta</option></select></div>
+<div class="row" style="margin-top:8px"><select id="cm${m.id}">${TEAMS.map(t=>`<option ${t===m.team?"selected":""}>${t}</option>`).join("")}</select><select id="tp${m.id}"><option value="">— tipo —</option>${Object.entries(TIPI).map(([k,v])=>`<option value="${k}" ${m.tipo===k?"selected":""}>${v}</option>`).join("")}</select></div>
+<div class="row" style="margin-top:8px"><input id="lg${m.id}" placeholder="Luogo" value="${e(m.luogo)}"></div>
+<div class="row" style="margin-top:8px"><button onclick="res('${m.id}')">Salva modifiche</button><button class="d" onclick="del('matches','${m.id}')">Elimina</button></div></details>`;
+const resOf=m=>{if(m.gf===""||m.gf==null||m.ga===""||m.ga==null)return"";const a=+m.gf,b=+m.ga;return a>b?"w":a<b?"l":"d"};
+function rec(list){const r={g:0,w:0,d:0,l:0,gf:0,ga:0,open:0};list.forEach(m=>{const s=resOf(m);if(!s){r.open++;return}r.g++;r[s]++;r.gf+=+m.gf;r.ga+=+m.ga});return r}
+const recOne=()=>{const r=rec(S.matches.filter(m=>m.team===team));return`<div class="card"><b>Risultati ${e(team)}</b><div style="margin-top:6px"><span class="lg pp">${r.w} vinte</span><span class="lg nn">${r.d} pareggiate</span><span class="lg aa">${r.l} perse</span> <span class="mut">· ${r.g} giocate · gol ${r.gf}-${r.ga}</span></div></div>`};
+function recTable(){const ms=S.matches.filter(m=>!calT||m.tipo===calT),teams=calF?[calF]:TEAMS,row=(n,r,b)=>`<tr${b?' class="tt"':""}><td>${n}</td><td>${r.g}</td><td class="rw">${r.w}</td><td class="rd">${r.d}</td><td class="rl">${r.l}</td><td>${r.gf}-${r.ga}</td></tr>`,tot=rec(ms.filter(m=>teams.includes(m.team)));
+return`<div class="card"><b>Vittorie, pareggi e sconfitte</b> <span class="mut">(solo partite con risultato)</span><div style="overflow-x:auto"><table class="rec"><thead><tr><th>Categoria</th><th>G</th><th>V</th><th>N</th><th>P</th><th>Gol</th></tr></thead><tbody>${teams.map(t=>row(e(t),rec(ms.filter(m=>m.team===t)))).join("")}${teams.length>1?row("Totale",tot,true):""}</tbody></table></div><div class="mut" style="margin-top:6px">G giocate · V vinte · N pareggiate · P perse · Gol fatti-subiti${tot.open?` · Senza risultato: ${tot.open}`:""}</div></div>`}
+const calTipo=v=>{calT=v;render()};
+function mcard(m,o={}){const hasR=m.gf!==""&&m.gf!=null&&m.ga!==""&&m.ga!=null,us=club(),l=m.home==="C"?[us,m.opp]:[m.opp,us],sc=m.home==="C"?[m.gf,m.ga]:[m.ga,m.gf];
+const rs=resOf(m);return`<div class="card${rs?" res-"+rs:""}"><div class="row" style="justify-content:space-between;gap:6px"><span class="mut" style="flex:1 1 auto">${fd(m.date)}${m.ora?" · ore "+e(m.ora):""}${o.team?" · "+e(m.team):""}</span>${rs?`<span class="tag rt-${rs}" style="flex:none">${{w:"Vinta",d:"Pareggiata",l:"Persa"}[rs]}</span>`:""}${m.tipo&&TIPI[m.tipo]?`<span class="tag t-${m.tipo}" style="flex:none">${TIPI[m.tipo]}</span>`:""}</div><div class="row" style="justify-content:space-between;flex-wrap:nowrap;margin-top:4px"><b style="flex:1">${e(l[0])} – ${e(l[1])}</b>${hasR?`<b style="flex:none;font-size:22px">${sc[0]} - ${sc[1]}</b>`:`<span class="tag" style="flex:none">Da giocare</span>`}</div>${m.luogo?`<div class="mut">Luogo: ${e(m.luogo)}</div>`:""}${o.admin?admRow(m):""}</div>`}
+function vCal(){if(isD()&&!calEdit)return vCalD();let h=(isD()?`<button class="g back" onclick="calEd(false)">← Calendario mensile</button>`:bk())+sel()+`<h2>Calendario</h2>`;
+if(canEditM())h+=recOne();if(canEditM())h+=`<div class="card"><b>Nuova partita</b><div class="row" style="margin-top:8px"><input id="md" type="date"><input id="mt" type="time"></div><div class="row" style="margin-top:8px"><input id="mo" placeholder="Avversario"><select id="mh"><option value="C">In casa</option><option value="T">Trasferta</option></select></div><div class="row" style="margin-top:8px"><select id="mk">${Object.entries(TIPI).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select><input id="ml" placeholder="Luogo (facoltativo)"><button onclick="addM()">Aggiungi partita</button></div></div>`;
+const ms=S.matches.filter(m=>m.team===team).sort(cmpM);if(!ms.length)h+=`<p class="mut">Nessuna partita inserita.</p>`;
+return h+ms.map(m=>mcard(m,{admin:canEditM()})).join("")}
+function vCalD(){const now=new Date(),td=isoD(now.getFullYear(),now.getMonth(),now.getDate());if(!calSel&&calY===now.getFullYear()&&calM===now.getMonth())calSel=td;
+const by={};S.matches.filter(m=>(!calF||m.team===calF)&&(!calT||m.tipo===calT)).forEach(m=>(by[m.date]=by[m.date]||[]).push(m));
+const start=(new Date(calY,calM,1).getDay()+6)%7,dim=new Date(calY,calM+1,0).getDate();let cells="";
+for(let i=0;i<start;i++)cells+=`<div></div>`;
+for(let d=1;d<=dim;d++){const k=isoD(calY,calM,d),n=(by[k]||[]).length;cells+=`<button class="dy${k===td?" td":""}${k===calSel?" sl":""}" onclick="calPick('${k}')" aria-label="${d}${n?", "+n+(n>1?" partite":" partita"):""}"><span>${d}</span>${n?`<span class="dots">${by[k].map(m=>`<u class="r${resOf(m)||"p"}"></u>`).join("")}</span>`:""}</button>`}
+const title=new Date(calY,calM,1).toLocaleDateString("it-IT",{month:"long",year:"numeric"});
+let h=bk()+`<h2>Calendario</h2><div class="card row"><select id="cf" style="flex:1 1 100%" onchange="calFilt(this.value)"><option value="">Tutte le categorie</option>${TEAMS.map(t=>`<option ${t===calF?"selected":""}>${t}</option>`).join("")}</select><select id="ctp" onchange="calTipo(this.value)"><option value="">Tutti i tipi</option>${Object.entries(TIPI).map(([k,v])=>`<option value="${k}" ${k===calT?"selected":""}>${v}</option>`).join("")}</select><button onclick="calEd(true)">Modifica partite</button></div>${recTable()}<div class="card"><div class="row" style="flex-wrap:nowrap;justify-content:space-between;margin-bottom:8px"><button class="g" style="color:var(--pri)" onclick="calNav(-1)" aria-label="Mese precedente">‹</button><b style="text-transform:capitalize;flex:1;text-align:center;font-size:18px">${title}</b><button class="g" style="color:var(--pri)" onclick="calNav(1)" aria-label="Mese successivo">›</button></div><div class="cg">${["Lun","Mar","Mer","Gio","Ven","Sab","Dom"].map(x=>`<div class="h">${x}</div>`).join("")}${cells}</div><div style="margin-top:8px"><button class="g" style="color:var(--pri)" onclick="calToday()">Oggi</button></div><div style="margin-top:8px"><span class="lg pp">● Vinta</span><span class="lg nn">● Pareggiata</span><span class="lg aa">● Persa</span><span class="lg">○ Da giocare</span></div></div>`;
+if(calSel){const l=(by[calSel]||[]).sort(cmpM);h+=`<h2 style="margin:8px 0">${fd(calSel)}</h2>`+(l.length?l.map(m=>mcard(m,{team:true})).join(""):`<p class="mut">Nessuna partita in questa data.</p>`)}
+else h+=`<p class="mut">Tocca un giorno per vedere le partite.</p>`;return h}
+const calNav=d=>{calM+=d;if(calM<0){calM=11;calY--}if(calM>11){calM=0;calY++}calSel="";render()},calPick=k=>{calSel=k;render()},calFilt=v=>{calF=v;render()},calToday=()=>{const n=new Date();calY=n.getFullYear();calM=n.getMonth();calSel=isoD(calY,calM,n.getDate());render()};
+const tl=p=>{const L=[["Atleta",p.cel],["Mamma",p.celMamma],["Papà",p.celPapa]].filter(x=>x[1]);return L.length?`<div class="mut">${L.map(x=>`${x[0]}: <a href="tel:${String(x[1]).replace(/[^+\d]/g,"")}">${e(x[1])}</a>`).join(" · ")}</div>`:""};
+function vAn(){const ps=pl(),x=editP?S.players.find(p=>p.id===editP)||{}:{};let h=bk()+sel()+`<h2>Anagrafica</h2><div class="card"><b>${editP?"Modifica giocatore":"Nuovo giocatore"}</b><div class="row" style="margin-top:8px"><input id="an1" placeholder="Nome" value="${e(x.nome)}"><input id="an2" placeholder="Cognome" value="${e(x.cognome)}"></div><div class="row" style="margin-top:8px"><label class="mut">Data di nascita<input id="an3" type="date" value="${e(x.dob)}"></label><label class="mut">Foto<input id="an4" type="file" accept="image/*"></label></div><div class="row" style="margin-top:8px"><label class="mut">Ruolo<input id="an5" list="ruoli" placeholder="es. Portiere" value="${e(x.ruolo)}"><datalist id="ruoli"><option>Portiere</option><option>Difensore</option><option>Centrocampista</option><option>Attaccante</option></datalist></label><label class="mut">Cellulare atleta<input id="an6" type="tel" value="${e(x.cel)}"></label></div><div class="row" style="margin-top:8px"><label class="mut">Cellulare mamma<input id="an7" type="tel" value="${e(x.celMamma)}"></label><label class="mut">Cellulare papà<input id="an8" type="tel" value="${e(x.celPapa)}"></label></div><div class="row" style="margin-top:8px"><label class="mut">N° tessera / matricola<input id="an9" inputmode="numeric" value="${e(x.tessera)}"></label><label class="mut">N° maglia<input id="an10" inputmode="numeric" value="${e(x.maglia)}"></label></div><div class="err">${err}</div><div class="row" style="margin-top:8px"><button onclick="savP()">${editP?"Salva modifiche":"Aggiungi giocatore"}</button>${editP?`<button class="g" onclick="edit(null)">Annulla</button>`:""}</div></div>`;
+return h+(ps.length?`<div class="card">`+ps.map(p=>`<div class="p">${av(p)}<div class="n"><b>${e(p.cognome)} ${e(p.nome)}</b><div class="mut">${fd(p.dob)}${p.ruolo?" · "+e(p.ruolo):""}</div>${tl(p)}${numInfo(p)}</div><button onclick="edit('${p.id}')">Modifica</button>${canEditP()?`<button class="d" onclick="del('players','${p.id}')">Elimina</button>`:""}</div>`).join("")+`</div>`:`<p class="mut">Nessun giocatore in questa categoria.</p>`)}
+function vUs(){return bk()+`<h2>Utenti</h2>${signupCards()}<div class="card"><b>Nuovo profilo</b><div class="row" style="margin-top:8px"><input id="un" placeholder="Nome utente (lettere e numeri)" autocomplete="off" autocapitalize="none"><input id="up" type="text" placeholder="Password (min. 6 caratteri)" autocomplete="off"></div><div class="row" style="margin-top:8px"><select id="ur" onchange="tg()">${Object.entries(ROLES).filter(r=>r[0]!=="admin").map(r=>`<option value="${r[0]}">${r[1]}</option>`).join("")}</select><select id="ut">${TEAMS.map(t=>`<option>${t}</option>`).join("")}</select></div><div class="err">${err}</div><div style="margin-top:8px"><button onclick="addU()">Crea profilo</button></div></div><div class="card">`+userRows()+`</div>`+delAllCard()}
+function tg(){$("ut").style.display=VIEW.includes($("ur").value)?"none":""}
+
+function vWelcome(){return`<div class="card" style="text-align:center;padding:28px 16px;margin-top:24px"><img src="${logo()}" alt="" style="max-width:220px;max-height:36vh;width:auto;height:auto"><h2 style="font-size:40px;margin:8px 0 4px">Benvenuto</h2><p style="font-size:18px;margin:0"><b>${e(me.name)}</b></p><p class="mut" style="margin:0 0 4px">${ROLES[me.role]}${me.team?" · "+e(me.team):""}</p><p style="font-weight:600;margin:12px 0 16px">${e(club())}</p><button style="min-width:220px;font-size:18px;min-height:52px" onclick="go('home')">Entra</button></div>`}
+function render(){const a=$("app");
+if(!configured){a.innerHTML=head()+`<main><div class="card"><b>Configurazione mancante</b><p>Apri <code>firebase-config.js</code> e incolla i dati del tuo progetto Firebase (vedi README).</p></div></main>`;return}
+if(!ready){a.innerHTML=head()+`<main><p class="mut">Caricamento…</p></main>`;return}
+if(!me){a.innerHTML=head()+`<main>${sgMode?vSignup():vLogin()}</main>`;return}
+if(((view==="us"||view==="set")&&!isA())||(view==="an"&&!canEditP())||(view==="rq"&&!isS())||(view==="rg"&&!canReq())||(isF()&&!["home","cal","cv","fb","welcome"].includes(view)))view="home";
+a.innerHTML=head()+`<main>${{home:vHome,tr:vTr,st:vSt,cal:vCal,an:vAn,us:vUs,set:vSet,welcome:vWelcome,rq:vRq,rg:vRg,fb:vFb,cv:vCv,vl:vVl,ds:vDs}[view]()}</main>`+bdayModal()+notifModal();if(view==="us")tg();if(view==="cv"&&cvId&&!cvEdit)cvDraw()}
+
+const unesc=s=>String(s).replace(/&#x([0-9a-f]+);/gi,(_,h)=>String.fromCodePoint(parseInt(h,16))).replace(/&#(\d+);/g,(_,d)=>String.fromCodePoint(+d)).replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&amp;/g,"&");
+async function inflate(u8){const ds=new DecompressionStream("deflate-raw"),w=ds.writable.getWriter();w.write(u8);w.close();return new Uint8Array(await new Response(ds.readable).arrayBuffer())}
+async function unzip(buf){const u=new Uint8Array(buf),dv=new DataView(buf),out={};let i=u.length-22;while(i>=0&&dv.getUint32(i,true)!==0x06054b50)i--;if(i<0)throw 0;
+const n=dv.getUint16(i+10,true);let p=dv.getUint32(i+16,true);
+for(let k=0;k<n;k++){const m=dv.getUint16(p+10,true),cs=dv.getUint32(p+20,true),nl=dv.getUint16(p+28,true),xl=dv.getUint16(p+30,true),cl=dv.getUint16(p+32,true),lo=dv.getUint32(p+42,true),name=new TextDecoder().decode(u.subarray(p+46,p+46+nl));p+=46+nl+xl+cl;
+if(!/^xl\/(sharedStrings\.xml|worksheets\/sheet\d+\.xml)$/.test(name))continue;
+const ln=dv.getUint16(lo+26,true),lx=dv.getUint16(lo+28,true),d=u.subarray(lo+30+ln+lx,lo+30+ln+lx+cs);out[name]=new TextDecoder().decode(m===0?d:await inflate(d))}return out}
+function sheetRows(z){const sn=Object.keys(z).filter(k=>k.includes("worksheets")).sort((a,b)=>a.localeCompare(b,"en",{numeric:true}))[0];if(!sn)throw 0;
+const ss=[...(z["xl/sharedStrings.xml"]||"").matchAll(/<si>(.*?)<\/si>/gs)].map(m=>unesc([...m[1].matchAll(/<t[^>]*>(.*?)<\/t>/gs)].map(x=>x[1]).join("")));
+const rows=[];for(const rm of z[sn].matchAll(/<row[^>]*>(.*?)<\/row>/gs)){const r=[];for(const cm of rm[1].matchAll(/<c ([^>]*?)(?:\/>|>(.*?)<\/c>)/gs)){const at=cm[1],b=cm[2]||"",ref=/r="([A-Z]+)\d+"/.exec(at),t=/t="(\w+)"/.exec(at)?.[1],v=/<v>(.*?)<\/v>/s.exec(b)?.[1];
+let val=t==="s"?ss[+v]:t==="inlineStr"?unesc([...b.matchAll(/<t[^>]*>(.*?)<\/t>/gs)].map(x=>x[1]).join("")):unesc(v??"");
+let c=0;for(const ch of ref?ref[1]:"A")c=c*26+ch.charCodeAt(0)-64;r[c-1]=String(val??"").trim()}rows.push(r)}return rows}
+function csvRows(t){const L=t.replace(/^\uFEFF/,"").split(/\r?\n/).filter(x=>x.trim()),sp=(L[0]||"").split(";").length>=(L[0]||"").split(",").length?";":",";return L.map(l=>l.split(sp).map(x=>x.replace(/^"|"$/g,"").trim()))}
+const nz=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]/g,"");
+function isoDate(v){v=String(v||"").trim();if(!v)return"";if(/^\d{4,6}(\.\d+)?$/.test(v)&&+v>1000){return new Date(Math.round((+v-25569)*864e5)).toISOString().slice(0,10)}
+let m=/^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})/.exec(v);if(m)return`${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`;
+m=/^(\d{4})-(\d{2})-(\d{2})/.exec(v);return m?m[0]:""}
+function parseAthletes(rows,teams,defTeam){const H=(rows[0]||[]).map(nz),ix=k=>H.findIndex(h=>k.includes(h)&&h),iN=H.indexOf("nome"),iC=H.indexOf("cognome"),iD=H.findIndex(h=>h.includes("nascita")||h==="data"),iT=H.findIndex(h=>h==="categoria"||h==="squadra"),iCa=H.findIndex(h=>h==="cellulareatleta"||h==="cellulare"||h==="telefonoatleta"),iCm=H.findIndex(h=>h.includes("mamma")),iCp=H.findIndex(h=>h.includes("papa")),iR=H.findIndex(h=>h==="ruolo"||h==="ruoloatleta"),iTe=H.findIndex(h=>h.includes("tessera")||h.includes("matricola")),iMa=H.findIndex(h=>h.includes("maglia"));
+if(iN<0||iC<0)return null;const out=[];let bad=0;
+for(const r of rows.slice(1)){const nome=(r[iN]||"").trim(),cognome=(r[iC]||"").trim();if(!nome&&!cognome)continue;let t=defTeam;
+if(iT>=0&&r[iT]){t=teams.find(x=>nz(x)===nz(r[iT]));if(!t){bad++;continue}}
+out.push({team:t,nome,cognome,dob:iD>=0?isoDate(r[iD]):"",photo:"",ruolo:iR>=0?r[iR]||"":"",cel:iCa>=0?r[iCa]||"":"",celMamma:iCm>=0?r[iCm]||"":"",celPapa:iCp>=0?r[iCp]||"":"",tessera:iTe>=0?r[iTe]||"":"",maglia:iMa>=0?r[iMa]||"":""})}return{out,bad}}
+
+function vSet(){const lg=S.settings.logo;return bk()+`<h2>Impostazioni</h2><div class="card"><b>Società</b><div class="row" style="margin-top:8px"><input id="sn" value="${e(club())}" placeholder="Nome della società"><button onclick="savClub()">Salva nome</button></div><div class="row" style="margin-top:8px">${lg?`<img class="av" style="border-radius:8px;flex:0 0 44px" alt="" src="${lg}">`:""}<label class="mut">Logo personalizzato (vuoto = logo ufficiale)<input id="lg" type="file" accept="image/*" onchange="savLogo()"></label>${lg?`<button class="d" onclick="rmLogo()">Rimuovi logo</button>`:""}</div></div>${dsCard()}<div class="card"><b>Importa anagrafica da Excel</b><p class="mut" style="margin:6px 0">File .xlsx o .csv con le colonne <b>Nome</b>, <b>Cognome</b>, <b>Data di nascita</b> e, facoltative, <b>Categoria</b>, <b>Ruolo</b>, <b>Cellulare atleta</b>, <b>Cellulare mamma</b>, <b>Cellulare papà</b>, <b>N tessera</b>, <b>Maglia</b>. Senza la colonna Categoria i giocatori vanno nella categoria scelta qui sotto. Le foto si aggiungono dall'Anagrafica.</p><select id="it">${TEAMS.map(t=>`<option ${t===team?"selected":""}>${t}</option>`).join("")}</select><div class="row" style="margin-top:8px"><input id="xf" type="file" accept=".xlsx,.csv,text/csv"><button onclick="impXl()">Importa</button></div><div style="margin-top:8px"><button class="g" style="color:var(--pri)" onclick="model()">Scarica modello</button></div><div class="${msgErr?"err":"mut"}" style="margin-top:8px">${e(msg)}</div></div>`}
+function savClub(){saveSet({...S.settings,name:$("sn").value.trim()})}
+async function savLogo(){const f=$("lg").files[0];if(!f)return;saveSet({...S.settings,logo:await rd(f,160,"image/png")})}
+function rmLogo(){const {logo,...o}=S.settings;saveSet(o)}
+async function impXl(){const f=$("xf").files[0],t=$("it").value;msgErr=true;if(!f){msg="Scegli prima un file.";return render()}
+try{const n=f.name.toLowerCase();let rows;if(n.endsWith(".csv"))rows=csvRows(await f.text());else if(n.endsWith(".xlsx"))rows=sheetRows(await unzip(await f.arrayBuffer()));else throw "fmt";
+const r=parseAthletes(rows,TEAMS,t);if(!r){msg="Non trovo le colonne Nome e Cognome nella prima riga.";return render()}
+let add=0,dup=0;const items=[];for(const a of r.out){if(S.players.some(p=>p.team===a.team&&nz(p.nome)===nz(a.nome)&&nz(p.cognome)===nz(a.cognome)&&p.dob===a.dob)){dup++;continue}items.push(["players",nid("players"),a]);add++}
+await batchSet(items);msgErr=false;msg=`Importati ${add} giocatori.${dup?` Saltati ${dup} già presenti.`:""}${r.bad?` Saltati ${r.bad} con categoria non riconosciuta.`:""}`;render()}
+catch(x){msg=x==="fmt"?"Formato non supportato: usa .xlsx o .csv (in Excel: Salva con nome → Cartella di lavoro di Excel).":"Non riesco a leggere il file. Controlla che sia un .xlsx o .csv valido.";render()}}
+function model(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\uFEFFNome;Cognome;Data di nascita;Categoria;Ruolo;Cellulare atleta;Cellulare mamma;Cellulare papà\nMario;Rossi;15/03/2012;Giovanissimi Under 14;Centrocampista;3331234567;3337654321;3339876543\n"],{type:"text/csv"}));a.download="modello-anagrafica.csv";a.click()}
+let newVer="",dismissed="";
+const num=v=>parseFloat(String(v).replace(",","."));
+const banner=()=>newVer&&newVer!==dismissed?`<div class="upd" role="status"><span>Nuova versione disponibile: <b>${e(newVer)}</b> (in uso: ${VER})</span><button onclick="doUpd()">Aggiorna ora</button><button class="g" onclick="later()">Più tardi</button></div>`:"";
+async function chk(){try{const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;const v=(await r.json()).version;
+if(v&&num(v)>num(VER)&&v!==newVer){newVer=v;const a=document.activeElement;if(a&&(a.tagName==="INPUT"||a.tagName==="SELECT"))pend=true;else render()}}catch(_){}}
+async function doUpd(){try{const r=await navigator.serviceWorker.getRegistration();await r?.update();for(const k of await caches.keys())await caches.delete(k)}catch(_){}location.reload()}
+function later(){dismissed=newVer;render()}
+let bdOff=false,syncing=false;const ld={p:0,b:0};
+const pad=n=>String(n).padStart(2,"0");
+function todayKeys(){const d=new Date(),k=[pad(d.getMonth()+1)+"-"+pad(d.getDate())];if(d.getMonth()===1&&d.getDate()===28&&new Date(d.getFullYear(),1,29).getMonth()!==1)k.push("02-29");return k}
+function bSub(){uns.push(onSnapshot(query(collection(db,"birthdays"),where("md","in",todayKeys())),s=>{S.bday=s.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>TEAMS.indexOf(a.team)-TEAMS.indexOf(b.team)||(a.cognome||"").localeCompare(b.cognome||""));paint()},x=>console.error("birthdays",x)));
+if(!isD())uns.push(onSnapshot(collection(db,"birthdays"),s=>{S.bAll=s.docs.map(x=>({id:x.id,...x.data()}));ld.b=1;syncB()},x=>console.error(x)))}
+async function syncB(){if(!canEditP()||syncing||!ld.p||!ld.b)return;const own=p=>isA()||p.team===me.team,want=new Map();
+for(const p of S.players.filter(own)){const m=/^\d{4}-(\d{2}-\d{2})/.exec(p.dob||"");if(m)want.set(p.id,{team:p.team,nome:p.nome,cognome:p.cognome,photo:p.photo||"",md:m[1]})}
+const have=new Map(S.bAll.filter(own).map(x=>[x.id,x])),ops=[];
+for(const [id,w] of want){const h=have.get(id);if(!h||h.md!==w.md||h.nome!==w.nome||h.cognome!==w.cognome||h.team!==w.team||(h.photo||"")!==w.photo)ops.push(["set",id,w])}
+for(const id of have.keys())if(!want.has(id))ops.push(["del",id]);
+if(!ops.length)return;syncing=true;
+try{for(let i=0;i<ops.length;i+=400){const b=writeBatch(db);ops.slice(i,i+400).forEach(([t,id,w])=>t==="set"?b.set(doc(db,"birthdays",id),w):b.delete(doc(db,"birthdays",id)));await b.commit()}}catch(x){console.error("sync compleanni",x)}
+syncing=false}
+const bdayModal=()=>!me||bdOff||!S.bday.length?"":`<div class="ov" role="dialog" aria-modal="true" aria-label="Compleanni"><div class="bd"><h2>🎉 Tanti auguri!</h2>${S.bday.map(p=>`<div class="bp">${p.photo?`<img src="${p.photo}" alt="">`:`<div class="ini">${e((p.nome||"?")[0])}${e((p.cognome||"")[0])}</div>`}<b>${e(p.nome)} ${e(p.cognome)}</b><span class="mut">${e(p.team)}</span><p>Oggi compie gli anni: tanti auguri da tutta la società!</p></div>`).join("")}<button onclick="bdClose()">Chiudi</button></div></div>`;
+function bdClose(){bdOff=true;render()}
+function stop(){uns.forEach(u=>u());uns=[];ld.p=0;ld.b=0;S.bday=[];S.bAll=[];S.cred=[];S.requests=[];S.feedback=[];S.convocations=[];S.ratings=[];S.signups=[];ld.requests=0;ld.feedback=0;bdOff=false;nOff=false}
+function paint(){const a=document.activeElement;if(a&&(a.tagName==="INPUT"||a.tagName==="SELECT"))pend=true;else render()}
+function sub(){const all=isA()||isD(),f=n=>all?collection(db,n):query(collection(db,n),where("team","==",me.team));
+(isF()?["matches","convocations"]:["players","trainings","matches","requests","convocations","ratings"]).forEach(n=>uns.push(onSnapshot(f(n),s=>{if(n==="requests")liveN(n,s);S[n]=s.docs.map(x=>({id:x.id,...x.data()}));if(n==="players"){ld.p=1;syncB()}paint()},x=>console.error(n,x))));
+if(isA())uns.push(onSnapshot(collection(db,"users"),s=>{S.users=s.docs.map(x=>({id:x.id,...x.data()}));paint()},x=>console.error(x)));
+if(isA())uns.push(onSnapshot(collection(db,"credentials"),s=>{S.cred=s.docs.map(x=>({id:x.id,...x.data()}));paint()},x=>console.error(x)));
+if(isA())uns.push(onSnapshot(collection(db,"signups"),s=>{S.signups=s.docs.map(x=>({id:x.id,...x.data()}));paint()},x=>console.error(x)));
+uns.push(onSnapshot(isA()?collection(db,"feedback"):query(collection(db,"feedback"),where("uid","==",me.id)),s=>{liveN("feedback",s);S.feedback=s.docs.map(x=>({id:x.id,...x.data()}));paint()},x=>console.error("feedback",x)));
+if(!isF())bSub()}
+async function load(u){try{const s=await getDoc(doc(db,"users",u.uid));
+if(!s.exists()){err="Profilo non abilitato. Contatta l'Admin.";await signOut(auth);return}
+me={id:u.uid,...s.data()};team=me.team||TEAMS[0];view="welcome";err="";sub()}catch(x){console.error(x);err="Impossibile leggere il profilo: "+(x.code||x.message)}
+ready=true;render()}
+function revoca(id){const u=S.users.find(x=>x.id===id);if(!u||u.id===me.id)return;if(!confirm("Eliminare l'utente «"+u.name+"» e i suoi dati? Il nome utente potrà essere riutilizzato."))return;
+const b=writeBatch(db);b.delete(doc(db,"users",id));b.delete(doc(db,"usernames",u.name));b.delete(doc(db,"credentials",id));b.commit().catch(fail)}
+let pwShow={};
+const userRows=()=>{const cr=Object.fromEntries(S.cred.map(c=>[c.id,c.password]));return S.users.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(u=>{const pw=cr[u.id],sh=pwShow[u.id],me_=u.id===me.id;
+return`<div class="p" style="align-items:flex-start"><div class="n"><b>${e(u.name)}</b>${u.full?` <span class="mut">· ${e(u.full)}</span>`:""}<div class="mut">${ROLES[u.role]}${u.team?" · "+e(u.team):""}</div>${me_?"":`<div style="margin-top:4px">Password: ${pw?`<code>${sh?e(pw):"••••••••"}</code>`:`<span class="mut">non disponibile</span>`}</div>`}</div>${me_?`<span class="tag">Tu</span>`:`<div style="display:grid;gap:6px">${pw?`<button class="g" style="color:var(--pri)" onclick="pwTgl('${u.id}')">${sh?"Nascondi":"Mostra"}</button>`:""}<button class="g" style="color:var(--pri)" onclick="newPw('${u.id}')">Nuova password</button><button class="d" onclick="revoca('${u.id}')">Revoca</button></div>`}</div>`}).join("")};
+const pwTgl=id=>{pwShow[id]=!pwShow[id];render()};
+async function newPw(id){const u=S.users.find(x=>x.id===id);if(!u||u.id===me.id)return;const p=prompt("Nuova password per «"+u.name+"» (almeno 6 caratteri):");if(p===null)return;if(p.length<6)return alert("La password deve avere almeno 6 caratteri.");
+try{const email=em2(u.name),sa=getAuth(secApp),c=await createUserWithEmailAndPassword(sa,email,p);
+const b=writeBatch(db);b.set(doc(db,"users",c.user.uid),{name:u.name,full:u.full||"",role:u.role,team:u.team||""});b.set(doc(db,"usernames",u.name),{email,uid:c.user.uid});b.set(doc(db,"credentials",c.user.uid),{name:u.name,password:p});
+b.delete(doc(db,"users",id));b.delete(doc(db,"credentials",id));await b.commit();await signOut(sa);pwShow[c.user.uid]=true;alert("Password cambiata: la trovi nell'elenco.")}catch(x){fail(x)}}
+let cvId=null,cvEdit=false,cvMsg="",cv={};
+const canEditC=()=>isA()||isS(),cvFind=id=>S.convocations.find(c=>c.id===id),garaOf=m=>m.home==="C"?`${club()} - ${m.opp}`:`${m.opp} - ${club()}`;
+const imgC={},loadImg=src=>imgC[src]||(imgC[src]=new Promise(r=>{const i=new Image;i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src}));
+const canShareF=()=>{try{return !!(navigator.canShare&&navigator.canShare({files:[new File(["x"],"a.jpg",{type:"image/jpeg"})]}))}catch(_){return false}};
+function vCv(){return cvId?vCvD():vCvL()}
+function vCvL(){let h=bk()+sel()+`<h2>Convocazioni</h2>`;const ms=S.matches.filter(m=>m.team===team).sort(cmpM);
+if(!ms.length)return h+`<p class="mut">Nessuna partita in calendario per questa categoria. Le partite le inserisce la Direzione o l'Admin dal Calendario.</p>`;
+return h+`<p class="mut">Scegli la partita${canEditC()?" per cui compilare la convocazione":""}.</p><div class="tiles">`+ms.map(m=>{const c=cvFind(m.id);return`<button class="tile" style="padding:14px 16px" onclick="cvOpen('${m.id}')"><b style="font-size:24px">${fd(m.date)}${m.ora?" · "+e(m.ora):""}${c?` <span class="tag t-amichevole" style="font-size:12px;vertical-align:middle">Salvata</span>`:""}</b><span>${e(garaOf(m))}${m.tipo&&TIPI[m.tipo]?" · "+TIPI[m.tipo]:""}</span></button>`}).join("")+`</div>`}
+function vCvD(){const m=S.matches.find(x=>x.id===cvId);if(!m){cvId=null;return vCvL()}
+const c=cvFind(m.id);let h=`<button class="g back" onclick="cvBack()">← Partite</button><h2>Convocazione</h2><p class="mut">${fd(m.date)} · ${e(garaOf(m))}</p>`;
+if(cvEdit)return h+cvForm(m);
+if(cvMsg)h+=`<div class="card" style="border-left:6px solid var(--ok)">${e(cvMsg)}</div>`;
+if(!c)return h+`<p>Convocazione non ancora compilata.</p>`+(canEditC()?`<button onclick="cvCompila()">Compila</button>`:"");
+return h+`<div class="row">${canEditC()?`<button onclick="cvCompila()">${"Modifica"}</button>`:""}<button onclick="cvJpg()">Scarica JPG</button>${canShareF()?`<button class="g" style="color:var(--pri)" onclick="cvShare()">Condividi</button>`:""}</div><p class="mut" style="margin:6px 0">Salvata${c.savedBy?" da "+e(c.savedBy):""}${c.savedAt?" il "+new Date(c.savedAt).toLocaleString("it-IT"):""}</p><canvas id="cvc" style="width:100%;height:auto;border:1px solid var(--line);background:#fff"></canvas>`}
+function cvForm(m){if(isU12(m.team))return cvForm12(m);const ps=pl(),miss=ps.filter(p=>!(cv.st[p.id]&&cv.st[p.id].m)).length,f=(id,l,t,v,k)=>`<label class="mut" style="flex:1 1 150px">${l}<input id="${id}" type="${t}" value="${e(v)}" onchange="cvH('${k}',this.value)"></label>`;
+return `<div class="card"><b>Dati della gara</b><div class="row" style="margin-top:8px">${f("cg","Gara","text",cv.gara,"gara")}</div><div class="row" style="margin-top:8px">${f("cd","Data","date",cv.date,"date")}${f("cc","Campo","text",cv.campo,"campo")}</div><div class="row" style="margin-top:8px">${f("cp","Partenza Oratorio","time",cv.partenza,"partenza")}${f("cr","Ritrovo al campo","time",cv.ritrovo,"ritrovo")}</div></div>
+<div class="card"><b>Ragazzi</b> <span class="mut">· da compilare: ${miss}</span><p class="mut" style="margin:4px 0 0">Infortunato e Prestito si possono scegliere solo per i Non convocati.</p>`+(ps.length?ps.map(p=>{const s=cv.st[p.id]||{},k=s.m||"";return`<div class="p" style="flex-wrap:wrap">${av(p)}<div class="n"><b>${e(p.cognome)} ${e(p.nome)}</b></div><div class="seg"><button class="P ${k==="C"?"on":""}" onclick="cvM('${p.id}','C')">Convocato</button><button class="N ${k==="N"?"on":""}" onclick="cvM('${p.id}','N')">Non conv.</button></div>${k==="N"?`<div class="seg" style="width:100%;justify-content:flex-end;margin-top:6px"><button class="x ${s.x==="I"?"on":""}" onclick="cvX('${p.id}','I')">Infortunato</button><button class="x ${s.x==="P"?"on":""}" onclick="cvX('${p.id}','P')">Prestito</button></div>`:""}</div>`}).join(""):`<p class="mut">Nessun giocatore in anagrafica.</p>`)+`</div><div class="row"><button onclick="cvSave()">Salva</button><button class="g" style="color:var(--ink)" onclick="cvCancel()">Annulla</button></div>`}
+function cvOpen(id){cvId=id;cvEdit=false;cvMsg="";render()}
+function cvBack(){if(cvEdit&&!confirm("Hai modifiche non salvate: scartarle?"))return;cvId=null;cvEdit=false;cvMsg="";render()}
+function cvCancel(){cvEdit=false;render()}
+function cvCompila(){const m=S.matches.find(x=>x.id===cvId),c=cvFind(cvId),u=isU12(m.team),st={};if(c)c.list.forEach(r=>st[r.id]=u?{m:(r.m==="N"&&r.x==="I")?"I":r.m}:{m:r.m,x:r.x||""});
+if(u){const k={};if(c&&c.tpl==="u12")c.list.forEach(r=>{const p=S.players.find(x=>x.id===r.id);if(p&&String(r.k||"")!==String(p.maglia||""))k[r.id]=r.k||""});
+cv={partita:c&&c.partita?c.partita:garaOf(m),tipo:c&&c.tipo?c.tipo:(m.tipo||"campionato"),inizio:c&&c.inizio!==undefined?c.inizio:(m.ora||""),date:c?c.date:m.date,campo:c?c.campo:(m.luogo||""),partenza:c?c.partenza:"",ritrovo:c?c.ritrovo:"",st,k,ask:false,numStep:false}}
+else cv={gara:c?c.gara:garaOf(m),date:c?c.date:m.date,campo:c?c.campo:(m.luogo||""),partenza:c?c.partenza:"",ritrovo:c?c.ritrovo:"",st};cvEdit=true;cvMsg="";render()}
+function cvRead(){for(const [id,k] of [["cg","gara"],["cd","date"],["cc","campo"],["cp","partenza"],["cr","ritrovo"],["cpt","partita"],["cti","tipo"],["cin","inizio"]]){const el=$(id);if(el)cv[k]=el.value}}
+const cvH=(k,v)=>{cv[k]=v};
+function cvM(pid,m){cvRead();const s=cv.st[pid]||{};if(s.m===m)delete cv.st[pid];else cv.st[pid]={m,x:m==="N"?(s.x||""):""};render()}
+function cvX(pid,x){cvRead();const s=cv.st[pid];if(!s||s.m!=="N")return;s.x=s.x===x?"":x;render()}
+async function cvSave(){cvRead();const m=S.matches.find(x=>x.id===cvId),ps=pl(),miss=ps.filter(p=>!(cv.st[p.id]&&cv.st[p.id].m));
+if(!ps.length)return alert("Non ci sono giocatori in anagrafica.");
+if(miss.length)return alert("Mancano "+miss.length+" atleti: scegli una voce per ognuno.");if(isU12(m.team)){cv.ask=true;return render()}
+const list=ps.map(p=>{const s=cv.st[p.id];return{id:p.id,n:p.cognome+" "+p.nome,m:s.m,x:s.m==="N"?(s.x||""):""}});
+try{await setDoc(doc(db,"convocations",cvId),{team:m.team,matchId:cvId,gara:cv.gara.trim(),date:cv.date,campo:cv.campo.trim(),partenza:cv.partenza,ritrovo:cv.ritrovo,club:club(),list,savedBy:me.name,savedAt:Date.now()});cvEdit=false;cvMsg="Convocazione salvata. Ora puoi scaricarla come immagine JPG.";render()}catch(x){fail(x)}}
+async function cvDraw(){const c=cvFind(cvId),cn=$("cvc");if(!c||!cn)return;const li=await loadImg(logoFor(c)),cn2=$("cvc");if(cn2)drawConv(cn2,c,li)}
+function drawConv(cn,c,li){if(c.tpl==="u12")return drawU12(cn,c,li);const W=1240,H=1754;cn.width=W;cn.height=H;const g=cn.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,W,H);
+const BL="#1F497D",L=45,R=W-45,T=45,B=H-45,WT=R-L,cw=[4.7,22.9,34.3,36.1,20.2,34.2],sum=cw.reduce((a,b)=>a+b),xs=[L];cw.forEach(w=>xs.push(xs[xs.length-1]+w/sum*WT));
+const font=(s,b)=>(b?"bold ":"")+s+"px Arial,Helvetica,sans-serif",ln=(x1,y1,x2,y2,w)=>{g.lineWidth=w||2;g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke()};
+const fit=(t,mw,s,b)=>{g.font=font(s,b);while(s>10&&g.measureText(t).width>mw){s--;g.font=font(s,b)}return s};
+const txt=(t,x,y,s,b,al,col,mw)=>{t=String(t||"");if(!t)return;s=mw?fit(t,mw,s,b):s;g.font=font(s,b);g.textAlign=al||"center";g.textBaseline="middle";g.fillStyle=col||"#000";g.fillText(t,x,y)};
+const mix=(parts,cx,y,s,mw)=>{const wd=z=>parts.reduce((t,[x,b])=>{g.font=font(z,b);return t+g.measureText(x).width},0);while(mw&&s>10&&wd(s)>mw)s--;let w=0;parts.forEach(([t,b])=>{g.font=font(s,b);w+=g.measureText(t).width});let x=cx-w/2;g.textAlign="left";g.textBaseline="middle";g.fillStyle="#000";parts.forEach(([t,b])=>{g.font=font(s,b);g.fillText(t,x,y);x+=g.measureText(t).width})};
+const dt=d=>d?new Date(d+"T12:00").toLocaleDateString("it-IT"):"";
+const n=Math.max(20,c.list.length),hdrH=224,colH=46,rowH=Math.max(22,Math.min(44,Math.floor(880/n))),y1=T+hdrH,y2=y1+colH,tEnd=y2+n*rowH;
+g.strokeStyle=BL;g.fillStyle="#000";
+// logo
+if(li){const bw=xs[2]-L-24,bh=hdrH-24,sc=Math.min(bw/li.width,bh/li.height),w=li.width*sc,h=li.height*sc;g.drawImage(li,L+12+(bw-w)/2,T+12+(bh-h)/2,w,h)}
+// intestazione destra
+const x0=xs[2],a=x0+84,rh=[60,40,40,42,42],ry=[T];rh.forEach(h=>ry.push(ry[ry.length-1]+h));
+txt("CONVOCAZIONI",(x0+R)/2,(ry[0]+ry[1])/2,46,false,"center","#4F81BD");
+for(let i=1;i<5;i++)ln(x0,ry[i],R,ry[i],2);
+[["Società",1],["Gara",2],["Data",3],["Campo",4]].forEach(([l,i])=>txt(l,x0+8,(ry[i]+ry[i+1])/2,17,false,"left"));
+for(const i of [1,2,3,4])ln(a,ry[i],a,ry[i+1],2);
+txt(c.club||club(),(a+R)/2,(ry[1]+ry[2])/2,26,false,"center","#000",R-a-20);
+txt(c.gara,(a+R)/2,(ry[2]+ry[3])/2,26,false,"center","#000",R-a-20);
+txt(c.campo,(a+R)/2,(ry[4]+ry[5])/2,26,false,"center","#000",R-a-20);
+const RW=R-a,v1=a+RW*.24,l2=v1+200,v2=l2+RW*.15,l3=v2+185,yc=(ry[3]+ry[4])/2;
+[v1,l2,v2,l3].forEach(x=>ln(x,ry[3],x,ry[4],2));
+txt(dt(c.date),(a+v1)/2,yc,24,false,"center","#000",v1-a-10);txt("Partenza Oratorio",(v1+l2)/2,yc,18,false,"center");txt(c.partenza,(l2+v2)/2,yc,24,false,"center");txt("Ritrovo al campo",(v2+l3)/2,yc,18,false,"center");txt(c.ritrovo,(l3+R)/2,yc,24,false,"center");
+// intestazioni colonne
+ln(L,y1,R,y1,3);ln(L,y2,R,y2,3);
+txt("N°",(xs[0]+xs[1])/2,(y1+y2)/2,16,false,"center");
+["RAGAZZI","CONVOCATO","NON CONVOCATO","PRESTITO","INFORTUNATO"].forEach((t,i)=>txt(t,(xs[i+1]+xs[i+2])/2,(y1+y2)/2,26,true,"center","#000",xs[i+2]-xs[i+1]-10));
+// righe
+let ns=Math.floor(rowH*.55);c.list.forEach(r=>{ns=Math.min(ns,fit(r.n,xs[2]-xs[1]-18,ns,false))});
+for(let i=0;i<n;i++){const y=y2+i*rowH,r=c.list[i],cy=y+rowH/2;
+g.fillStyle="#C5D9F1";g.fillRect(xs[0],y,xs[1]-xs[0],rowH);g.fillStyle="#000";
+if(i>0)ln(L,y,R,y,1.5);
+txt(i+1,(xs[0]+xs[1])/2,cy,Math.min(18,rowH*.5),false,"center");
+if(r){txt(r.n,xs[1]+10,cy,ns,false,"left","#000");
+const mk=col=>txt("X",(xs[col]+xs[col+1])/2,cy,Math.floor(rowH*.62),true,"center");
+if(r.m==="C")mk(2);if(r.m==="N")mk(3);if(r.x==="P")mk(4);if(r.x==="I")mk(5)}}
+for(let i=1;i<6;i++)ln(xs[i],y1,xs[i],tEnd,i===1?3:2);
+ln(L,tEnd,R,tEnd,3);
+// piè di pagina
+const cx=(L+R)/2,sp=B-tEnd;
+txt("CONFERMARE LA PRESENZA",cx,tEnd+sp*.30,70,true,"center");
+mix([["CHI AVESSE BISOGNO DEL ",0],["PASSAGGIO",1],[" LO ",0],["RIFERISCA PREVENTIVAMENTE",1]],cx,tEnd+sp*.30+100,32,WT-60);
+txt("*PER LE PARTITE FUORI CASA*",cx,tEnd+sp*.30+145,18,false,"center");
+mix([["PORTARE SEMPRE IL ",0],["KIT D'ALLENAMENTO",1],[" (",0],["MAGLIETTA - FELPA - KWAY",1],[")",0]],cx,B-65,27,WT-60);
+// cornice
+g.strokeStyle=BL;g.lineWidth=5;g.strokeRect(L,T,WT,B-T);ln(L,y1,R,y1,3);ln(x0,T,x0,y1,3)}
+async function cvImg(){const c=cvFind(cvId),cn=document.createElement("canvas");drawConv(cn,c,await loadImg(logoFor(c)));return new Promise(r=>cn.toBlob(r,"image/jpeg",.92))}
+async function cvJpg(){const b=await cvImg(),m=S.matches.find(x=>x.id===cvId),nm=("Convocazione_"+(m?m.team+"_"+m.date:"")).replace(/[^A-Za-z0-9_-]+/g,"_")+".jpg",a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=nm;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}
+async function cvShare(){const b=await cvImg();try{await navigator.share({files:[new File([b],"convocazione.jpg",{type:"image/jpeg"})]})}catch(_){}}
+const RATE={"Giovanissimi Under 14":["t","m"],"Giovanissimi Under 15":["m"]};
+const GIUD={4:"Insufficiente",5:"Mediocre",6:"Sufficiente",7:"Buono",8:"Ottimo",9:"Eccellente",SV:"Senza voto"};
+let vlMode=null,vlOpen=null,rtEd=null,rtDraft={};
+const canRate=()=>isA()||isS(),valOk=()=>isA()||isD()||(isS()&&!!RATE[me.team]),rOn=k=>!!RATE[team]&&RATE[team].includes(k);
+const rkey=(k,id)=>k+"_"+id,rdoc=(k,id)=>S.ratings.find(r=>r.id===rkey(k,id));
+const fm=x=>x.toFixed(1).replace(".",","),gl=x=>GIUD[Math.max(4,Math.min(9,Math.round(x)))];
+const mStarted=m=>new Date(m.date+"T"+(m.ora||"00:00")+":00")<=new Date();
+function avgOf(pid){const a={t:[],m:[]},sv={t:0,m:0};S.ratings.forEach(r=>{const v=r.rates&&r.rates[pid];if(!v||!a[r.kind])return;if(r.kind==="t"){const t=S.trainings.find(x=>x.id===r.refId);if(!t||!["P","R"].includes((t.att||{})[pid]))return}if(typeof v!=="number"){sv[r.kind]++;return}a[r.kind].push(v)});
+const all=a.t.concat(a.m),av=l=>l.length?l.reduce((x,y)=>x+y,0)/l.length:0;return{all:av(all),t:av(a.t),m:av(a.m),n:all.length,nt:a.t.length,nm:a.m.length,st:sv.t,sm:sv.m}}
+const avgTile=(l,v,n,c,sv)=>`<div class="avg" style="border-left:5px solid ${c}"><span class="mut">${l}</span><b>${n?fm(v):"—"}</b><span class="mut">${n?gl(v)+" · "+n+(n===1?" voto":" voti")+(sv?" · "+sv+" SV":""):(sv?sv+" SV (senza voto)":"nessun voto")}</span></div>`;
+const avgRow=pid=>{if(!RATE[team])return"";const a=avgOf(pid),t=rOn("t"),m=rOn("m");return`<div class="avgs" style="grid-template-columns:repeat(${(t?1:0)+(m?1:0)},1fr)">${t?avgTile("Media allenamenti",a.t,a.nt,"var(--pri)",a.st):""}${m?avgTile("Media partite",a.m,a.nm,"var(--acc)",a.sm):""}</div>`};
+function ratingBox(p){if(!RATE[team])return"";const a=avgOf(p.id),ml=S.ratings.filter(r=>r.kind==="m"&&r.rates&&r.rates[p.id]).map(r=>({r,m:S.matches.find(x=>x.id===r.refId)})).filter(x=>x.m).sort((x,y)=>x.m.date.localeCompare(y.m.date));
+return`<div style="margin-top:10px;border-top:1px solid var(--line);padding-top:10px"><b>Valutazioni</b><div class="mut" style="margin:4px 0">${a.n||a.st||a.sm?"":"Nessuna valutazione ancora"}${a.nt?`Media allenamenti <b>${fm(a.t)}</b> (${gl(a.t)}) su ${a.nt} voti`:""}${a.nt&&a.nm?"<br>":""}${a.nm?`Media partite <b>${fm(a.m)}</b> (${gl(a.m)}) su ${a.nm} voti`:""}</div>${ml.map(x=>`<div class="p"><div class="n">${fd(x.m.date)} · ${e(garaOf(x.m))}</div><span class="tag">${x.r.rates[p.id]} · ${GIUD[x.r.rates[p.id]]}</span></div>`).join("")}</div>`}
+const gLegend=()=>`<div class="card"><b>Scala di giudizio</b><div style="margin-top:6px">${Object.entries(GIUD).map(([n,l])=>`<span class="lg">${n} · ${l}</span>`).join("")}</div></div>`;
+function vVl(){let h=bk()+sel()+`<h2>Valutazioni</h2>`;const md=RATE[team];
+if(!md)return h+`<div class="card"><p style="margin:0">Le valutazioni non sono ancora attive per questa categoria.</p><p class="mut" style="margin:6px 0 0">Per ora sono attive: Giovanissimi Under 14 (allenamenti e partite) e Giovanissimi Under 15 (solo partite).</p></div>`;
+if(md.length===1)vlMode=md[0];
+if(!vlMode)return h+gLegend()+`<div class="tiles"><button class="tile" onclick="vlSet('t')"><b>Allenamento</b><span>Valuta gli atleti presenti a un allenamento</span></button><button class="tile" onclick="vlSet('m')"><b>Partita</b><span>Valuta gli atleti dopo l'inizio della partita</span></button></div>`;
+if(md.length>1)h+=`<button class="g back" onclick="vlSet(null)">← Allenamento / Partita</button>`;
+return h+`<p style="margin:6px 0"><b>Valutazione ${vlMode==="t"?"dell'allenamento":"della partita"}</b></p>`+gLegend()+(vlMode==="t"?vlTr():vlMa())}
+function vlTr(){const td=todayIso(),[my,mm]=idxYM(trI),pre=isoD(my,mm,1).slice(0,7),ps=pl(),ts=tr().filter(t=>t.date.slice(0,7)===pre&&t.date<=td).sort((a,b)=>a.date.localeCompare(b.date));
+const h=trMonthBar();if(!ts.length)return h+`<p class="mut">Nessun allenamento già svolto in questo mese.</p>`;
+return h+ts.map(t=>{const pr=ps.filter(p=>["P","R"].includes((t.att||{})[p.id])),r=rdoc("t",t.id),n=pr.filter(p=>r&&r.rates&&r.rates[p.id]).length;
+return vlCard(rkey("t",t.id),fd(t.date),`${n}/${pr.length} valutati`,pr.map(p=>({id:p.id,nome:p.cognome+" "+p.nome})),ps.length-pr.length,"")}).join("")}
+function vlMa(){const ms=S.matches.filter(m=>m.team===team).sort(cmpM);if(!ms.length)return`<p class="mut">Nessuna partita in calendario per questa categoria.</p>`;
+return ms.map(m=>{const c=cvFind(m.id),r=rdoc("m",m.id),pr=c?c.list.filter(x=>x.m==="C").map(x=>({id:x.id,nome:x.n})):pl().map(p=>({id:p.id,nome:p.cognome+" "+p.nome})),n=pr.filter(p=>r&&r.rates&&r.rates[p.id]).length,tit=`${fd(m.date)}${m.ora?" · "+e(m.ora):""} · ${e(garaOf(m))}`;
+if(!mStarted(m))return`<div class="card" style="opacity:.75"><b>${tit}</b><div class="mut">Valutabile dall'inizio della partita (${fd(m.date)}${m.ora?" ore "+e(m.ora):""}).</div></div>`;
+return vlCard(rkey("m",m.id),tit,`${n}/${pr.length} valutati`,pr,0,c?"Sono elencati gli atleti convocati.":"Convocazione non compilata: sono elencati tutti i giocatori.")}).join("")}
+function vlCard(k,title,sub,list,absent,note){const o=vlOpen===k,ed=rtEd===k,cur=ed?rtDraft:((S.ratings.find(x=>x.id===k)||{}).rates||{});
+let h=`<div class="card"><button class="g" style="color:var(--ink);width:100%;text-align:left" onclick="vlTog('${k}')"><b>${title}</b> <span class="mut">· ${sub}${ed?" · in modifica":""}</span></button>`;
+if(o){if(note)h+=`<p class="mut" style="margin:6px 0">${note}</p>`;
+if(!list.length)h+=`<p class="mut">${k[0]==="t"?"Nessun atleta presente: segna prima le presenze in Allenamenti.":"Nessun giocatore da valutare."}</p>`;
+else{if(canRate())h+=ed?`<div class="row" style="margin:8px 0"><button onclick="rtSave()">Salva</button><button class="g" style="color:var(--ink)" onclick="rtCancel()">Annulla</button></div>`:`<div style="margin:8px 0"><button onclick="rtEdit('${k}')">Modifica valutazioni</button></div>`;
+h+=list.map(p=>{const v=cur[p.id]||0;return`<div class="p" style="flex-wrap:wrap"><div class="n"><b>${e(p.nome)}</b></div>${canRate()?`<span class="mut">${v?GIUD[v]:"Non valutato"}</span><div class="rts">${[4,5,6,7,8,9,"SV"].map(n=>`<button class="${v===n?"on":""}${n==="SV"?" sv":""}" ${ed?"":"disabled"} onclick="rtSet('${k}','${p.id}',${n==="SV"?"'SV'":n})">${n}</button>`).join("")}</div>`:`<span class="tag">${v?v+" · "+GIUD[v]:"—"}</span>`}</div>`}).join("");
+if(absent)h+=`<p class="mut" style="margin-top:6px">Non presenti o non segnati: ${absent} (non valutabili).</p>`}}
+return h+`</div>`}
+const rtDirty=()=>{const r=S.ratings.find(x=>x.id===rtEd);return JSON.stringify(rtDraft)!==JSON.stringify((r&&r.rates)||{})};
+const vlSet=m=>{if(rtEd&&rtDirty()&&!confirm("Hai modifiche non salvate: scartarle?"))return;rtEd=null;vlMode=m;vlOpen=null;render()};
+const vlTog=k=>{if(rtEd&&rtEd!==k){if(rtDirty()&&!confirm("Hai modifiche non salvate: scartarle?"))return;rtEd=null}vlOpen=vlOpen===k?null:k;render()};
+function rtEdit(k){const r=S.ratings.find(x=>x.id===k);rtEd=k;rtDraft={...((r&&r.rates)||{})};render()}
+const rtCancel=()=>{rtEd=null;render()};
+function rtSet(k,pid,n){if(rtEd!==k)return;if(rtDraft[pid]===n)delete rtDraft[pid];else rtDraft[pid]=n;render()}
+async function rtSave(){const k=rtEd,kind=k[0],refId=k.slice(2),src=kind==="t"?S.trainings.find(x=>x.id===refId):S.matches.find(x=>x.id===refId);
+if(!src)return alert("Elemento non trovato.");if(kind==="m"&&!mStarted(src))return alert("La partita non è ancora iniziata: non si può valutare.");
+try{await setDoc(doc(db,"ratings",k),{team:src.team,kind,refId,date:src.date,rates:rtDraft,by:me.name,at:Date.now()});rtEd=null;render()}catch(x){fail(x)}}
+const U12="Esordienti Under 12",isU12=t=>t===U12;
+const U12STAFF=[["MISTER","BUSSALINO","FULVIO",""],["MISTER IN SECONDA","AHMETLLI","LEDJON","214892216"],["ACCOMPAGNATORE DIRIGENTE","MOMBELLI","CLAUDIO","205076052"]];
+const ST12={C:"Convocato",N:"Non convocato",R:"Rifiuto",I:"Infortunio / Malattia"};
+const logoFor=c=>c&&c.tpl==="u12"?(S.settings.logo||"logo-u12.png"):logo();
+const seasonOf=d=>{const y=+d.slice(0,4),m=+d.slice(5,7);const a=m>=6?y:y-1;return a+"/"+(a+1)};
+const numInfo=p=>(p.maglia||p.tessera)?`<div class="mut">${p.maglia?"Maglia "+e(p.maglia):""}${p.maglia&&p.tessera?" · ":""}${p.tessera?"Tessera "+e(p.tessera):""}</div>`:"";
+const cvK=p=>cv.k&&cv.k[p.id]!==undefined?cv.k[p.id]:(p.maglia||"");
+function cvForm12(m){const ps=pl();if(cv.numStep)return cvNums(ps);
+const miss=ps.filter(p=>!(cv.st[p.id]&&cv.st[p.id].m)).length,f=(id,l,t,v,k)=>`<label class="mut" style="flex:1 1 150px">${l}<input id="${id}" type="${t}" value="${e(v)}" onchange="cvH('${k}',this.value)"></label>`;
+return`<div class="card"><b>Partita e info gara</b><div class="row" style="margin-top:8px">${f("cpt","Partita (le due squadre)","text",cv.partita,"partita")}</div><div class="row" style="margin-top:8px"><label class="mut" style="flex:1 1 150px">Tipo gara<select id="cti" onchange="cvH('tipo',this.value)">${Object.entries(TIPI).map(([k,v])=>`<option value="${k}" ${cv.tipo===k?"selected":""}>${v}</option>`).join("")}</select></label>${f("cin","Inizio partita","time",cv.inizio,"inizio")}</div><div class="row" style="margin-top:8px">${f("cd","Data","date",cv.date,"date")}${f("cc","Campo","text",cv.campo,"campo")}</div><div class="row" style="margin-top:8px">${f("cp","Partenza Oratorio","time",cv.partenza,"partenza")}${f("cr","Ritrovo al campo","time",cv.ritrovo,"ritrovo")}</div></div>
+<div class="card"><b>Giocatori</b> <span class="mut">· da compilare: ${miss}</span><p class="mut" style="margin:4px 0 0">Per ogni ragazzo scegli una sola voce. Numeri di maglia e di tessera sono quelli personali dell'Anagrafica. Mister, Mister in seconda e Accompagnatore Dirigente sono fissi come nel foglio ufficiale.</p>`+(ps.length?ps.map(p=>{const k=(cv.st[p.id]||{}).m||"";return`<div class="p" style="flex-wrap:wrap">${av(p)}<div class="n"><b>${e(p.cognome)} ${e(p.nome)}</b>${numInfo(p)}</div><div class="seg4">${Object.entries(ST12).map(([s,l])=>`<button class="${s} ${k===s?"on":""}" onclick="cvM12('${p.id}','${s}')">${l}</button>`).join("")}</div></div>`}).join(""):`<p class="mut">Nessun giocatore in anagrafica.</p>`)+`</div><div class="row"><button onclick="cvSave()">Salva</button><button class="g" style="color:var(--ink)" onclick="cvCancel()">Annulla</button></div>`+(cv.ask?`<div class="ov" role="dialog" aria-modal="true" aria-label="Numeri di maglia"><div class="bd"><h2 style="font-size:28px">Numeri di maglia</h2><p style="margin:8px 0 14px">Vuoi modificare i numeri di maglia prima di salvare la distinta?</p><div class="row" style="justify-content:center"><button onclick="cvAsk(true)">Sì, modifica</button><button class="g" style="color:var(--ink)" onclick="cvAsk(false)">No, salva così</button></div></div></div>`:"")}
+function cvNums(ps){return`<div class="card"><b>Numeri di maglia</b><p class="mut" style="margin:4px 0 8px">Cambia solo i numeri di maglia di questa distinta. Il numero di tessera non si modifica e l'Anagrafica resta com'è.</p>`+ps.map(p=>`<div class="p"><div class="n"><b>${e(p.cognome)} ${e(p.nome)}</b><div class="mut">Tessera ${e(p.tessera||"—")}</div></div><input id="kn${p.id}" inputmode="numeric" style="width:84px;text-align:center" value="${e(cvK(p))}" aria-label="Maglia ${e(p.cognome)}"></div>`).join("")+`</div><div class="row"><button onclick="cvSaveNums()">Salva distinta</button><button class="g" style="color:var(--ink)" onclick="cvNumBack()">Indietro</button></div>`}
+function cvM12(pid,k){cvRead();if(cv.st[pid]&&cv.st[pid].m===k)delete cv.st[pid];else cv.st[pid]={m:k};render()}
+function cvAsk(y){cv.ask=false;if(y){cv.numStep=true;render()}else cvSave12()}
+function cvNumBack(){cv.numStep=false;render()}
+function cvSaveNums(){cv.k=cv.k||{};pl().forEach(p=>{const el=$("kn"+p.id);if(el)cv.k[p.id]=el.value.trim()});cvSave12()}
+async function cvSave12(){cvRead();const m=S.matches.find(x=>x.id===cvId),ps=pl();cv.ask=false;
+const list=ps.map(p=>({id:p.id,n:(p.cognome+" "+p.nome).toUpperCase().replace(/\s+/g," ").trim(),m:cv.st[p.id].m,t:String(p.tessera||""),k:String(cvK(p)).trim()}));
+try{await setDoc(doc(db,"convocations",cvId),{tpl:"u12",team:m.team,matchId:cvId,partita:cv.partita.trim(),gara:cv.partita.trim(),tipo:cv.tipo,inizio:cv.inizio,date:cv.date,campo:cv.campo.trim(),partenza:cv.partenza,ritrovo:cv.ritrovo,anno:seasonOf(cv.date||m.date),club:club(),list,savedBy:me.name,savedAt:Date.now()});cvEdit=false;cv.numStep=false;cvMsg="Distinta salvata. Ora puoi scaricarla come immagine JPG.";render()}catch(x){fail(x)}}
+function drawU12(cn,c,li){const W=1240,H=1754;cn.width=W;cn.height=H;const g=cn.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,W,H);
+const L=40,R=W-40,T=40,B=H-40,WT=R-L,BL="#1F497D",cu={A:4.7,B:5.7,C:5.9,D:12.8,E:12.2,F:8.0,G:4.8,H:20.0,I:5.8,J:3.0,K:1.8,L:2.1,M:17.2,N:2.1,O:5.1,P:5.8,Q:1.1,R:9.9,S:19.8,T:13.1},ks=Object.keys(cu),tot=Object.values(cu).reduce((a,b)=>a+b),X={};let ac=0;ks.forEach(k=>{X[k]=L+ac/tot*WT;ac+=cu[k]});
+const xs=k=>X[k],xe=k=>{const i=ks.indexOf(k);return i+1<ks.length?X[ks[i+1]]:R};
+const n=Math.max(17,c.list.length),rows=[62,24,24,24,19.5,26.3,...Array(n+7).fill(27.8),26.2,27,23.2,22.5,27,33.8,45.8,45.8],sy=(B-T)/rows.reduce((a,b)=>a+b),Y=[T];rows.forEach(h=>Y.push(Y[Y.length-1]+h*sy));
+const f=(pt,b)=>(b?"bold ":"")+Math.max(9,Math.round(pt*sy))+"px Arial,Helvetica,sans-serif",ln=(x1,y1,x2,y2,w)=>{g.lineWidth=w||1.5;g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke()};
+const fit=(t,mw,pt,b)=>{let z=Math.round(pt*sy);g.font=(b?"bold ":"")+z+"px Arial,Helvetica,sans-serif";while(z>9&&g.measureText(t).width>mw){z--;g.font=(b?"bold ":"")+z+"px Arial,Helvetica,sans-serif"}return z};
+const tx=(t,xa,xb,ya,yb,pt,b,al,col)=>{t=String(t==null?"":t);if(!t)return;const mw=xb-xa-12;const z=fit(t,mw,pt,b);g.fillStyle=col||"#000";g.textBaseline="middle";g.textAlign=al||"center";g.fillText(t,al==="left"?xa+8:(xa+xb)/2,(ya+yb)/2+1)};
+const bx=(xa,xb,ya,yb,fill)=>{if(fill){g.fillStyle=fill;g.fillRect(xa,ya,xb-xa,yb-ya)}g.strokeStyle="#000";g.lineWidth=1.5;g.strokeRect(xa,ya,xb-xa,yb-ya)};
+const dt=d=>d?new Date(d+"T12:00").toLocaleDateString("it-IT"):"",UP=s=>String(s||"").toUpperCase();
+// logo
+bx(xs("A"),xs("E"),Y[0],Y[5]);if(li){const bw=xs("E")-xs("A")-16,bh=Y[5]-Y[0]-16,sc=Math.min(bw/li.width,bh/li.height),w=li.width*sc,h=li.height*sc;g.drawImage(li,xs("A")+8+(bw-w)/2,Y[0]+8+(bh-h)/2,w,h)}
+// titolo
+const tw=R-xs("E")-20;tx("CONVOCAZIONI ESORDIENTI UNDER 12",xs("E"),R,Y[0]+4,(Y[0]+Y[1])/2+4,26,true,"center","#4F81BD");tx("ANNO "+(c.anno||seasonOf(c.date||"2026-09-01")),xs("E"),R,(Y[0]+Y[1])/2,Y[1]-2,26,true,"center","#4F81BD");
+// partita
+bx(xs("E"),xs("F"),Y[1],Y[2]);tx("Partita",xs("E"),xs("F"),Y[1],Y[2],13,true,"left");bx(xs("F"),R,Y[1],Y[2],"#729FCF");tx(UP(c.partita||c.gara),xs("F"),R,Y[1],Y[2],17,true);
+// info gara
+bx(xs("E"),xs("F"),Y[2],Y[3]);tx("Info Gara",xs("E"),xs("F"),Y[2],Y[3],13,true,"left");
+bx(xs("F"),xs("I"),Y[2],Y[3],"#FFFF00");tx("Tipo Gara",xs("F"),xs("I"),Y[2],Y[3],14,false);bx(xs("I"),xs("P"),Y[2],Y[3],"#FFFF00");tx(UP(TIPI[c.tipo]||c.tipo),xs("I"),xs("P"),Y[2],Y[3],14,true);
+bx(xs("P"),xs("S"),Y[2],Y[3],"#FFFF00");tx("Inizio Partita",xs("P"),xs("S"),Y[2],Y[3],14,false);bx(xs("S"),R,Y[2],Y[3]);tx(c.inizio,xs("S"),R,Y[2],Y[3],14,true);
+// data
+bx(xs("E"),xs("F"),Y[3],Y[4]);tx("Data",xs("E"),xs("F"),Y[3],Y[4],13,true,"left");bx(xs("F"),xs("K"),Y[3],Y[4]);tx(dt(c.date),xs("F"),xs("K"),Y[3],Y[4],14,true);
+bx(xs("K"),xs("P"),Y[3],Y[4]);tx("Partenza Oratorio",xs("K"),xs("P"),Y[3],Y[4],12,false);bx(xs("P"),xs("S"),Y[3],Y[4]);tx(c.partenza,xs("P"),xs("S"),Y[3],Y[4],14,true);
+bx(xs("S"),xs("T"),Y[3],Y[4]);tx("Ritrovo al campo",xs("S"),xs("T"),Y[3],Y[4],12,false);bx(xs("T"),R,Y[3],Y[4]);tx(c.ritrovo,xs("T"),R,Y[3],Y[4],14,true);
+// campo
+bx(xs("E"),xs("F"),Y[4],Y[5]);tx("Campo",xs("E"),xs("F"),Y[4],Y[5],13,true,"left");bx(xs("F"),R,Y[4],Y[5]);tx(c.campo,xs("F"),R,Y[4],Y[5],14,true);
+// intestazione tabella
+const hd=[["A","B","N°",9.5,false],["B","E","GIOCATORE",14,true],["E","H","N TESSERA",14,true],["H","I","CONVOCATO",14,true],["I","P","NON CONVOCATO",14,true],["P","S","RIFIUTO",14,true],["S",null,"INFORTUNIO MALATTIA",13,true]];
+hd.forEach(([a,b,t,pt,bo])=>{const xb=b?xs(b):R;bx(xs(a),xb,Y[5],Y[6]);tx(t,xs(a),xb,Y[5],Y[6],pt,bo)});
+// giocatori
+const cols={C:["H","I"],N:["I","P"],R:["P","S"],I:["S",null]};
+for(let i=0;i<n;i++){const ya=Y[6+i],yb=Y[7+i],r=c.list[i];bx(xs("A"),xs("B"),ya,yb,"#C5D9F1");tx(i+1,xs("A"),xs("B"),ya,yb,9,false);
+bx(xs("B"),xs("E"),ya,yb);bx(xs("E"),xs("G"),ya,yb);bx(xs("G"),xs("H"),ya,yb);[["H","I"],["I","P"],["P","S"],["S",null]].forEach(([a,b])=>bx(xs(a),b?xs(b):R,ya,yb));
+if(r){const nm=r.n,wN=xs("E")-xs("B")-14;if(fit(nm,wN,14,true)>=Math.round(14*sy*.72)||nm.indexOf(" ")<0)tx(nm,xs("B"),xs("E"),ya,yb,14,true,"left");else{const k=nm.indexOf(" "),h=(yb-ya)/2;tx(nm.slice(0,k),xs("B"),xs("E"),ya,ya+h+2,11,true,"left");tx(nm.slice(k+1),xs("B"),xs("E"),ya+h-2,yb,11,true,"left")}
+tx(r.t,xs("E"),xs("G"),ya,yb,14,true);tx(r.k,xs("G"),xs("H"),ya,yb,14,true);const cc=cols[r.m];if(cc)tx("X",xs(cc[0]),cc[1]?xs(cc[1]):R,ya,yb,18,true)}}
+// staff (fisso, come nel foglio ufficiale)
+U12STAFF.forEach((s,i)=>{const ya=Y[6+n+i],yb=Y[7+n+i];bx(xs("A"),xs("B"),ya,yb);bx(xs("B"),xs("E"),ya,yb);tx(s[0],xs("B"),xs("E"),ya,yb,13,true,"left");bx(xs("E"),xs("G"),ya,yb);tx(s[1],xs("E"),xs("G"),ya,yb,13,true);bx(xs("G"),xs("H"),ya,yb);bx(xs("H"),xs("I"),ya,yb);tx(s[2],xs("H"),xs("I"),ya,yb,13,true);bx(xs("I"),xs("P"),ya,yb);tx("MATRICOLA",xs("I"),xs("P"),ya,yb,14,true);bx(xs("P"),xs("S"),ya,yb);tx(s[3],xs("P"),xs("S"),ya,yb,14,true)});
+// piè di pagina
+const f0=6+n+7;
+tx("CONFERMARE LA PRESENZA",L,R,Y[f0],Y[f0+1],36,true,"center","#3465A4");
+{const parts=[["CHI AVESSE BISOGNO DEL PASSAGGIO ",1],["LO ",0],["RIFERISCA PREVENTIVAMENTE",1]];let z=Math.round(20*sy);const wd=q=>parts.reduce((t,[x,b])=>{g.font=(b?"bold ":"")+q+"px Arial,Helvetica,sans-serif";return t+g.measureText(x).width},0);while(z>10&&wd(z)>WT-40)z--;let x=(L+R)/2-wd(z)/2;const y=(Y[f0+3]+Y[f0+4])/2;g.textAlign="left";g.textBaseline="middle";g.fillStyle="#000";parts.forEach(([t,b])=>{g.font=(b?"bold ":"")+z+"px Arial,Helvetica,sans-serif";g.fillText(t,x,y);x+=g.measureText(t).width})}
+g.fillStyle="#FFFF00";g.fillRect(xs("F"),Y[f0+4],xs("S")-xs("F"),Y[f0+5]-Y[f0+4]);tx("*PER LE PARTITE FUORI CASA*",xs("F"),xs("S"),Y[f0+4],Y[f0+5],13,true);
+tx("*LE MAGLIETTE SE AFFIDATE AL GIOCATORE VANNO RIPORTATE LAVATE IL MARTEDI",L,R,Y[f0+6],(Y[f0+6]+Y[f0+7])/2+8,15,true);tx("LAVATE CON INDICAZIONI DA ETICHETTA E SEMPRE AL ROVESCIO*",L,R,(Y[f0+6]+Y[f0+7])/2-6,Y[f0+7],15,true);
+g.fillStyle="#FFFF00";g.fillRect(xs("D"),Y[f0+7],xs("T")-xs("D"),Y[f0+8]-Y[f0+7]);tx("PORTARE SEMPRE IL KIT D'ALLENAMENTO",xs("D"),xs("T"),Y[f0+7],(Y[f0+7]+Y[f0+8])/2+8,16,true);tx("(CALZETTONI-MAGLIETTA BIANCA SPONSOR- FELPA - KWAY)",xs("D"),xs("T"),(Y[f0+7]+Y[f0+8])/2-6,Y[f0+8],16,true);
+g.strokeStyle=BL;g.lineWidth=6;g.strokeRect(L-3,T-3,WT+6,B-T+6)}
+const NOCOPPA=["Prima Squadra","Juniores","Giovanissimi Under 14"],hasCoppa=t=>!NOCOPPA.includes(t),canReq=()=>!!me&&(isA()||me.role==="direttore");
+let dsSel=TEAMS[0];
+const dsLink=(t,k)=>(((S.settings.dist||{})[t]||{})[k])||"";
+function vDs(){const lc=dsLink(team,"c"),lb=dsLink(team,"b");let h=bk()+sel()+`<h2>Distinte</h2><p class="mut">Si apre il sito della Lega Nazionale Dilettanti in una nuova scheda.</p><div class="tiles">`;
+h+=lc?`<a class="tile" href="${e(lc)}" target="_blank" rel="noopener noreferrer"><b>Distinte Campionato</b><span>Apre la lista di presentazione del campionato</span></a>`:`<button class="tile" onclick="dsNo('Campionato')"><b>Distinte Campionato</b><span>Link non ancora impostato</span></button>`;
+if(hasCoppa(team))h+=lb?`<a class="tile" href="${e(lb)}" target="_blank" rel="noopener noreferrer"><b>Distinte Coppa Brescia</b><span>Apre la lista di presentazione della Coppa Brescia</span></a>`:`<button class="tile" onclick="dsNo('Coppa Brescia')"><b>Distinte Coppa Brescia</b><span>Link non ancora impostato</span></button>`;
+return h+`</div>`}
+const dsNo=n=>alert("Il link per le Distinte "+n+" non è ancora stato impostato."+(isA()?" Puoi inserirlo da Impostazioni.":" Chiedilo all'Admin."));
+function dsCard(){const t=dsSel;return`<div class="card"><b>Link Distinte</b><p class="mut" style="margin:4px 0 8px">Scegli la categoria e incolla i link dei pulsanti. Devono iniziare con https:// . Se lasci vuoto, il pulsante resta senza link. ✓ = link già inserito.</p><select id="dst" onchange="dsPick(+this.value)">${TEAMS.map((x,i)=>`<option value="${i}" ${x===t?"selected":""}>${x}${dsLink(x,"c")||dsLink(x,"b")?" ✓":""}</option>`).join("")}</select><label class="mut" style="display:block;margin-top:8px">Distinte Campionato<input id="dsc" inputmode="url" value="${e(dsLink(t,"c"))}"></label>${hasCoppa(t)?`<label class="mut" style="display:block;margin-top:8px">Distinte Coppa Brescia<input id="dsb" inputmode="url" value="${e(dsLink(t,"b"))}"></label>`:`<p class="mut" style="margin:8px 0 0">Per questa categoria non c'è il pulsante Coppa Brescia.</p>`}<div style="margin-top:8px"><button onclick="dsSave()">Salva link</button></div></div>`}
+const dsPick=i=>{dsSel=TEAMS[i];render()};
+function dsSave(){const t=dsSel,c=$("dsc").value.trim(),be=$("dsb"),b=be?be.value.trim():"",ok=u=>!u||/^https:\/\//i.test(u);if(!ok(c)||!ok(b))return alert("I link devono iniziare con https://");const d={...(S.settings.dist||{})};d[t]={c,b:hasCoppa(t)?b:""};saveSet({...S.settings,dist:d})}
+const FAM=["genitore","giocatore"],isF=()=>!!me&&FAM.includes(me.role);
+let sgMode=false,sgDone=false,sg={kind:"genitore",n:"",u:"",r:"allenatore",t:TEAMS[0]};
+const SG_ROLES=["allenatore","collaboratore","dirigente","direttore","presidente","dirgenerale","dirsportivo","segreteria"],SG_KIND={genitore:"Genitore",giocatore:"Giocatore",staff:"Staff"};
+function sgRead(){const v=id=>{const x=$(id);return x?x.value:null},n=v("sg_n"),u=v("sg_u"),r=v("sg_r"),t=v("sg_t");if(n!==null)sg.n=n;if(u!==null)sg.u=u;if(r!==null)sg.r=r;if(t!==null)sg.t=t}
+const sgGo=on=>{sgMode=on;if(on)sgDone=false;err="";render()},sgKind=k=>{sgRead();sg.kind=k;render()},sgRole=()=>{sgRead();render()};
+function vSignup(){const k=sg.kind,staff=k==="staff",role=staff?sg.r:k,needT=!VIEW.includes(role);
+return`<div class="login"><h2 style="font-size:30px;margin-bottom:8px">Iscrizione</h2><div class="card" style="display:grid;gap:10px"><b>Chi sei?</b><div class="seg">${Object.entries(SG_KIND).map(([x,l])=>`<button class="P ${k===x?"on":""}" style="flex:1" onclick="sgKind('${x}')">${l}</button>`).join("")}</div><input id="sg_n" placeholder="Nome e cognome" value="${e(sg.n)}"><input id="sg_u" placeholder="Scegli un nome utente" autocapitalize="none" value="${e(sg.u)}"><input id="sg_p" type="password" placeholder="Password (min. 6 caratteri)" autocomplete="new-password">${staff?`<label class="mut">Ruolo richiesto<select id="sg_r" onchange="sgRole()">${SG_ROLES.map(r=>`<option value="${r}" ${sg.r===r?"selected":""}>${ROLES[r]}</option>`).join("")}</select></label>`:""}${needT?`<label class="mut">Categoria<select id="sg_t">${TEAMS.map(t=>`<option ${sg.t===t?"selected":""}>${t}</option>`).join("")}</select></label>`:""}<p class="mut" style="margin:0;font-size:13px">${staff?"L'Admin controllerà la richiesta e potrà cambiare ruolo o categoria prima di approvarla.":"L'Admin approverà la richiesta. Potrai vedere il calendario delle partite e le convocazioni della categoria scelta."}</p><button onclick="sgSubmit()">Invia richiesta</button><button class="g" style="color:var(--mut);font-size:14px" onclick="sgGo(false)">Torna all'accesso</button></div></div>`}
+async function sgSubmit(){sgRead();const n=sg.n.trim(),u=sg.u.trim().toLowerCase(),p=($("sg_p")||{}).value||"";
+if(!n)return alert("Scrivi nome e cognome.");if(!okName(u)||p.length<6)return alert("Nome utente di 3+ caratteri (lettere minuscole, numeri - _) e password di 6+ caratteri.");
+const staff=sg.kind==="staff",role=staff?sg.r:sg.kind;boot=true;let c;
+try{if((await getDoc(doc(db,"usernames",u))).exists()){boot=false;return alert("Nome utente già esistente: scegline un altro.")}
+const email=em2(u);c=await createUserWithEmailAndPassword(auth,email,p);
+await setDoc(doc(db,"signups",c.user.uid),{name:n,username:u,kind:sg.kind,role,team:VIEW.includes(role)?"":sg.t,email,status:"pending",at:Date.now()});
+await signOut(auth);boot=false;sgMode=false;sgDone=true;sg.n="";sg.u="";render()}
+catch(x){boot=false;if(c)await c.user.delete().catch(()=>{});await signOut(auth).catch(()=>{});alert(x.code==="auth/email-already-in-use"?"Nome utente già esistente.":x.code==="permission-denied"?"Iscrizione non riuscita: l'Admin deve ripubblicare le regole di Firestore.":"Iscrizione non riuscita: "+(x.code||x.message))}}
+function signupCards(){const L=S.signups.slice().sort((a,b)=>(a.at||0)-(b.at||0));if(!L.length)return"";
+return`<div class="card" style="border-left:6px solid var(--acc)"><b>Richieste di iscrizione (${L.length})</b>`+L.map(r=>`<div class="p" style="flex-wrap:wrap"><div class="n"><b>${e(r.name)}</b><div class="mut">${SG_KIND[r.kind]||""} · utente <b>${e(r.username)}</b> · ${new Date(r.at||0).toLocaleDateString("it-IT")}</div></div><div class="row" style="width:100%;margin-top:6px"><select id="ar${r.id}">${Object.entries(ROLES).filter(x=>x[0]!=="admin").map(([k,l])=>`<option value="${k}" ${r.role===k?"selected":""}>${l}</option>`).join("")}</select><select id="at${r.id}">${TEAMS.map(t=>`<option ${r.team===t?"selected":""}>${t}</option>`).join("")}</select></div><p class="mut" style="margin:4px 0 0;font-size:13px">La categoria vale per tutti i ruoli tranne Direzione, Presidente e Segreteria.</p><div class="row" style="width:100%;margin-top:6px"><button onclick="sgOk('${r.id}')">Approva</button><button class="d" onclick="sgNo('${r.id}')">Rifiuta</button></div></div>`).join("")+`</div>`}
+async function sgOk(id){const r=S.signups.find(x=>x.id===id);if(!r)return;const role=$("ar"+id).value,team=VIEW.includes(role)?"":$("at"+id).value;
+if(S.users.some(u=>u.name===r.username))return alert("Nome utente già esistente: rifiuta la richiesta.");
+try{if((await getDoc(doc(db,"usernames",r.username))).exists())return alert("Nome utente già esistente: rifiuta la richiesta.");
+const b=writeBatch(db);b.set(doc(db,"users",id),{name:r.username,full:r.name,role,team});b.set(doc(db,"usernames",r.username),{email:r.email,uid:id});b.delete(doc(db,"signups",id));await b.commit()}catch(x){fail(x)}}
+function sgNo(id){const r=S.signups.find(x=>x.id===id);if(r&&confirm("Rifiutare la richiesta di "+r.name+"?"))deleteDoc(doc(db,"signups",id)).catch(fail)}
+const delAllCard=()=>S.users.some(u=>u.role!=="admin")?`<div class="card"><button class="d" onclick="delAll()">Elimina tutti gli utenti (tranne l'Admin)</button><p class="mut" style="margin:6px 0 0">Cancella profili e nomi utente di tutti, Admin escluso. Le voci in Firebase → Authentication restano e si cancellano a mano.</p></div>`:"";
+async function delAll(){const L=S.users.filter(u=>u.role!=="admin");if(!L.length)return alert("Non ci sono altri utenti.");
+if(!confirm("Eliminare "+L.length+" utenti (tutti tranne l'Admin)? Non si può annullare."))return;if(prompt("Per confermare scrivi ELIMINA")!=="ELIMINA")return;
+const ops=[];L.forEach(u=>{ops.push(["users",u.id]);ops.push(["usernames",u.name]);ops.push(["credentials",u.id])});
+try{for(let i=0;i<ops.length;i+=400){const b=writeBatch(db);ops.slice(i,i+400).forEach(([c,id])=>b.delete(doc(db,c,id)));await b.commit()}alert("Eliminati "+L.length+" utenti.")}catch(x){fail(x)}}
+async function login(){const n=$("lu").value.trim().toLowerCase(),p=$("lp").value;err="";
+try{let email=em(n);try{const m=await getDoc(doc(db,"usernames",n));if(m.exists())email=m.data().email}catch(_){}await signInWithEmailAndPassword(auth,email,p)}catch(x){err=["auth/invalid-credential","auth/invalid-email","auth/user-not-found","auth/wrong-password"].includes(x.code)?"Nome utente o password non corretti.":"Accesso non riuscito: "+x.code;render()}}
+async function out(){stop();me=null;S.users=[];S.players=[];S.trainings=[];S.matches=[];await signOut(auth)}
+async function setup(){const n=$("lu").value.trim().toLowerCase(),p=$("lp").value;
+if(!okName(n)||p.length<6){err="Nome utente di 3+ caratteri (lettere, numeri - _) e password di 6+ caratteri.";return render()}
+boot=true;let c;const email=em2(n);try{c=await createUserWithEmailAndPassword(auth,email,p);
+const b=writeBatch(db);b.set(doc(db,"users",c.user.uid),{name:n,role:"admin",team:""});b.set(doc(db,"usernames",n),{email,uid:c.user.uid});b.set(doc(db,"config","setup"),{by:c.user.uid,at:Date.now()});await b.commit();
+boot=false;setupMode=false;await load(c.user)}
+catch(x){boot=false;if(c)await c.user.delete().catch(()=>{});await signOut(auth).catch(()=>{});err=x.code==="auth/email-already-in-use"?"Nome utente già usato.":(x.code==="permission-denied"?"Esiste già un Admin: accedi con le sue credenziali.":"Errore: "+(x.code||x.message));render()}}
+async function addU(){const n=$("un").value.trim().toLowerCase(),p=$("up").value,r=$("ur").value;err="";
+if(!okName(n)||p.length<6){err="Nome utente di 3+ caratteri (lettere minuscole, numeri - _) e password di 6+ caratteri.";return render()}
+let st="lettura nome utente";try{if(S.users.some(u=>u.name===n)||(await getDoc(doc(db,"usernames",n))).exists()){err="Nome utente già esistente.";return render()}
+st="creazione account";const email=em2(n),sa=getAuth(secApp),c=await createUserWithEmailAndPassword(sa,email,p);
+st="salvataggio profilo";const b=writeBatch(db);b.set(doc(db,"users",c.user.uid),{name:n,role:r,team:VIEW.includes(r)?"":$("ut").value});b.set(doc(db,"usernames",n),{email,uid:c.user.uid});b.set(doc(db,"credentials",c.user.uid),{name:n,password:p});await b.commit();await signOut(sa)}
+catch(x){err=x.code==="auth/email-already-in-use"?"Nome utente già esistente (anche se revocato in passato).":x.code==="permission-denied"?"Permesso negato ("+st+"). In Firebase ripubblica le regole di Firestore (file firestore.rules) e controlla di essere entrato con l'Admin.":"Errore ("+st+"): "+(x.code||x.message);console.error(x);render()}}
+function exp(){const d={app:"osm",ver:VER,players:S.players,trainings:S.trainings,matches:S.matches,ratings:S.ratings,convocations:S.convocations,settings:S.settings,users:S.users.map(u=>({id:u.id,name:u.name,role:u.role,team:u.team}))},a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:"application/json"}));a.download="backup-oratorio-"+new Date().toISOString().slice(0,10)+".json";a.click()}
+function pick(){$("imp").click()}
+async function imp(i){const f=i.files[0];i.value="";if(!f)return;let d;try{d=JSON.parse(await f.text());if(!["players","trainings","matches"].every(c=>Array.isArray(d[c])))throw 0}catch(_){return alert("File di backup non valido.")}
+if(!confirm("Ripristinare i dati del backup? Giocatori, allenamenti, partite e impostazioni saranno aggiunti o sovrascritti. Gli utenti non vengono ripristinati: vanno ricreati da 'Utenti'."))return;
+try{alert("Ripristinati "+await restore(d)+" elementi.")}catch(x){fail(x)}}
+function localData(){try{if(localStorage.getItem("osm-migrated"))return null;const d=JSON.parse(localStorage.getItem("osm-db")||"null");return d&&Array.isArray(d.players)&&(d.players.length||(d.trainings||[]).length)?d:null}catch(_){return null}}
+async function restore(d){const items=[];for(const n of["players","trainings","matches","ratings","convocations"])for(const x of d[n]||[]){const {id,...o}=x;items.push([n,id,o])}
+await batchSet(items);if(d.settings&&typeof d.settings==="object"&&Object.keys(d.settings).length)await saveSet(d.settings);return items.length}
+async function migra(){if(!confirm("Importare nel database online i dati salvati su questo dispositivo?"))return;try{const n=await restore(localData());localStorage.setItem("osm-migrated","1");alert("Importati "+n+" elementi. Ora crea gli utenti dalla sezione Utenti.");render()}catch(x){fail(x)}}
+const migCard=()=>{const d=isA()&&localData();return d?`<div class="card" style="border-left:6px solid var(--acc)"><b>Dati della versione precedente trovati</b><p class="mut" style="margin:6px 0">Su questo dispositivo ci sono ${d.players.length} giocatori, ${(d.trainings||[]).length} allenamenti e ${(d.matches||[]).length} partite. Importali nel database online.</p><button onclick="migra()">Importa nel database online</button></div>`:""}
+function addM(){const d=$("md").value,o=$("mo").value.trim();if(!d||!o)return alert("Inserisci data e avversario.");save("matches",nid("matches"),{team,date:d,ora:$("mt").value,opp:o,home:$("mh").value,tipo:$("mk").value,luogo:$("ml").value.trim(),gf:"",ga:""})}
+function res(id){const m=S.matches.find(m=>m.id===id),v=k=>$(k+id).value,f=v("gf"),a=v("ga"),d=v("dt"),o=v("op").trim();if(!d||!o)return alert("Data e avversario sono obbligatori.");const {id:_,...r}=m;
+save("matches",id,{...r,team:v("cm"),date:d,ora:v("ot"),opp:o,home:v("hm"),tipo:v("tp"),luogo:v("lg").trim(),gf:f===""?"":+f,ga:a===""?"":+a})}
+function rd(f,mx=200,ty="image/jpeg"){return new Promise(r=>{const fr=new FileReader;fr.onload=()=>{const i=new Image;i.onload=()=>{const s=Math.min(1,mx/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*s;c.height=i.height*s;c.getContext("2d").drawImage(i,0,0,c.width,c.height);r(c.toDataURL(ty,.75))};i.src=fr.result};fr.readAsDataURL(f)})}
+async function savP(){const n=$("an1").value.trim(),c=$("an2").value.trim(),d=$("an3").value,f=$("an4").files[0];
+if(!n||!c)return err="Nome e cognome sono obbligatori.",render();
+const old=editP?S.players.find(p=>p.id===editP):null,photo=f?await rd(f):(old?.photo||"");
+err="";const id=editP||nid("players");editP=null;await save("players",id,{team:old?.team||team,nome:n,cognome:c,dob:d,photo,ruolo:$("an5").value.trim(),cel:$("an6").value.trim(),celMamma:$("an7").value.trim(),celPapa:$("an8").value.trim(),tessera:$("an9").value.trim(),maglia:$("an10").value.trim()})}
+
+const setTeam=v=>{team=v;edTr=null;rtEd=null;vlMode=null;vlOpen=null;cvId=null;cvEdit=false;render()},tgl=id=>{if(edTr&&edTr!==id&&dirty()&&!confirm("Hai modifiche non salvate: scartarle?"))return;if(edTr&&edTr!==id)edTr=null;open=open===id?null:id;render()},edit=id=>{editP=id;render();if(id)scrollTo(0,0)},tsetup=()=>{setupMode=!setupMode;err="";render()};
+Object.assign(window,{sgGo,sgKind,sgRole,sgSubmit,sgOk,sgNo,delAll,dsNo,dsSave,dsPick,cvM12,cvAsk,cvNumBack,cvSaveNums,calTipo,vlSet,vlTog,rtEdit,rtCancel,rtSet,rtSave,cvOpen,cvBack,cvCancel,cvCompila,cvH,cvM,cvX,cvSave,cvJpg,cvShare,calEd,trNav,trSet,stTog,stNav,addRq,rgSet,rqConf,rqDeny,addFb,repFb,notifAck,notifAsk,pwTgl,newPw,calNav,calPick,calFilt,calToday,bdClose,revoca,go,del,login,out,setup,addU,mk,trEdit,trSave,trCancel,tpNav,tpTog,tpClear,tcTog,tcAll,addTs,addM,res,savP,tg,setTeam,tgl,edit,tsetup,exp,pick,imp,doUpd,later,savClub,savLogo,rmLogo,impXl,model});
+document.addEventListener("focusout",()=>{if(pend){pend=false;setTimeout(render,50)}});
+if(configured){onSnapshot(doc(db,"config","club"),s=>{S.settings=s.exists()?s.data():{};paint()},x=>console.error(x));
+onAuthStateChanged(auth,async u=>{if(boot)return;if(!u){stop();me=null;ready=true;render();return}await load(u)})}
+render();
+chk();setInterval(chk,18e5);document.addEventListener("visibilitychange",()=>{if(!document.hidden)chk()});
+if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+</script>
+</body>
+</html>
